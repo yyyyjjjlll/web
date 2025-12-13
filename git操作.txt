@@ -30,3 +30,9 @@ git config --global --get user.email
 bash
 Copy Code
 git config --get user.email
+
+
+可以直接运行以下命令（替换 你的名字 和 正确邮箱@example.com）：
+git filter-branch -f --env-filter 'export GIT_AUTHOR_NAME="你的名字"export GIT_AUTHOR_EMAIL="正确邮箱@example.com"export GIT_COMMITTER_NAME="你的名字"export GIT_COMMITTER_EMAIL="正确邮箱@example.com"' -- --all
+修改完成后强制推送：
+git push --force
