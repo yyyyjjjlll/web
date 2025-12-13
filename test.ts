@@ -17,7 +17,71 @@ function twoSum(nums: number[], target: number): number[] {
   return []
 }
 // 49. 字母异位词分组
-
+function groupAnagrams(strs: string[]): string[][] {
+  let map = new Map<string, string[]>();
+  let res: string[][] = [];
+  const strs2 = strs.map((str)=>str.split('').sort().join(''))
+  for(let i = 0; i < strs.length; i++){
+      if(map.has(strs2[i])){
+          const a = map.get(strs2[i])!
+          // map.set(strs2[i], a.push(i))
+          // map.set(strs2[i],a.push(strs[i]) ) 
+          // 这种写法是错误的，因为a.push(strs[i]) 返回的是数组的新长度（数字），而不是一个数组，所以不能直接赋值给map
+          // .pop() 返回的是数组最后一个元素，所以不能直接赋值给map
+          // .shift() 返回的是数组第一个元素，所以不能直接赋值给map
+          // .unshift() 返回的是数组的新长度，所以不能直接赋值给map
+          map.set(strs2[i], [...a, strs[i]])
+      } else {
+          // map.set(strs2[i], [i])
+          map.set(strs2[i], [strs[i]])
+      }
+  }
+  // for(const v of map.values()){
+  //     res.push(v)
+  // }
+  // return res
+  return Array.from(map.values())
+};
+// 128. 最长连续序列
+function longestConsecutive(nums: number[]): number {
+  // 时间复杂度O(n log n)
+  // // const new_nums = nums.sort(); // nums.sort() 默认按字符串排序，不是数字排序, 会让数字以字符串规则排序
+  // const new_nums = nums.sort((a,b) => a-b); // 时间复杂度：O(n log n)
+  // if(nums.length === 0){
+  //   return 0
+  // }
+  // let res: number = 1;
+  // let l = 1;
+  // for(let i = 1; i < nums.length; i++){
+  //     if(new_nums[i]-new_nums[i-1] === 1){
+  //         l += 1;
+  //     } else if(new_nums[i]-new_nums[i-1] !== 0){
+  //         res = Math.max(res, l);
+  //         l = 1;
+  //     }
+  // }
+  // return Math.max(res, l);
+  if(nums.length === 0){
+    return 0;
+  }
+  let a = new Set(nums);
+  let res = 1;
+  // set的遍历方式是for(const num of a.values())，而不是for(let i = 0; i < a.size; i++)
+  for(const num of a.values()){
+      if(a.has(num-1)){
+          continue;
+      } else {
+          let l = 1;
+          let b = num +1
+          while(a.has(b)){
+              b+=1;
+              l+=1;
+          }
+          res = Math.max(res, l);
+      }
+  }
+  return res
+};
 
 // 测试函数
 function test() {
