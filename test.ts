@@ -82,12 +82,43 @@ function longestConsecutive(nums: number[]): number {
   }
   return res
 };
-
+// 283. 移动零
+function moveZeroes(nums: number[]): void {
+  // 时间过长，时间复杂度O(n^2)
+  // let n = 0 // 注意当nums[n]===0迭代后，nums[n]发生了变化，所以还得从n开始迭代
+  // for(let i = 0; i < nums.length; i++){
+  //     if(nums[n]===0){
+  //         for(let j=n; j<(nums.length-1); j++){
+  //             nums[j]=nums[j+1];
+  //         }
+  //         nums[nums.length-1]=0;
+  //     } else {
+  //         n++;
+  //     }
+  // }
+  // 时间复杂度O(n)
+  let n = 0;
+  for(let i = 0; i < nums.length; i++){
+      if(nums[i] !== 0){
+          nums[n] = nums[i];
+          n++;
+      }
+  }
+  // for(let j = n; j < nums.length; j++){
+  //     nums[j] = 0;
+  // }
+  nums.fill(0, n)
+};
 // 测试函数
 function test() {
-    console.log("测试函数");
+  const nums = [1,2,3,4,5]
+  for(let i = 0; i < nums.length-1; i++){
+    nums[i+1] = nums[i]*2;
+  }
+  console.log(nums);
+  return nums;
 }
 
-test
+test();
 console.log("\n========== 测试完成 ==========");
 
