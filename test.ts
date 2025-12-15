@@ -19,7 +19,7 @@ function twoSum(nums: number[], target: number): number[] {
 // 49. 字母异位词分组
 function groupAnagrams(strs: string[]): string[][] {
   let map = new Map<string, string[]>();
-  let res: string[][] = [];
+  // let res: string[][] = [];
   const strs2 = strs.map((str)=>str.split('').sort().join(''))
   for(let i = 0; i < strs.length; i++){
       if(map.has(strs2[i])){
@@ -109,14 +109,68 @@ function moveZeroes(nums: number[]): void {
   // }
   nums.fill(0, n)
 };
+// 11. 盛最多水的容器
+function maxArea(height: number[]): number {
+  // 数据量过大导致栈溢出
+  // let areas: number[][] = Array.from({length: height.length}, ()=> new Array(height.length).fill(0))
+  // // let areas: number[][] = new Array(height.length);
+  // // let a: number[] = new Array(height.length);
+  // // a.fill(0);
+  // // areas.fill(a); // 错误，所有行会引用同一个数组，导致修改一个数组会影响所有行
+  // for(let i = 0; i < height.length-1; i++){
+  //     for(let j = i+1; j < height.length; j++){
+  //         areas[i][j] = Math.min(height[i], height[j])*(j-i)
+  //     }
+  // }
+  // return Math.max(...areas.flat());
+  let left = 0;
+  let right = height.length - 1;
+  let max_area = 0
+  while(left < right){
+      const area = Math.min(height[left], height[right])*(right - left);
+      max_area = Math.max(area, max_area);
+      if(height[left] < height[right]){
+          left++;
+      } else {
+          right--;
+      }
+  }
+  return max_area;
+};
+// 15. 三数之和
+function threeSum(nums: number[]): number[][] {
+  // 时间复杂度O(n^3)，超时
+  // nums.sort();
+  // let res: number[][] = [];
+  // let x = new Set<number>();
+  // for(let i = 0; i < nums.length - 2; i++){
+  //     if(x.has(nums[i])){
+  //         continue;
+  //     } else {
+  //         x.add(nums[i])
+  //         let y = new Set<number>();
+  //         for(let j = i + 1; j < nums.length - 1; j++){
+  //             if(y.has(nums[j])){
+  //                 continue;
+  //             } else {
+  //                 y.add(nums[j])
+  //                 const a = new Set(nums.slice(j+1, nums.length)); // 时间复杂度O(n)
+  //                 if(a.has(0-nums[i]-nums[j])){
+  //                     res.push([nums[i],nums[j],0-nums[i]-nums[j]])
+  //                 }
+  //             }
+  //         }
+  //     }
+  // }
+  // return res;
+  
+};
 // 测试函数
 function test() {
-  const nums = [1,2,3,4,5]
-  for(let i = 0; i < nums.length-1; i++){
-    nums[i+1] = nums[i]*2;
-  }
-  console.log(nums);
-  return nums;
+  const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
+  console.log(twoDArray.flat());
+  console.log(...twoDArray);
+  // const maxVal = Math.max(...twoDArray.flat()); 
 }
 
 test();
