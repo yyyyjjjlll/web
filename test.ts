@@ -218,26 +218,35 @@ function trap(height: number[]): number {
   //     res += get_area(i, left, right, height)
   // }
   // return res;
-  let left = 0, right = height.length - 1;
-  let leftMax = 0, rightMax = 0;
+  // // 动态规划
+  // let res = 0;
+  // let left_max = [];
+  // let right_max = [];
+  // left_max[0] = height[0];
+  // right_max[height.length-1] = height[height.length-1];
+  // for(let i = 1; i < height.length - 1; i++){
+  //     left_max[i] = Math.max(left_max[i-1], height[i])
+  //     right_max[height.length-1-i] = Math.max(right_max[height.length-i], height[height.length-1-i])
+  // }
+  // for(let i = 1; i < height.length - 1; i++){
+  //     const a = Math.min(left_max[i],right_max[i])
+  //     res += Math.max(a-height[i],0)
+  // }
+  // return res;
+  // 双指针法
   let res = 0;
-  
-  while (left < right) {
-    if (height[left] < height[right]) {
-      if (height[left] >= leftMax) {
-        leftMax = height[left];
+  let left = 0,right = height.length-1;
+  let left_max = height[0], right_max = height[height.length-1];
+  while(left<right){
+      left_max=Math.max(left_max,height[left])
+      right_max=Math.max(right_max,height[right])
+      if(left_max<right_max){
+          res += left_max-height[left]
+          left++
       } else {
-        res += leftMax - height[left];
+          res += right_max-height[right]
+          right--
       }
-      left++;
-    } else {
-      if (height[right] >= rightMax) {
-        rightMax = height[right];
-      } else {
-        res += rightMax - height[right];
-      }
-      right--;
-    }
   }
   return res;
 }
