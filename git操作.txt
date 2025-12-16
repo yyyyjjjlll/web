@@ -1,0 +1,38 @@
+1. 配置全局邮箱
+首先，你可以设置一个全局的邮箱地址，这样除非你在特定的仓库中做了修改，否则所有的仓库都会使用这个邮箱地址。
+
+bash
+Copy Code
+git config --global user.email "your_global_email@example.com"
+2. 为特定仓库配置邮箱
+但是，如果你想要为特定的仓库使用不同的邮箱地址，你可以在该仓库的本地配置中设置邮箱。这不会影响其他仓库。
+
+首先，切换到你想设置不同邮箱的仓库目录：
+
+bash
+Copy Code
+cd path/to/your/repository
+然后，在该仓库中设置邮箱：
+
+bash
+Copy Code
+git config user.email "your_specific_email@example.com"
+3. 检查配置
+为了验证你的设置，你可以检查全局和特定仓库的配置：
+
+查看全局配置：
+
+bash
+Copy Code
+git config --global --get user.email
+查看特定仓库的配置：
+
+bash
+Copy Code
+git config --get user.email
+
+
+可以直接运行以下命令（替换 你的名字 和 正确邮箱@example.com）：
+git filter-branch -f --env-filter 'export GIT_AUTHOR_NAME="你的名字"export GIT_AUTHOR_EMAIL="正确邮箱@example.com"export GIT_COMMITTER_NAME="你的名字"export GIT_COMMITTER_EMAIL="正确邮箱@example.com"' -- --all
+修改完成后强制推送：
+git push --force
