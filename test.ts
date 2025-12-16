@@ -196,6 +196,63 @@ function threeSum(nums: number[]): number[][] {
   return res;
 
 };
+// 42. 接雨水
+function trap(height: number[]): number {
+  // 超时（当max_height过大时，耗时过多）
+  // const max_height: number = Math.max(...height);
+  // let res = 0;
+  // for(let i = 1; i <= max_height; i++){
+  //     let left = 0;
+  //     let right = height.length-1;
+  //     while(left<right){
+  //         if(height[left]<i){
+  //             left++;
+  //         }
+  //         if(height[right]<i){
+  //             right--;
+  //         }
+  //         if(height[left]>=i && height[right]>=i){
+  //             break;
+  //         }
+  //     }
+  //     res += get_area(i, left, right, height)
+  // }
+  // return res;
+  let left = 0, right = height.length - 1;
+  let leftMax = 0, rightMax = 0;
+  let res = 0;
+  
+  while (left < right) {
+    if (height[left] < height[right]) {
+      if (height[left] >= leftMax) {
+        leftMax = height[left];
+      } else {
+        res += leftMax - height[left];
+      }
+      left++;
+    } else {
+      if (height[right] >= rightMax) {
+        rightMax = height[right];
+      } else {
+        res += rightMax - height[right];
+      }
+      right--;
+    }
+  }
+  return res;
+}
+// function get_area(x, left, right, height: number[]): number {
+//   if(left===right){
+//       return 0;
+//   }
+//   let area = 0;
+//   for(let i = left+1; i < right; i++){
+//       if(height[i]<x){
+//           area++;
+//       }
+//   }
+//   return area
+// }
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
