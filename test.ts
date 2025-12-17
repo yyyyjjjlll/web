@@ -262,6 +262,82 @@ function trap(height: number[]): number {
 //   }
 //   return area
 // }
+// 3. 无重复字符的最长子串
+function lengthOfLongestSubstring(s: string): number {
+    // 时间复杂度O(n^2)
+    // const strs = s.split('');
+    // if(strs.length===0) return 0
+    // if(strs.length===1) return 1
+    // let res = [];
+    // for(let i = 0; i < strs.length-1; i++){
+    //     let set = new Set();
+    //     set.add(strs[i]);
+    //     for(let j = i+1; j<strs.length; j++){
+    //         if(set.has(strs[j])){
+    //             res.push(j-i)
+    //             break;
+    //         } else if(j===strs.length-1) {
+    //             res.push(j-i+1)
+    //         } else {
+    //             set.add(strs[j]);
+    //         }
+    //     }
+    // }
+    // return Math.max(...res)
+    // 时间复杂度O(n)
+    if(s.length<2) return s.length
+    let left = 0,right = 0
+    let res = 1;
+    let set = new Set();
+    while(right<s.length){
+        if(set.has(s[right])){
+            set.delete(s[left])
+            left++;
+        } else {
+            set.add(s[right])
+            res = Math.max(res, right-left+1)
+            right++;
+        }
+    }
+    return res
+};
+// 438. 找到字符串中所有字母异位词
+function findAnagrams(s: string, p: string): number[] {
+    let res: number[] = [];
+    let map = new Map();
+    for(let i = 0; i < p.length; i++){
+        if(map.has(p[i])){
+            map.set(p[i], map.get(p[i])+1)
+        } else {
+            map.set(p[i], 1)
+        }
+    }
+    let left: number = 0, right: number = 0;
+    let map2 = new Map();
+    while(right<s.length && left<=(s.length-p.length)){
+        if(!map.has(s[right])){
+            left = right+1;
+            right++;
+            map2.clear();
+        } else {
+            const n1 = map.get(s[right]);
+            const n2 = map2.get(s[right]) || 0
+            if(n2 < n1){
+                map2.set(s[right], n2+1)
+                if(right-left+1===p.length){
+                    res.push(left);
+                    map2.set(s[left],map2.get(s[left])-1)
+                    left++;
+                }
+                right++;
+            } else {
+                map2.set(s[left],map2.get(s[left])-1)
+                left++;
+            }
+        }
+    }
+    return res;
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
@@ -273,3 +349,5 @@ function test() {
 test();
 console.log("\n========== 测试完成 ==========");
 
+123456789
+123
