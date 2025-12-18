@@ -255,3 +255,193 @@ HTML 提供了相应的标签，使其具有加粗、倾斜、下划线等效果
 
 > 💡 **开发中设计师提供图片，我们直接使用即可。**
 
+---
+
+## 📂 路径
+
+在 HTML 中，**路径**用于指定文件（如图像、样式表或其他网页）的位置。
+
+> 💡 **白话：** 图片相对于 HTML 文件的位置，HTML 怎么找到图片
+
+```
+                路径类型
+                   │
+        ┌──────────┴──────────┐
+        │                     │
+   ┌────▼────┐          ┌─────▼─────┐
+   │ 相对路径 │          │  绝对路径  │
+   └────┬────┘          └─────┬─────┘
+        │                     │
+   相对于当前             从根目录开始
+   文件位置的路径         的完整路径
+```
+
+### 1️⃣ 相对路径（重点掌握）
+
+相对于**当前文件位置**的路径。
+
+| 场景 | 写法 | 示例 |
+|------|------|------|
+| **同一目录** | 直接使用文件名 或 `./文件名` | `<img src="pig.jpg">` 或 `<img src="./pig.jpg">` |
+| **下级子目录** | `目录名/文件名` | `<img src="img/pig.jpg">` |
+| **上级目录** | `../文件名` | `<img src="../pig.jpg">` |
+
+**符号说明：**
+- `./` → 当前文件夹
+- `../` → 返回上一级目录
+- `../../` → 返回上两级目录
+
+**目录结构示例：**
+```
+project/
+├── index.html        ← 当前文件
+├── logo.png          ← 同级：src="logo.png"
+├── images/
+│   └── pig.jpg       ← 下级：src="images/pig.jpg"
+└── ../
+    └── pic.jpg       ← 上级：src="../pic.jpg"
+```
+
+### 2️⃣ 绝对路径（了解即可）
+
+从**根目录**开始的完整路径，包含完整的 URL 地址。
+
+**从盘符开始：**
+```html
+<img src="E:\HTML5\代码\pic.jpg" alt="示例图片">
+```
+
+**完整网络地址：**
+```html
+<img src="https://www.example.com/images/pic.jpg" alt="示例图片">
+```
+
+### 📋 路径对比
+
+| 类型 | 特点 | 使用场景 |
+|------|------|----------|
+| **相对路径** | 相对当前文件，简洁灵活 | ✅ 推荐，项目内部文件引用 |
+| **绝对路径** | 完整路径，不受位置影响 | 外部资源、CDN 引用 |
+
+> ⚠️ **注意：** 开发中主要使用**相对路径**，更便于项目迁移和维护。
+
+---
+
+## 🎬 视频和音频
+
+### 视频标签 video
+
+`<video>` 元素用于在网页中轻松嵌入视频。
+
+**基本语法：**
+```html
+<video src="video.mp4" controls width="300"></video>
+```
+
+### 视频属性
+
+| 属性 | 作用 | 说明 |
+|------|------|------|
+| `src` | 视频地址 | 指向要插入的视频文件 |
+| `controls` | 播放控件 | 显示浏览器自带播放控件 |
+| `width/height` | 宽度/高度 | 设置视频的尺寸 |
+| `autoplay` | 自动播放 | 需配合 `muted` 使用 |
+| `muted` | 静音 | 静音播放 |
+| `loop` | 循环播放 | 视频循环播放 |
+| `poster` | 预览图像 | 视频加载前显示的封面图 |
+
+**完整示例：**
+```html
+<video src="./media/video.mp4" width="400" controls autoplay muted loop poster="./media/cover.jpg"></video>
+```
+
+> 💡 **提示：** 在 H5 中，如果属性的键和值相同，可以省略值。如 `controls="controls"` 可简写为 `controls`。
+
+### 视频格式兼容性
+
+| 浏览器 | MP4 | WebM | Ogg |
+|--------|-----|------|-----|
+| Internet Explorer | ✅ YES | ❌ NO | ❌ NO |
+| Chrome | ✅ YES | ✅ YES | ✅ YES |
+| Firefox | ✅ YES | ✅ YES | ✅ YES |
+| Safari | ✅ YES | ❌ NO | ❌ NO |
+| Opera | ✅ YES (25+) | ✅ YES | ✅ YES |
+
+> 📌 **HTML5 视频主要支持三种格式：MP4、Ogg、WebM，主要用 MP4 格式。**
+
+### 视频兼容性写法
+
+使用 `<source>` 元素提供多种格式，浏览器会播放第一个支持的格式：
+
+```html
+<video controls>
+  <source src="video.mp4" type="video/mp4">
+  <source src="video.ogg" type="video/ogg">
+  <source src="video.webm" type="video/webm">
+  <p>您的浏览器不支持 HTML5 Video 标签，请升级浏览器。</p>
+</video>
+```
+
+**要点：**
+1. 将 `src` 属性放在单独的 `<source>` 元素中
+2. 浏览器会检查 `<source>` 元素，播放第一个匹配的媒体
+3. `type` 属性帮助浏览器快速跳过不支持的格式
+
+---
+
+### 音频标签 audio
+
+`<audio>` 元素用于在网页中嵌入音频。
+
+**基本语法：**
+```html
+<audio src="audio.mp3" controls></audio>
+```
+
+### 音频属性
+
+| 属性 | 作用 |
+|------|------|
+| `src` | 音频地址 |
+| `controls` | 播放控件 |
+| `autoplay` | 自动播放（浏览器通常禁止） |
+| `muted` | 静音 |
+| `loop` | 循环播放 |
+
+> ⚠️ **注意：** 音频标签浏览器**不让自动播放**，后续可以用 JS 实现。
+
+### 音频格式兼容性
+
+| 浏览器 | MP3 | Wav | Ogg |
+|--------|-----|-----|-----|
+| Internet Explorer 9+ | ✅ YES | ❌ NO | ❌ NO |
+| Chrome 6+ | ✅ YES | ✅ YES | ✅ YES |
+| Firefox 3.6+ | ✅ YES | ✅ YES | ✅ YES |
+| Safari 5+ | ✅ YES | ✅ YES | ❌ NO |
+| Opera 10+ | ✅ YES | ✅ YES | ✅ YES |
+
+> 📌 **音频主要用 MP3 格式。**
+
+### 音频兼容性写法
+
+```html
+<audio controls>
+  <source src="./media/audio.mp3" type="audio/mp3">
+  <p>您的浏览器不支持音频播放</p>
+</audio>
+```
+
+---
+
+## 📋 视频和音频总结
+
+| 标签 | 用途 | 主要格式 | 常用属性 |
+|------|------|----------|----------|
+| `<video>` | 嵌入视频 | **MP4** | src, controls, autoplay, muted, loop, poster |
+| `<audio>` | 嵌入音频 | **MP3** | src, controls, autoplay, muted, loop |
+
+**关键点：**
+- 自动播放 `autoplay` 需要配合 `muted` 静音
+- 使用 `<source>` 提供多格式兼容
+- `type` 属性帮助浏览器快速识别格式
+
