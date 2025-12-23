@@ -5,7 +5,11 @@ function debounce(fun: Function, wait: number){
     console.log('yes')
     let timeoutid: any;
     return function(...args: any[]){
-        clearTimeout(timeoutid);
+        // 校验
+        if(timeoutid){
+            clearTimeout(timeoutid);
+        }
+
         timeoutid = setTimeout(()=>{
             fun(...args)
         }, wait)
