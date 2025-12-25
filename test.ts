@@ -385,7 +385,7 @@ function maxSlidingWindow(nums: number[], k: number): number[] {
             this.queue = [];
         }
         enqueue(value: number){
-            for(let i = this.queue.length; i > -1; i--){
+            for(let i = this.queue.length-1; i > -1; i--){
                 if(this.queue[i]<value){
                     this.queue.pop()
                 } else {
