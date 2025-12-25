@@ -377,6 +377,45 @@ function subarraySum(nums: number[], k: number): number {
     // }
     // return res
 };
+// 239. 滑动窗口最大值
+function maxSlidingWindow(nums: number[], k: number): number[] {
+    class Queue {
+        private queue: number[];
+        constructor(){
+            this.queue = [];
+        }
+        enqueue(value: number){
+            for(let i = this.queue.length; i > -1; i--){
+                if(this.queue[i]<value){
+                    this.queue.pop()
+                } else {
+                    break;
+                }
+            }
+            this.queue.push(value)
+        }
+        dequeue(value: number){
+            if(this.queue[0] === value){
+                this.queue.shift();
+            }
+        }
+        top(){
+            return this.queue[0]
+        }
+    }
+    let queue = new Queue();
+    let res = new Array();
+    for(let i = 0; i < k; i++){
+        queue.enqueue(nums[i])
+    }
+    res.push(queue.top())
+    for(let i = k; i < nums.length; i++){
+        queue.enqueue(nums[i]);
+        queue.dequeue(nums[i-k]);
+        res.push(queue.top())
+    }
+    return res
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
