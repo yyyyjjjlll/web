@@ -456,7 +456,7 @@ function minWindow(s: string, t: string): string {
         map.set(t[i], (map.get(t[i]) || 0) +1)
     }
     let left = 0, right = 0;
-    let res = '', min_res = s;
+    let min_left=0, min_right=Infinity;
     let type_num = map.size;
 
     while(right<s.length){
@@ -468,7 +468,12 @@ function minWindow(s: string, t: string): string {
                 type_num--;
             }
         }
-        while(type_num<=0){
+        right++
+        while(type_num===0){
+            if((min_right-min_left)>(right-left)){
+                min_right = right;
+                min_left = left;
+            }
             if(map.has(s[left])){
                 const b = map.get(s[left])!
                 map.set(s[left], b!+1)
@@ -476,39 +481,11 @@ function minWindow(s: string, t: string): string {
                     type_num++;
                 }
             }
-        }
-
-        if(type_num>0){
-            res += s[right]
-            if(map.has(s[right])){
-                const a = map.get(s[right])
-                map.set(s[right], a!-1)
-                if(a===1){
-                    type_num--
-                    if(type_num===0){
-                        right--;
-                    }
-                }
-            }
-            right++;
-        } else {
-            if(map.has(s[left])){
-                const b = map.get(s[left])!
-                map.set(s[left], b!+1)
-                if(b===0){
-                    type_num++;
-                }
-            }
-            res = res.slice(1)
             left++;
         }
-        if(type_num===0){
-            if(min_res.length>res.length){
-                min_res = res;
-            }
-        }
     }
-    return min_res
+    const res = min_right-min_left>s.length ? '' : s.substring(min_left, min_right)
+    return res
 };
 // 测试函数
 function test() {
