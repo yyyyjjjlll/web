@@ -379,42 +379,136 @@ function subarraySum(nums: number[], k: number): number {
 };
 // 239. 滑动窗口最大值
 function maxSlidingWindow(nums: number[], k: number): number[] {
-    class Queue {
-        private queue: number[];
-        constructor(){
-            this.queue = [];
+    let res: number[] = [];
+    let queue: number[] = [];
+    for(let i = 0; i < nums.length; i++){
+        while(queue.length>0 && nums[i]>nums[queue[queue.length-1]]){
+            queue.pop()
         }
-        enqueue(value: number){
-            for(let i = this.queue.length-1; i > -1; i--){
-                if(this.queue[i]<value){
-                    this.queue.pop()
-                } else {
-                    break;
-                }
-            }
-            this.queue.push(value)
+        queue.push(i)
+        if(queue[0]<i-k+1){
+            queue.shift()
         }
-        dequeue(value: number){
-            if(this.queue[0] === value){
-                this.queue.shift();
-            }
+        if(i>=k-1){
+            res.push(nums[queue[0]])
         }
-        top(){
-            return this.queue[0]
-        }
-    }
-    let queue = new Queue();
-    let res = new Array();
-    for(let i = 0; i < k; i++){
-        queue.enqueue(nums[i])
-    }
-    res.push(queue.top())
-    for(let i = k; i < nums.length; i++){
-        queue.enqueue(nums[i]);
-        queue.dequeue(nums[i-k]);
-        res.push(queue.top())
     }
     return res
+    // let res = [];
+    // let queue = [];
+    // for(let i = 0; i < nums.length; i++){
+    //     for(let j = queue.length -1; j>-1; j--){
+    //         if(queue[j]<nums[i]){
+    //             queue.pop()
+    //         } else { break }
+    //     }
+    //     queue.push(nums[i])
+    //     if(i>=k && queue[0]===nums[i-k]){
+    //         queue.shift()
+    //     }
+    //     if(i>=k-1){
+    //         res.push(queue[0])
+    //     }
+    // }
+    // return res
+    // class Queue {
+    //     private queue: number[];
+    //     constructor(){
+    //         this.queue = [];
+    //     }
+    //     enqueue(value: number){
+    //         for(let i = this.queue.length-1; i > -1; i--){
+    //             if(this.queue[i]<value){
+    //                 this.queue.pop()
+    //             } else {
+    //                 break;
+    //             }
+    //         }
+    //         this.queue.push(value)
+    //     }
+    //     dequeue(value: number){
+    //         if(this.queue[0] === value){
+    //             this.queue.shift();
+    //         }
+    //     }
+    //     top(){
+    //         return this.queue[0]
+    //     }
+    // }
+    // let queue = new Queue();
+    // let res = new Array();
+    // for(let i = 0; i < k; i++){
+    //     queue.enqueue(nums[i])
+    // }
+    // res.push(queue.top())
+    // for(let i = k; i < nums.length; i++){
+    //     queue.enqueue(nums[i]);
+    //     queue.dequeue(nums[i-k]);
+    //     res.push(queue.top())
+    // }
+    // return res
+};
+// 76. 最小覆盖子串
+function minWindow(s: string, t: string): string {
+    if(s.length < t.length) return ''
+    let map = new Map<string, number>()
+    for(let i=0; i<t.length; i++){
+        map.set(t[i], (map.get(t[i]) || 0) +1)
+    }
+    let left = 0, right = 0;
+    let res = '', min_res = s;
+    let type_num = map.size;
+
+    while(right<s.length){
+        const char = s[right];
+        if(map.has(char)){
+            const a = map.get(s[right])
+            map.set(char, a!-1)
+            if(a === 1){
+                type_num--;
+            }
+        }
+        while(type_num<=0){
+            if(map.has(s[left])){
+                const b = map.get(s[left])!
+                map.set(s[left], b!+1)
+                if(b===0){
+                    type_num++;
+                }
+            }
+        }
+
+        if(type_num>0){
+            res += s[right]
+            if(map.has(s[right])){
+                const a = map.get(s[right])
+                map.set(s[right], a!-1)
+                if(a===1){
+                    type_num--
+                    if(type_num===0){
+                        right--;
+                    }
+                }
+            }
+            right++;
+        } else {
+            if(map.has(s[left])){
+                const b = map.get(s[left])!
+                map.set(s[left], b!+1)
+                if(b===0){
+                    type_num++;
+                }
+            }
+            res = res.slice(1)
+            left++;
+        }
+        if(type_num===0){
+            if(min_res.length>res.length){
+                min_res = res;
+            }
+        }
+    }
+    return min_res
 };
 // 测试函数
 function test() {
