@@ -487,6 +487,39 @@ function minWindow(s: string, t: string): string {
     const res = min_right-min_left>s.length ? '' : s.substring(min_left, min_right)
     return res
 };
+// 53. 最大子数组和
+function maxSubArray(nums: number[]): number {
+    if(nums.length === 1) return nums[0]
+    let res = -Infinity, sum = 0, pre_min_sum = 0
+    for(let num of nums){
+        pre_min_sum = Math.min(pre_min_sum, sum)
+        sum += num;
+        res = Math.max(sum-pre_min_sum, res)
+    }
+    return res;
+    // if(nums.length === 1) return nums[0]
+    // // let sum_list: number[] = new Array(nums.length).fill(0);
+    // let left_min = 0, right_max = -Infinity;
+    // let left = 0, right = 0, res = 0;
+    // let sum = 0, sum_left_min = 0;
+    // // for(let i = 0; i < nums.length; i++){
+    // //     sum_list[i] = (sum_list[i-1]||0) + nums[i];
+    // // }
+    // for(let num of nums){
+    //     sum += num;
+    //     if(right_max <= num){
+    //         right_max = Math.max(sum, right_max)
+    //         while(left<right){
+    //             sum_left_min += nums[left];
+    //             left_min = Math.min(sum_left_min, left_min)
+    //             left++;
+    //         }
+    //         res = Math.max(res, right_max - left_min)
+    //     }
+    //     right++;
+    // }
+    // return res;
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
