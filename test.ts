@@ -520,6 +520,39 @@ function maxSubArray(nums: number[]): number {
     // }
     // return res;
 };
+// 56. 合并区间
+function merge(intervals: number[][]): number[][] {
+    intervals.sort((a,b)=>a[0]-b[0]);
+    let left = intervals[0][0], right = intervals[0][1];
+    let res: number[][] = [];
+    for(let i = 0; i < intervals.length; i++){
+        if(intervals[i][0]<=right){
+            right = Math.max(right, intervals[i][1])
+        } else {
+            res.push([left, right])
+            left = intervals[i][0];
+            right = intervals[i][1];
+        }
+        if(i === intervals.length -1){res.push([left, right])}
+    }
+    return res;
+};
+// 189. 轮转数组
+function rotate(nums: number[], k: number): void {
+    const new_k = k % nums.length;
+    let res: number[] = [];
+    for(let i = 0; i < new_k; i++){
+        res.push(nums[nums.length - (new_k-i)]);
+    }
+    for(let i = new_k; i < nums.length; i++){
+        res.push(nums[i-new_k]);
+    }
+    // nums = res; 修改引用只在内部有效
+    // 将 res 复制回 nums
+    for (let i = 0; i < nums.length; i++) {
+        nums[i] = res[i];
+    }
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
