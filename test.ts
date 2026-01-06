@@ -539,18 +539,114 @@ function merge(intervals: number[][]): number[][] {
 };
 // 189. 轮转数组
 function rotate(nums: number[], k: number): void {
-    const new_k = k % nums.length;
-    let res: number[] = [];
-    for(let i = 0; i < new_k; i++){
-        res.push(nums[nums.length - (new_k-i)]);
+    // // 方法一使用额外的数组：时间复杂度O(n)，空间复杂度O(n)
+    // const new_k = k % nums.length;
+    // let res: number[] = [];
+    // for(let i = 0; i < new_k; i++){
+    //     res.push(nums[nums.length - (new_k-i)]);
+    // }
+    // for(let i = new_k; i < nums.length; i++){
+    //     res.push(nums[i-new_k]);
+    // }
+    // // nums = res; 修改引用只在内部有效，函数内修改数组元素会改变原数组，但重新赋值数组变量则不会影响外部
+    // // 将 res 复制回 nums
+    // for (let i = 0; i < nums.length; i++) {
+    //     nums[i] = res[i];
+    // }
+    // 方法二数组翻转：时间复杂度O(n)，空间复杂度O(1)
+    k = k % nums.length;
+    const reverse = (a: number[], start: number, end: number) => {
+        while(start<end){
+            let temp = a[start];
+            a[start] = a[end];
+            a[end] = temp;
+            start++;
+            end--;
+        }
     }
-    for(let i = new_k; i < nums.length; i++){
-        res.push(nums[i-new_k]);
+    reverse(nums, 0, nums.length-1);
+    reverse(nums, 0, k-1);
+    reverse(nums, k, nums.length-1);
+};
+// 238. 除自身以外数组的乘积
+function productExceptSelf(nums: number[]): number[] {
+    // 时间复杂度O(n)，空间复杂度O(1)
+    let answer: number[] = new Array(nums.length);
+    for(let i = 0; i < nums.length; i++){
+        answer[i] = (answer[i - 1] ?? 1) * (nums[i-1] ?? 1);
     }
-    // nums = res; 修改引用只在内部有效
-    // 将 res 复制回 nums
-    for (let i = 0; i < nums.length; i++) {
-        nums[i] = res[i];
+    let t = 1;
+    for(let i = 0; i < nums.length; i++){
+        t *=  nums[nums.length-i] ?? 1;
+        answer[nums.length-1-i] *= t
+    }
+    return answer;
+    // 时间复杂度O(n)，空间复杂度O(n)
+    // if(nums.length===0){return []}
+    // let pre: number[] = new Array(nums.length);
+    // let suf: number[] = new Array(nums.length);
+    // let answer: number[] = new Array(nums.length);
+    // pre[0] = nums[0]; 
+    // suf[nums.length-1] = nums[nums.length-1];
+    // for(let i = 1; i < nums.length; i++){
+    //     pre[i] = pre[i-1]*nums[i];
+    //     suf[nums.length-1-i] = suf[nums.length-i]*nums[nums.length-1-i];
+    // }
+    // for(let i = 0; i < nums.length; i++){
+    //     answer[i] = (pre[i-1] ?? 1)*(suf[i+1] ?? 1)
+    // }
+    // return answer;
+};
+// 41. 缺失的第一个正数
+function firstMissingPositive(nums: number[]): number {
+    let res: number = nums.length+1;
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] < 1){
+            nums[i] = nums.length + 1;
+        }
+    }
+    for(let i = 0; i < nums.length; i++){
+        if(Math.abs(nums[i]) < nums.length + 1){
+            nums[Math.abs(nums[i])-1] = -Math.abs(nums[Math.abs(nums[i])-1])
+        }
+    }
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] > 0){
+            res = i + 1;
+            break;
+        }
+    }
+    return res;
+    // 时间复杂度O(n)，空间复杂度O(n)
+    // let set = new Set<number>(nums);
+    // let res: number = 1;
+    // for(let i = 1; i < set.size+2; i++ ){
+    //     if(!set.has(i)){
+    //         res = i;
+    //         break;
+    //     }
+    // }
+    // return res;
+};
+// 73. 矩阵置零
+function setZeroes(matrix: number[][]): void {
+    // 时间复杂度：O(mn)，空间复杂度：O(m+n)
+    let raw = new Set<number>();
+    let col = new Set<number>();
+    for(let i = 0; i < matrix.length; i++){
+        for(let j = 0; j < matrix[0].length; j++){
+            if(matrix[i][j] === 0){
+                raw.add(i);
+                col.add(j);
+            }
+        }
+    }
+    for(let i = 0; i < matrix.length; i++){
+        for(let j = 0; j < matrix[0].length; j++){
+            if(raw.has(i) || col.has(j)){
+                matrix[i][j] = 0;
+            }
+        }
     }
 };
 // 测试函数
