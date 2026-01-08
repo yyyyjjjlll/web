@@ -741,6 +741,39 @@ function spiralOrder(matrix: number[][]): number[] {
     return res;
 };
 // 48. 旋转图像
+function rotate2(matrix: number[][]): void {
+    const n: number = matrix.length;
+    for(let i = 0; i < Math.ceil(n/2); i++){
+        for(let j = 0; j < Math.floor(n/2); j++){
+            const temp = matrix[i][j];
+            matrix[i][j] = matrix[n-1-j][i]
+            matrix[n-1-j][i] = matrix[n-1-i][n-1-j];
+            matrix[n-1-i][n-1-j] = matrix[j][n-1-i];
+            matrix[j][n-1-i] = temp;
+        }
+    }
+};
+// 240. 搜索二维矩阵 II
+function searchMatrix(matrix: number[][], target: number): boolean {
+    // 时间复杂度O(m+n)
+    let i = matrix.length-1, j = 0;
+    while(i > -1 && j < matrix[0].length){
+        const a = matrix[i][j]
+        if(a === target) return true;
+        if(a > target) i--;
+        if(a < target) j++;
+    }
+    return false;
+    // 时间复杂度O(mn)
+    // for(let i = 0; i < matrix.length; i++){
+    //     if(matrix[i][0] > target){break}
+    //     for(let j = 0; j < matrix[0].length; j++){
+    //         if(matrix[i][j] > target){break}
+    //         if(matrix[i][j] === target){return true}
+    //     }
+    // }
+    // return false;
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
