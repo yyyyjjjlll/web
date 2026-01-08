@@ -630,25 +630,117 @@ function firstMissingPositive(nums: number[]): number {
 };
 // 73. 矩阵置零
 function setZeroes(matrix: number[][]): void {
-    // 时间复杂度：O(mn)，空间复杂度：O(m+n)
-    let raw = new Set<number>();
-    let col = new Set<number>();
+    // 时间复杂度O(mn)，空间复杂度O(1)
+    let fir_col: Boolean = false;
     for(let i = 0; i < matrix.length; i++){
-        for(let j = 0; j < matrix[0].length; j++){
-            if(matrix[i][j] === 0){
-                raw.add(i);
-                col.add(j);
+        if(matrix[i][0] === 0){
+            fir_col = true;
+            break;
+        }
+    }
+    for(let j = 0; j < matrix[0].length; j++){
+        if(matrix[0][j] === 0){
+            matrix[0][0] = 0;
+            break;
+        }
+    }
+    for(let i = 1; i < matrix.length; i++){
+        for(let j = 1; j < matrix[0].length; j++){
+            if(matrix[i][j]===0){
+                matrix[0][j] = 0;
+                matrix[i][0] = 0;
             }
         }
     }
-    for(let i = 0; i < matrix.length; i++){
-        for(let j = 0; j < matrix[0].length; j++){
-            if(raw.has(i) || col.has(j)){
+    for(let i = 1; i < matrix.length; i++){
+        for(let j = 1; j < matrix[0].length; j++){
+            if(matrix[i][0]===0 || matrix[0][j]===0){
                 matrix[i][j] = 0;
             }
         }
     }
+    for(let j = 0; j < matrix[0].length; j++){
+        if(matrix[0][0] === 0){
+            matrix[0][j] = 0;
+        }
+    }
+    for(let i = 0; i < matrix.length; i++){
+        if(fir_col){
+            matrix[i][0]=0;
+        }
+    }
+    // // 时间复杂度：O(mn)，空间复杂度：O(m+n)
+    // let raw = new Set<number>();
+    // let col = new Set<number>();
+    // for(let i = 0; i < matrix.length; i++){
+    //     for(let j = 0; j < matrix[0].length; j++){
+    //         if(matrix[i][j] === 0){
+    //             raw.add(i);
+    //             col.add(j);
+    //         }
+    //     }
+    // }
+    // for(let i = 0; i < matrix.length; i++){
+    //     for(let j = 0; j < matrix[0].length; j++){
+    //         if(raw.has(i) || col.has(j)){
+    //             matrix[i][j] = 0;
+    //         }
+    //     }
+    // }
 };
+// 54. 螺旋矩阵
+function spiralOrder(matrix: number[][]): number[] {
+    let dir: string = 'right';
+    let i = 0, j = 0;
+    let list: number[] = [matrix[0].length-1, matrix.length-1, 0, 1] //右，下，左，上   
+    let res: number[] = [];
+    const t = matrix[0].length*matrix.length;
+    for(let x = 0; x < t; x++){
+        res.push(matrix[i][j]);
+        if(dir === 'right'){
+            if(j === list[0]){
+                dir = 'bottom';
+                list[0] -= 1;
+                i++;
+                continue;
+            }
+            j++;
+            continue;
+        }
+        if(dir === 'bottom'){
+            if(i === list[1]){
+                dir = 'left';
+                list[1] -= 1;
+                j--;
+                continue;
+            }
+            i++;
+            continue;
+        }
+        if(dir === 'left'){
+            if(j === list[2]){
+                dir = 'top';
+                list[2] += 1;
+                i--;
+                continue;
+            }
+            j--;
+            continue;
+        }
+        if(dir === 'top'){
+            if(i === list[3]){
+                dir = 'right';
+                list[3] += 1;
+                j++;
+                continue;
+            }
+            i--;
+            continue;
+        }
+    }
+    return res;
+};
+// 48. 旋转图像
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
