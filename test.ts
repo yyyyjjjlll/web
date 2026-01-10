@@ -774,6 +774,66 @@ function searchMatrix(matrix: number[][], target: number): boolean {
     // }
     // return false;
 };
+// 160. 相交链表
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+class ListNode {
+    val: number
+    next: ListNode | null
+    constructor(val?: number, next?: ListNode | null) {
+        this.val = (val===undefined ? 0 : val)
+        this.next = (next===undefined ? null : next)
+    }
+}
+function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
+    let A = headA, B = headB;
+    while(A != B){
+        A = A === null ? headB : A.next; // 运算顺序： ‘===’， ‘？ ：’， ‘=’
+        B = B === null ? headA : B.next;
+    }
+    return A;
+    // let A = headA, B = headB;
+    // while(A != B){
+    //     if(A === null){
+    //         A = headB;
+    //     } else {
+    //         A = A.next;
+    //     }
+    //     if(B === null){
+    //         B = headA;
+    //     } else {
+    //         B = B.next;
+    //     }
+    // }
+    // return A;
+};
+// 206. 反转链表
+function reverseList(head: ListNode | null): ListNode | null {
+    // 递归方法，时间复杂度：O(n)，空间复杂度：O(n)，空间复杂度主要取决于递归调用的栈空间，最多为 n 层。
+    if (head == null || head.next == null) return head
+    const res = reverseList(head.next)
+    head.next.next = head;
+    head.next = null
+    return res;
+    // 循环方法，时间复杂度：O(n)，空间复杂度：O(1)
+    // let pre = null, current = head;
+    // while(current){
+    //     const next = current.next;
+    //     current.next = pre;
+    //     pre = current;
+    //     current = next;
+    // }
+    // return pre;
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
