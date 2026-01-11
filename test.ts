@@ -834,6 +834,115 @@ function reverseList(head: ListNode | null): ListNode | null {
     // }
     // return pre;
 };
+// 234. 回文链表
+function isPalindrome(head: ListNode | null): boolean {
+    // 时间复杂度：O(n)，空间复杂度：O(1)
+    function middleNode(head: ListNode | null): ListNode | null{
+        let fast = head, slow = head;
+        while(slow && slow.next && fast && fast.next){
+            slow = slow.next;
+            fast = fast.next.next
+        }
+        return slow;
+    }
+    function reverseList(head: ListNode | null): ListNode | null{
+        let pre = null, current = head;
+        while(current){
+            const next = current.next;
+            current.next = pre;
+            pre = current;
+            current = next;
+        }
+        return pre;
+    }
+    const mn = middleNode(head);
+    const l = reverseList(mn);
+    let left = head, right = l;
+    let res = true;
+    while(left && right){
+        if(left.val !== right.val){
+            res = false;
+            break;
+        }
+        left = left.next;
+        right = right.next;
+    }
+    return res;
+    // 时间复杂度：O(n)，空间复杂度：O(n)
+    // let list = new Array();
+    // let current = head;
+    // while(current){
+    //     list.push(current.val);
+    //     current = current.next;
+    // }
+    // let left = 0, right = list.length-1;
+    // let res = true;
+    // while(left < right){
+    //     if(list[left] !== list[right]){
+    //         res = false;
+    //         break;
+    //     }
+    //     left++;
+    //     right--;
+    // }
+    // return res;
+};
+// 141. 环形链表
+function hasCycle(head: ListNode | null): boolean {
+    // 时间复杂度：O(n)，空间复杂度：O(1)
+    let slow = head, fast = head;
+    while(fast && fast.next){
+        slow = slow.next;
+        fast = fast.next.next;
+        if(fast === slow){
+            return true;
+        }
+    }
+    return false;
+    // 时间复杂度：O(n)，空间复杂度：O(n)
+    // let set = new Set<ListNode>();
+    // let l = head;
+    // while(l){
+    //     if(set.has(l)){
+    //         return true
+    //     }
+    //     set.add(l)
+    //     l = l.next;
+    // }
+    // return false;
+};
+// 142. 环形链表 II
+function detectCycle(head: ListNode | null): ListNode | null {
+    // 时间复杂度：O(n)，空间复杂度：O(1)
+    let slow = head, fast = head;
+    let meet = null;
+    while(fast && fast.next){
+        slow = slow.next;
+        fast = fast.next.next;
+        if(slow === fast){
+            meet = slow;
+            break;
+        }
+    }
+    if(!meet) return null;
+    let slow2 = head;
+    while(slow !== slow2){
+        slow = slow.next;
+        slow2 = slow2.next;
+    }
+    return slow;
+    // 时间复杂度：O(n)，空间复杂度：O(n)
+    // let set = new Set<ListNode>();
+    // let l = head;
+    // while(l){
+    //     if(set.has(l)){
+    //         return l
+    //     }
+    //     set.add(l)
+    //     l = l.next;
+    // }
+    // return null;
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
@@ -844,6 +953,3 @@ function test() {
 
 test();
 console.log("\n========== 测试完成 ==========");
-
-123456789
-123
