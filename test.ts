@@ -974,6 +974,21 @@ function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode
     // res.next = n1next ? n1next : n2next;
     // return head.next;
 };
+// 2. 两数相加
+function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+    const head = new ListNode(-1);
+    let res = head;
+    let add = 0;
+    while(l1 != null || l2 != null){
+        res.next = new ListNode(((l1?.val || 0) +(l2?.val || 0)) % 10)
+        add = Math.floor((l1?.val || 0) +(l2?.val || 0) / 10);
+        res = res.next;
+        l1 = l1?.next || null;
+        l2 = l2?.next || null;
+    }
+    res.next = add === 0 ? null : new ListNode(add)
+    return head.next
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
