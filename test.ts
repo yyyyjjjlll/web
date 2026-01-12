@@ -980,14 +980,53 @@ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | nul
     let res = head;
     let add = 0;
     while(l1 != null || l2 != null){
-        res.next = new ListNode(((l1?.val || 0) +(l2?.val || 0)) % 10)
-        add = Math.floor((l1?.val || 0) +(l2?.val || 0) / 10);
+        const count =  (l1?.val || 0) +(l2?.val || 0) + add 
+        res.next = new ListNode(count % 10)
+        add = Math.floor(count / 10);
         res = res.next;
         l1 = l1?.next || null;
         l2 = l2?.next || null;
     }
     res.next = add === 0 ? null : new ListNode(add)
     return head.next
+};
+// 19. 删除链表的倒数第 N 个结点
+function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
+    let fast = 0, slow = -n;
+    const node = new ListNode(-1, head);
+    let fastnode = node, slownode = node; 
+    while(fastnode && fastnode.next){
+        fastnode = fastnode.next;
+        slownode = (slow >= 0) ? slownode.next : slownode;
+        fast++;
+        slow++;
+    }
+    slownode.next = slownode.next?.next || null;
+    return node.next;
+};
+// 24. 两两交换链表中的节点
+function swapPairs(head: ListNode | null): ListNode | null {
+    // 方法二：递归，时间复杂度：O(n)，空间复杂度：O(n)
+    if(head === null || head.next === null) return head;
+    const next = head.next;
+    head.next = swapPairs(next.next)
+    const pre = new ListNode(-1, head);
+    pre.next = next;
+    next.next = head;
+    return pre.next
+    // 方法一：迭代，时间复杂度：O(n)，空间复杂度：O(1)
+    // const node1 = new ListNode(-1, head);
+    // let left= node1, right = head;
+    // while(right && right.next && right.next){
+    //     const last = right.next;
+    //     right.next = last.next
+    //     left.next = last;
+    //     last.next = right;
+        
+    //     left = right;
+    //     right = right.next;
+    // }
+    // return node1.next;
 };
 // 测试函数
 function test() {
