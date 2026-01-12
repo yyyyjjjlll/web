@@ -943,6 +943,37 @@ function detectCycle(head: ListNode | null): ListNode | null {
     // }
     // return null;
 };
+// 21. 合并两个有序链表
+function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode | null {
+    // 方法二：递归，时间复杂度O(n+m)，空间复杂度O(n+m)
+    if(list1 === null) return list2;
+    if(list2 === null) return list1;
+    if(list1.val <= list2.val){
+        list1.next = mergeTwoLists(list1.next, list2);
+        return list1;
+    } else {
+        list2.next = mergeTwoLists(list1, list2.next);
+        return list2;
+    }
+    // 方法一：递归，时间复杂度O(n+m)，空间复杂度O(1)
+    // let n1next = list1, n2next = list2;
+    // if(list1 === null) return list2;
+    // if(list2 === null) return list1;
+    // const head = new ListNode(-Infinity);
+    // let res = head;
+    // while(n1next && n2next){
+    //     if(n1next.val <= n2next.val){
+    //         res.next = n1next;
+    //         n1next = n1next.next;
+    //     } else {
+    //         res.next = n2next;
+    //         n2next = n2next.next;
+    //     }
+    //     res = res.next
+    // }
+    // res.next = n1next ? n1next : n2next;
+    // return head.next;
+};
 // 测试函数
 function test() {
   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
