@@ -6,249 +6,249 @@
 // ============== 工具函数 ==============
 // 1. 两数之和
 function twoSum(nums: number[], target: number): number[] {
-  let map = new Map<number, number>()
-  for(let i = 0; i < nums.length; i++){
-    const a = target - nums[i]
-    if(map.has(a)){
-      return [map.get(a)!, i] // ! 符号的作用是‌非空断言操作符‌（Non-null assertion operator），它告诉编译器或解释器：“我确信这个值不会为 null（或 None）”，并强制将其视为非空值。‌
+    let map = new Map<number, number>()
+    for (let i = 0; i < nums.length; i++) {
+        const a = target - nums[i]
+        if (map.has(a)) {
+            return [map.get(a)!, i] // ! 符号的作用是‌非空断言操作符‌（Non-null assertion operator），它告诉编译器或解释器：“我确信这个值不会为 null（或 None）”，并强制将其视为非空值。‌
+        }
+        map.set(nums[i], i)
     }
-    map.set(nums[i], i)
-  }
-  return []
+    return []
 }
 // 49. 字母异位词分组
 function groupAnagrams(strs: string[]): string[][] {
-  let map = new Map<string, string[]>();
-  // let res: string[][] = [];
-  const strs2 = strs.map((str)=>str.split('').sort().join(''))
-  for(let i = 0; i < strs.length; i++){
-      if(map.has(strs2[i])){
-          const a = map.get(strs2[i])!
-          // map.set(strs2[i], a.push(i))
-          // map.set(strs2[i],a.push(strs[i]) ) 
-          // 这种写法是错误的，因为a.push(strs[i]) 返回的是数组的新长度（数字），而不是一个数组，所以不能直接赋值给map
-          // .pop() 返回的是数组最后一个元素，所以不能直接赋值给map
-          // .shift() 返回的是数组第一个元素，所以不能直接赋值给map
-          // .unshift() 返回的是数组的新长度，所以不能直接赋值给map
-          map.set(strs2[i], [...a, strs[i]])
-      } else {
-          // map.set(strs2[i], [i])
-          map.set(strs2[i], [strs[i]])
-      }
-  }
-  // for(const v of map.values()){
-  //     res.push(v)
-  // }
-  // return res
-  return Array.from(map.values())
+    let map = new Map<string, string[]>();
+    // let res: string[][] = [];
+    const strs2 = strs.map((str) => str.split('').sort().join(''))
+    for (let i = 0; i < strs.length; i++) {
+        if (map.has(strs2[i])) {
+            const a = map.get(strs2[i])!
+            // map.set(strs2[i], a.push(i))
+            // map.set(strs2[i],a.push(strs[i]) ) 
+            // 这种写法是错误的，因为a.push(strs[i]) 返回的是数组的新长度（数字），而不是一个数组，所以不能直接赋值给map
+            // .pop() 返回的是数组最后一个元素，所以不能直接赋值给map
+            // .shift() 返回的是数组第一个元素，所以不能直接赋值给map
+            // .unshift() 返回的是数组的新长度，所以不能直接赋值给map
+            map.set(strs2[i], [...a, strs[i]])
+        } else {
+            // map.set(strs2[i], [i])
+            map.set(strs2[i], [strs[i]])
+        }
+    }
+    // for(const v of map.values()){
+    //     res.push(v)
+    // }
+    // return res
+    return Array.from(map.values())
 };
 // 128. 最长连续序列
 function longestConsecutive(nums: number[]): number {
-  // 时间复杂度O(n log n)
-  // // const new_nums = nums.sort(); // nums.sort() 默认按字符串排序，不是数字排序, 会让数字以字符串规则排序
-  // const new_nums = nums.sort((a,b) => a-b); // 时间复杂度：O(n log n)
-  // if(nums.length === 0){
-  //   return 0
-  // }
-  // let res: number = 1;
-  // let l = 1;
-  // for(let i = 1; i < nums.length; i++){
-  //     if(new_nums[i]-new_nums[i-1] === 1){
-  //         l += 1;
-  //     } else if(new_nums[i]-new_nums[i-1] !== 0){
-  //         res = Math.max(res, l);
-  //         l = 1;
-  //     }
-  // }
-  // return Math.max(res, l);
-  if(nums.length === 0){
-    return 0;
-  }
-  let a = new Set(nums);
-  let res = 1;
-  // set的遍历方式是for(const num of a.values())，而不是for(let i = 0; i < a.size; i++)
-  for(const num of a.values()){
-      if(a.has(num-1)){
-          continue;
-      } else {
-          let l = 1;
-          let b = num +1
-          while(a.has(b)){
-              b+=1;
-              l+=1;
-          }
-          res = Math.max(res, l);
-      }
-  }
-  return res
+    // 时间复杂度O(n log n)
+    // // const new_nums = nums.sort(); // nums.sort() 默认按字符串排序，不是数字排序, 会让数字以字符串规则排序
+    // const new_nums = nums.sort((a,b) => a-b); // 时间复杂度：O(n log n)
+    // if(nums.length === 0){
+    //   return 0
+    // }
+    // let res: number = 1;
+    // let l = 1;
+    // for(let i = 1; i < nums.length; i++){
+    //     if(new_nums[i]-new_nums[i-1] === 1){
+    //         l += 1;
+    //     } else if(new_nums[i]-new_nums[i-1] !== 0){
+    //         res = Math.max(res, l);
+    //         l = 1;
+    //     }
+    // }
+    // return Math.max(res, l);
+    if (nums.length === 0) {
+        return 0;
+    }
+    let a = new Set(nums);
+    let res = 1;
+    // set的遍历方式是for(const num of a.values())，而不是for(let i = 0; i < a.size; i++)
+    for (const num of a.values()) {
+        if (a.has(num - 1)) {
+            continue;
+        } else {
+            let l = 1;
+            let b = num + 1
+            while (a.has(b)) {
+                b += 1;
+                l += 1;
+            }
+            res = Math.max(res, l);
+        }
+    }
+    return res
 };
 // 283. 移动零
 function moveZeroes(nums: number[]): void {
-  // 时间过长，时间复杂度O(n^2)
-  // let n = 0 // 注意当nums[n]===0迭代后，nums[n]发生了变化，所以还得从n开始迭代
-  // for(let i = 0; i < nums.length; i++){
-  //     if(nums[n]===0){
-  //         for(let j=n; j<(nums.length-1); j++){
-  //             nums[j]=nums[j+1];
-  //         }
-  //         nums[nums.length-1]=0;
-  //     } else {
-  //         n++;
-  //     }
-  // }
-  // 时间复杂度O(n)
-  let n = 0;
-  for(let i = 0; i < nums.length; i++){
-      if(nums[i] !== 0){
-          nums[n] = nums[i];
-          n++;
-      }
-  }
-  // for(let j = n; j < nums.length; j++){
-  //     nums[j] = 0;
-  // }
-  nums.fill(0, n)
+    // 时间过长，时间复杂度O(n^2)
+    // let n = 0 // 注意当nums[n]===0迭代后，nums[n]发生了变化，所以还得从n开始迭代
+    // for(let i = 0; i < nums.length; i++){
+    //     if(nums[n]===0){
+    //         for(let j=n; j<(nums.length-1); j++){
+    //             nums[j]=nums[j+1];
+    //         }
+    //         nums[nums.length-1]=0;
+    //     } else {
+    //         n++;
+    //     }
+    // }
+    // 时间复杂度O(n)
+    let n = 0;
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] !== 0) {
+            nums[n] = nums[i];
+            n++;
+        }
+    }
+    // for(let j = n; j < nums.length; j++){
+    //     nums[j] = 0;
+    // }
+    nums.fill(0, n)
 };
 // 11. 盛最多水的容器
 function maxArea(height: number[]): number {
-  // 数据量过大导致栈溢出
-  // let areas: number[][] = Array.from({length: height.length}, ()=> new Array(height.length).fill(0))
-  // // let areas: number[][] = new Array(height.length);
-  // // let a: number[] = new Array(height.length);
-  // // a.fill(0);
-  // // areas.fill(a); // 错误，所有行会引用同一个数组，导致修改一个数组会影响所有行
-  // for(let i = 0; i < height.length-1; i++){
-  //     for(let j = i+1; j < height.length; j++){
-  //         areas[i][j] = Math.min(height[i], height[j])*(j-i)
-  //     }
-  // }
-  // return Math.max(...areas.flat());
-  let left = 0;
-  let right = height.length - 1;
-  let max_area = 0
-  while(left < right){
-      const area = Math.min(height[left], height[right])*(right - left);
-      max_area = Math.max(area, max_area);
-      if(height[left] < height[right]){
-          left++;
-      } else {
-          right--;
-      }
-  }
-  return max_area;
+    // 数据量过大导致栈溢出
+    // let areas: number[][] = Array.from({length: height.length}, ()=> new Array(height.length).fill(0))
+    // // let areas: number[][] = new Array(height.length);
+    // // let a: number[] = new Array(height.length);
+    // // a.fill(0);
+    // // areas.fill(a); // 错误，所有行会引用同一个数组，导致修改一个数组会影响所有行
+    // for(let i = 0; i < height.length-1; i++){
+    //     for(let j = i+1; j < height.length; j++){
+    //         areas[i][j] = Math.min(height[i], height[j])*(j-i)
+    //     }
+    // }
+    // return Math.max(...areas.flat());
+    let left = 0;
+    let right = height.length - 1;
+    let max_area = 0
+    while (left < right) {
+        const area = Math.min(height[left], height[right]) * (right - left);
+        max_area = Math.max(area, max_area);
+        if (height[left] < height[right]) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return max_area;
 };
 // 15. 三数之和
 function threeSum(nums: number[]): number[][] {
-  // 时间复杂度O(n^3)，超时
-  // nums.sort();
-  // let res: number[][] = [];
-  // let x = new Set<number>();
-  // for(let i = 0; i < nums.length - 2; i++){
-  //     if(x.has(nums[i])){
-  //         continue;
-  //     } else {
-  //         x.add(nums[i])
-  //         let y = new Set<number>();
-  //         for(let j = i + 1; j < nums.length - 1; j++){
-  //             if(y.has(nums[j])){
-  //                 continue;
-  //             } else {
-  //                 y.add(nums[j])
-  //                 const a = new Set(nums.slice(j+1, nums.length)); // 时间复杂度O(n)
-  //                 if(a.has(0-nums[i]-nums[j])){
-  //                     res.push([nums[i],nums[j],0-nums[i]-nums[j]])
-  //                 }
-  //             }
-  //         }
-  //     }
-  // }
-  // return res;
-  // nums.sort(); // 这是默认字符串排序，不是数字排序
-  nums.sort((a,b) => a-b); // 时间复杂度O(n log n)
-  let res: number[][] = [];
-  for(let i = 0; i < nums.length - 2; i++){
-      if(i > 0 && nums[i] === nums[i-1]){
-          continue;
-      }
-      let left = i+1;
-      let right = nums.length-1;
-      while(left < right){
-          if(left > i+1 && nums[left] === nums[left-1]){
-              left++;
-              continue;
-          }
-          if(right < nums.length-1 && nums[right] === nums[right+1]){
-              right--;
-              continue;
-          }
-          const sum = nums[i]+nums[left]+nums[right]
-          if(sum===0){
-              res.push([nums[i],nums[left],nums[right]])
-              left++;
-              right--;
-          } else if(sum<0){
-              left++;
-          } else {
-              right--;
-          }
-      }
-  }
-  return res;
+    // 时间复杂度O(n^3)，超时
+    // nums.sort();
+    // let res: number[][] = [];
+    // let x = new Set<number>();
+    // for(let i = 0; i < nums.length - 2; i++){
+    //     if(x.has(nums[i])){
+    //         continue;
+    //     } else {
+    //         x.add(nums[i])
+    //         let y = new Set<number>();
+    //         for(let j = i + 1; j < nums.length - 1; j++){
+    //             if(y.has(nums[j])){
+    //                 continue;
+    //             } else {
+    //                 y.add(nums[j])
+    //                 const a = new Set(nums.slice(j+1, nums.length)); // 时间复杂度O(n)
+    //                 if(a.has(0-nums[i]-nums[j])){
+    //                     res.push([nums[i],nums[j],0-nums[i]-nums[j]])
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // return res;
+    // nums.sort(); // 这是默认字符串排序，不是数字排序
+    nums.sort((a, b) => a - b); // 时间复杂度O(n log n)
+    let res: number[][] = [];
+    for (let i = 0; i < nums.length - 2; i++) {
+        if (i > 0 && nums[i] === nums[i - 1]) {
+            continue;
+        }
+        let left = i + 1;
+        let right = nums.length - 1;
+        while (left < right) {
+            if (left > i + 1 && nums[left] === nums[left - 1]) {
+                left++;
+                continue;
+            }
+            if (right < nums.length - 1 && nums[right] === nums[right + 1]) {
+                right--;
+                continue;
+            }
+            const sum = nums[i] + nums[left] + nums[right]
+            if (sum === 0) {
+                res.push([nums[i], nums[left], nums[right]])
+                left++;
+                right--;
+            } else if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+    return res;
 
 };
 // 42. 接雨水
 function trap(height: number[]): number {
-  // 超时（当max_height过大时，耗时过多）
-  // const max_height: number = Math.max(...height);
-  // let res = 0;
-  // for(let i = 1; i <= max_height; i++){
-  //     let left = 0;
-  //     let right = height.length-1;
-  //     while(left<right){
-  //         if(height[left]<i){
-  //             left++;
-  //         }
-  //         if(height[right]<i){
-  //             right--;
-  //         }
-  //         if(height[left]>=i && height[right]>=i){
-  //             break;
-  //         }
-  //     }
-  //     res += get_area(i, left, right, height)
-  // }
-  // return res;
-  // // 动态规划
-  // let res = 0;
-  // let left_max = [];
-  // let right_max = [];
-  // left_max[0] = height[0];
-  // right_max[height.length-1] = height[height.length-1];
-  // for(let i = 1; i < height.length - 1; i++){
-  //     left_max[i] = Math.max(left_max[i-1], height[i])
-  //     right_max[height.length-1-i] = Math.max(right_max[height.length-i], height[height.length-1-i])
-  // }
-  // for(let i = 1; i < height.length - 1; i++){
-  //     const a = Math.min(left_max[i],right_max[i])
-  //     res += Math.max(a-height[i],0)
-  // }
-  // return res;
-  // 双指针法
-  let res = 0;
-  let left = 0,right = height.length-1;
-  let left_max = height[0], right_max = height[height.length-1];
-  while(left<right){
-      left_max=Math.max(left_max,height[left])
-      right_max=Math.max(right_max,height[right])
-      if(left_max<right_max){
-          res += left_max-height[left]
-          left++
-      } else {
-          res += right_max-height[right]
-          right--
-      }
-  }
-  return res;
+    // 超时（当max_height过大时，耗时过多）
+    // const max_height: number = Math.max(...height);
+    // let res = 0;
+    // for(let i = 1; i <= max_height; i++){
+    //     let left = 0;
+    //     let right = height.length-1;
+    //     while(left<right){
+    //         if(height[left]<i){
+    //             left++;
+    //         }
+    //         if(height[right]<i){
+    //             right--;
+    //         }
+    //         if(height[left]>=i && height[right]>=i){
+    //             break;
+    //         }
+    //     }
+    //     res += get_area(i, left, right, height)
+    // }
+    // return res;
+    // // 动态规划
+    // let res = 0;
+    // let left_max = [];
+    // let right_max = [];
+    // left_max[0] = height[0];
+    // right_max[height.length-1] = height[height.length-1];
+    // for(let i = 1; i < height.length - 1; i++){
+    //     left_max[i] = Math.max(left_max[i-1], height[i])
+    //     right_max[height.length-1-i] = Math.max(right_max[height.length-i], height[height.length-1-i])
+    // }
+    // for(let i = 1; i < height.length - 1; i++){
+    //     const a = Math.min(left_max[i],right_max[i])
+    //     res += Math.max(a-height[i],0)
+    // }
+    // return res;
+    // 双指针法
+    let res = 0;
+    let left = 0, right = height.length - 1;
+    let left_max = height[0], right_max = height[height.length - 1];
+    while (left < right) {
+        left_max = Math.max(left_max, height[left])
+        right_max = Math.max(right_max, height[right])
+        if (left_max < right_max) {
+            res += left_max - height[left]
+            left++
+        } else {
+            res += right_max - height[right]
+            right--
+        }
+    }
+    return res;
 }
 // function get_area(x, left, right, height: number[]): number {
 //   if(left===right){
@@ -285,17 +285,17 @@ function lengthOfLongestSubstring(s: string): number {
     // }
     // return Math.max(...res)
     // 时间复杂度O(n)
-    if(s.length<2) return s.length
-    let left = 0,right = 0
+    if (s.length < 2) return s.length
+    let left = 0, right = 0
     let res = 1;
     let set = new Set();
-    while(right<s.length){
-        if(set.has(s[right])){
+    while (right < s.length) {
+        if (set.has(s[right])) {
             set.delete(s[left])
             left++;
         } else {
             set.add(s[right])
-            res = Math.max(res, right-left+1)
+            res = Math.max(res, right - left + 1)
             right++;
         }
     }
@@ -305,33 +305,33 @@ function lengthOfLongestSubstring(s: string): number {
 function findAnagrams(s: string, p: string): number[] {
     let res: number[] = [];
     let map = new Map();
-    for(let i = 0; i < p.length; i++){
-        if(map.has(p[i])){
-            map.set(p[i], map.get(p[i])+1)
+    for (let i = 0; i < p.length; i++) {
+        if (map.has(p[i])) {
+            map.set(p[i], map.get(p[i]) + 1)
         } else {
             map.set(p[i], 1)
         }
     }
     let left: number = 0, right: number = 0;
     let map2 = new Map();
-    while(right<s.length && left<=(s.length-p.length)){
-        if(!map.has(s[right])){
-            left = right+1;
+    while (right < s.length && left <= (s.length - p.length)) {
+        if (!map.has(s[right])) {
+            left = right + 1;
             right++;
             map2.clear();
         } else {
             const n1 = map.get(s[right]);
             const n2 = map2.get(s[right]) || 0
-            if(n2 < n1){
-                map2.set(s[right], n2+1)
-                if(right-left+1===p.length){
+            if (n2 < n1) {
+                map2.set(s[right], n2 + 1)
+                if (right - left + 1 === p.length) {
                     res.push(left);
-                    map2.set(s[left],map2.get(s[left])-1)
+                    map2.set(s[left], map2.get(s[left]) - 1)
                     left++;
                 }
                 right++;
             } else {
-                map2.set(s[left],map2.get(s[left])-1)
+                map2.set(s[left], map2.get(s[left]) - 1)
                 left++;
             }
         }
@@ -340,19 +340,19 @@ function findAnagrams(s: string, p: string): number[] {
 };
 // 560. 和为K的子数组
 function subarraySum(nums: number[], k: number): number {
-    let sum = 0, res=0;
+    let sum = 0, res = 0;
     let map = new Map();
-    if(nums.length === 0) return 0
-    for(let i =0; i< nums.length; i++){
+    if (nums.length === 0) return 0
+    for (let i = 0; i < nums.length; i++) {
         sum += nums[i]
-        if(sum === k){res++}
-        if(map.has(sum-k)){
-            res+=map.get(sum-k) 
-        } 
-        if(map.has(sum)){
-            map.set(sum, map.get(sum)+1)
+        if (sum === k) { res++ }
+        if (map.has(sum - k)) {
+            res += map.get(sum - k)
+        }
+        if (map.has(sum)) {
+            map.set(sum, map.get(sum) + 1)
         } else {
-            map.set(sum,1)
+            map.set(sum, 1)
         }
     }
     return res
@@ -381,15 +381,15 @@ function subarraySum(nums: number[], k: number): number {
 function maxSlidingWindow(nums: number[], k: number): number[] {
     let res: number[] = [];
     let queue: number[] = [];
-    for(let i = 0; i < nums.length; i++){
-        while(queue.length>0 && nums[i]>nums[queue[queue.length-1]]){
+    for (let i = 0; i < nums.length; i++) {
+        while (queue.length > 0 && nums[i] > nums[queue[queue.length - 1]]) {
             queue.pop()
         }
         queue.push(i)
-        if(queue[0]<i-k+1){
+        if (queue[0] < i - k + 1) {
             queue.shift()
         }
-        if(i>=k-1){
+        if (i >= k - 1) {
             res.push(nums[queue[0]])
         }
     }
@@ -450,51 +450,51 @@ function maxSlidingWindow(nums: number[], k: number): number[] {
 };
 // 76. 最小覆盖子串
 function minWindow(s: string, t: string): string {
-    if(s.length < t.length) return ''
+    if (s.length < t.length) return ''
     let map = new Map<string, number>()
-    for(let i=0; i<t.length; i++){
-        map.set(t[i], (map.get(t[i]) || 0) +1)
+    for (let i = 0; i < t.length; i++) {
+        map.set(t[i], (map.get(t[i]) || 0) + 1)
     }
     let left = 0, right = 0;
-    let min_left=0, min_right=Infinity;
+    let min_left = 0, min_right = Infinity;
     let type_num = map.size;
 
-    while(right<s.length){
+    while (right < s.length) {
         const char = s[right];
-        if(map.has(char)){
+        if (map.has(char)) {
             const a = map.get(s[right])
-            map.set(char, a!-1)
-            if(a === 1){
+            map.set(char, a! - 1)
+            if (a === 1) {
                 type_num--;
             }
         }
         right++
-        while(type_num===0){
-            if((min_right-min_left)>(right-left)){
+        while (type_num === 0) {
+            if ((min_right - min_left) > (right - left)) {
                 min_right = right;
                 min_left = left;
             }
-            if(map.has(s[left])){
+            if (map.has(s[left])) {
                 const b = map.get(s[left])!
-                map.set(s[left], b!+1)
-                if(b===0){
+                map.set(s[left], b! + 1)
+                if (b === 0) {
                     type_num++;
                 }
             }
             left++;
         }
     }
-    const res = min_right-min_left>s.length ? '' : s.substring(min_left, min_right)
+    const res = min_right - min_left > s.length ? '' : s.substring(min_left, min_right)
     return res
 };
 // 53. 最大子数组和
 function maxSubArray(nums: number[]): number {
-    if(nums.length === 1) return nums[0]
+    if (nums.length === 1) return nums[0]
     let res = -Infinity, sum = 0, pre_min_sum = 0
-    for(let num of nums){
+    for (let num of nums) {
         pre_min_sum = Math.min(pre_min_sum, sum)
         sum += num;
-        res = Math.max(sum-pre_min_sum, res)
+        res = Math.max(sum - pre_min_sum, res)
     }
     return res;
     // if(nums.length === 1) return nums[0]
@@ -522,18 +522,18 @@ function maxSubArray(nums: number[]): number {
 };
 // 56. 合并区间
 function merge(intervals: number[][]): number[][] {
-    intervals.sort((a,b)=>a[0]-b[0]);
+    intervals.sort((a, b) => a[0] - b[0]);
     let left = intervals[0][0], right = intervals[0][1];
     let res: number[][] = [];
-    for(let i = 0; i < intervals.length; i++){
-        if(intervals[i][0]<=right){
+    for (let i = 0; i < intervals.length; i++) {
+        if (intervals[i][0] <= right) {
             right = Math.max(right, intervals[i][1])
         } else {
             res.push([left, right])
             left = intervals[i][0];
             right = intervals[i][1];
         }
-        if(i === intervals.length -1){res.push([left, right])}
+        if (i === intervals.length - 1) { res.push([left, right]) }
     }
     return res;
 };
@@ -556,7 +556,7 @@ function rotate(nums: number[], k: number): void {
     // 方法二数组翻转：时间复杂度O(n)，空间复杂度O(1)
     k = k % nums.length;
     const reverse = (a: number[], start: number, end: number) => {
-        while(start<end){
+        while (start < end) {
             let temp = a[start];
             a[start] = a[end];
             a[end] = temp;
@@ -564,21 +564,21 @@ function rotate(nums: number[], k: number): void {
             end--;
         }
     }
-    reverse(nums, 0, nums.length-1);
-    reverse(nums, 0, k-1);
-    reverse(nums, k, nums.length-1);
+    reverse(nums, 0, nums.length - 1);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, nums.length - 1);
 };
 // 238. 除自身以外数组的乘积
 function productExceptSelf(nums: number[]): number[] {
     // 时间复杂度O(n)，空间复杂度O(1)
     let answer: number[] = new Array(nums.length);
-    for(let i = 0; i < nums.length; i++){
-        answer[i] = (answer[i - 1] ?? 1) * (nums[i-1] ?? 1);
+    for (let i = 0; i < nums.length; i++) {
+        answer[i] = (answer[i - 1] ?? 1) * (nums[i - 1] ?? 1);
     }
     let t = 1;
-    for(let i = 0; i < nums.length; i++){
-        t *=  nums[nums.length-i] ?? 1;
-        answer[nums.length-1-i] *= t
+    for (let i = 0; i < nums.length; i++) {
+        t *= nums[nums.length - i] ?? 1;
+        answer[nums.length - 1 - i] *= t
     }
     return answer;
     // 时间复杂度O(n)，空间复杂度O(n)
@@ -599,19 +599,19 @@ function productExceptSelf(nums: number[]): number[] {
 };
 // 41. 缺失的第一个正数
 function firstMissingPositive(nums: number[]): number {
-    let res: number = nums.length+1;
-    for(let i = 0; i < nums.length; i++){
-        if(nums[i] < 1){
+    let res: number = nums.length + 1;
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] < 1) {
             nums[i] = nums.length + 1;
         }
     }
-    for(let i = 0; i < nums.length; i++){
-        if(Math.abs(nums[i]) < nums.length + 1){
-            nums[Math.abs(nums[i])-1] = -Math.abs(nums[Math.abs(nums[i])-1])
+    for (let i = 0; i < nums.length; i++) {
+        if (Math.abs(nums[i]) < nums.length + 1) {
+            nums[Math.abs(nums[i]) - 1] = -Math.abs(nums[Math.abs(nums[i]) - 1])
         }
     }
-    for(let i = 0; i < nums.length; i++){
-        if(nums[i] > 0){
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] > 0) {
             res = i + 1;
             break;
         }
@@ -632,41 +632,41 @@ function firstMissingPositive(nums: number[]): number {
 function setZeroes(matrix: number[][]): void {
     // 时间复杂度O(mn)，空间复杂度O(1)
     let fir_col: Boolean = false;
-    for(let i = 0; i < matrix.length; i++){
-        if(matrix[i][0] === 0){
+    for (let i = 0; i < matrix.length; i++) {
+        if (matrix[i][0] === 0) {
             fir_col = true;
             break;
         }
     }
-    for(let j = 0; j < matrix[0].length; j++){
-        if(matrix[0][j] === 0){
+    for (let j = 0; j < matrix[0].length; j++) {
+        if (matrix[0][j] === 0) {
             matrix[0][0] = 0;
             break;
         }
     }
-    for(let i = 1; i < matrix.length; i++){
-        for(let j = 1; j < matrix[0].length; j++){
-            if(matrix[i][j]===0){
+    for (let i = 1; i < matrix.length; i++) {
+        for (let j = 1; j < matrix[0].length; j++) {
+            if (matrix[i][j] === 0) {
                 matrix[0][j] = 0;
                 matrix[i][0] = 0;
             }
         }
     }
-    for(let i = 1; i < matrix.length; i++){
-        for(let j = 1; j < matrix[0].length; j++){
-            if(matrix[i][0]===0 || matrix[0][j]===0){
+    for (let i = 1; i < matrix.length; i++) {
+        for (let j = 1; j < matrix[0].length; j++) {
+            if (matrix[i][0] === 0 || matrix[0][j] === 0) {
                 matrix[i][j] = 0;
             }
         }
     }
-    for(let j = 0; j < matrix[0].length; j++){
-        if(matrix[0][0] === 0){
+    for (let j = 0; j < matrix[0].length; j++) {
+        if (matrix[0][0] === 0) {
             matrix[0][j] = 0;
         }
     }
-    for(let i = 0; i < matrix.length; i++){
-        if(fir_col){
-            matrix[i][0]=0;
+    for (let i = 0; i < matrix.length; i++) {
+        if (fir_col) {
+            matrix[i][0] = 0;
         }
     }
     // // 时间复杂度：O(mn)，空间复杂度：O(m+n)
@@ -692,13 +692,13 @@ function setZeroes(matrix: number[][]): void {
 function spiralOrder(matrix: number[][]): number[] {
     let dir: string = 'right';
     let i = 0, j = 0;
-    let list: number[] = [matrix[0].length-1, matrix.length-1, 0, 1] //右，下，左，上   
+    let list: number[] = [matrix[0].length - 1, matrix.length - 1, 0, 1] //右，下，左，上   
     let res: number[] = [];
-    const t = matrix[0].length*matrix.length;
-    for(let x = 0; x < t; x++){
+    const t = matrix[0].length * matrix.length;
+    for (let x = 0; x < t; x++) {
         res.push(matrix[i][j]);
-        if(dir === 'right'){
-            if(j === list[0]){
+        if (dir === 'right') {
+            if (j === list[0]) {
                 dir = 'bottom';
                 list[0] -= 1;
                 i++;
@@ -707,8 +707,8 @@ function spiralOrder(matrix: number[][]): number[] {
             j++;
             continue;
         }
-        if(dir === 'bottom'){
-            if(i === list[1]){
+        if (dir === 'bottom') {
+            if (i === list[1]) {
                 dir = 'left';
                 list[1] -= 1;
                 j--;
@@ -717,8 +717,8 @@ function spiralOrder(matrix: number[][]): number[] {
             i++;
             continue;
         }
-        if(dir === 'left'){
-            if(j === list[2]){
+        if (dir === 'left') {
+            if (j === list[2]) {
                 dir = 'top';
                 list[2] += 1;
                 i--;
@@ -727,8 +727,8 @@ function spiralOrder(matrix: number[][]): number[] {
             j--;
             continue;
         }
-        if(dir === 'top'){
-            if(i === list[3]){
+        if (dir === 'top') {
+            if (i === list[3]) {
                 dir = 'right';
                 list[3] += 1;
                 j++;
@@ -743,25 +743,25 @@ function spiralOrder(matrix: number[][]): number[] {
 // 48. 旋转图像
 function rotate2(matrix: number[][]): void {
     const n: number = matrix.length;
-    for(let i = 0; i < Math.ceil(n/2); i++){
-        for(let j = 0; j < Math.floor(n/2); j++){
+    for (let i = 0; i < Math.ceil(n / 2); i++) {
+        for (let j = 0; j < Math.floor(n / 2); j++) {
             const temp = matrix[i][j];
-            matrix[i][j] = matrix[n-1-j][i]
-            matrix[n-1-j][i] = matrix[n-1-i][n-1-j];
-            matrix[n-1-i][n-1-j] = matrix[j][n-1-i];
-            matrix[j][n-1-i] = temp;
+            matrix[i][j] = matrix[n - 1 - j][i]
+            matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+            matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+            matrix[j][n - 1 - i] = temp;
         }
     }
 };
 // 240. 搜索二维矩阵 II
 function searchMatrix(matrix: number[][], target: number): boolean {
     // 时间复杂度O(m+n)
-    let i = matrix.length-1, j = 0;
-    while(i > -1 && j < matrix[0].length){
+    let i = matrix.length - 1, j = 0;
+    while (i > -1 && j < matrix[0].length) {
         const a = matrix[i][j]
-        if(a === target) return true;
-        if(a > target) i--;
-        if(a < target) j++;
+        if (a === target) return true;
+        if (a > target) i--;
+        if (a < target) j++;
     }
     return false;
     // 时间复杂度O(mn)
@@ -790,13 +790,13 @@ class ListNode {
     val: number
     next: ListNode | null
     constructor(val?: number, next?: ListNode | null) {
-        this.val = (val===undefined ? 0 : val)
-        this.next = (next===undefined ? null : next)
+        this.val = (val === undefined ? 0 : val)
+        this.next = (next === undefined ? null : next)
     }
 }
 function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
     let A = headA, B = headB;
-    while(A != B){
+    while (A != B) {
         A = A === null ? headB : A.next; // 运算顺序： ‘===’， ‘？ ：’， ‘=’
         B = B === null ? headA : B.next;
     }
@@ -837,17 +837,17 @@ function reverseList(head: ListNode | null): ListNode | null {
 // 234. 回文链表
 function isPalindrome(head: ListNode | null): boolean {
     // 时间复杂度：O(n)，空间复杂度：O(1)
-    function middleNode(head: ListNode | null): ListNode | null{
+    function middleNode(head: ListNode | null): ListNode | null {
         let fast = head, slow = head;
-        while(slow && slow.next && fast && fast.next){
+        while (slow && slow.next && fast && fast.next) {
             slow = slow.next;
             fast = fast.next.next
         }
         return slow;
     }
-    function reverseList(head: ListNode | null): ListNode | null{
+    function reverseList(head: ListNode | null): ListNode | null {
         let pre = null, current = head;
-        while(current){
+        while (current) {
             const next = current.next;
             current.next = pre;
             pre = current;
@@ -859,8 +859,8 @@ function isPalindrome(head: ListNode | null): boolean {
     const l = reverseList(mn);
     let left = head, right = l;
     let res = true;
-    while(left && right){
-        if(left.val !== right.val){
+    while (left && right) {
+        if (left.val !== right.val) {
             res = false;
             break;
         }
@@ -891,10 +891,10 @@ function isPalindrome(head: ListNode | null): boolean {
 function hasCycle(head: ListNode | null): boolean {
     // 时间复杂度：O(n)，空间复杂度：O(1)
     let slow = head, fast = head;
-    while(fast && fast.next){
+    while (fast && fast.next) {
         slow = slow.next;
         fast = fast.next.next;
-        if(fast === slow){
+        if (fast === slow) {
             return true;
         }
     }
@@ -916,17 +916,17 @@ function detectCycle(head: ListNode | null): ListNode | null {
     // 时间复杂度：O(n)，空间复杂度：O(1)
     let slow = head, fast = head;
     let meet = null;
-    while(fast && fast.next){
+    while (fast && fast.next) {
         slow = slow.next;
         fast = fast.next.next;
-        if(slow === fast){
+        if (slow === fast) {
             meet = slow;
             break;
         }
     }
-    if(!meet) return null;
+    if (!meet) return null;
     let slow2 = head;
-    while(slow !== slow2){
+    while (slow !== slow2) {
         slow = slow.next;
         slow2 = slow2.next;
     }
@@ -946,9 +946,9 @@ function detectCycle(head: ListNode | null): ListNode | null {
 // 21. 合并两个有序链表
 function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode | null {
     // 方法二：递归，时间复杂度O(n+m)，空间复杂度O(n+m)
-    if(list1 === null) return list2;
-    if(list2 === null) return list1;
-    if(list1.val <= list2.val){
+    if (list1 === null) return list2;
+    if (list2 === null) return list1;
+    if (list1.val <= list2.val) {
         list1.next = mergeTwoLists(list1.next, list2);
         return list1;
     } else {
@@ -979,8 +979,8 @@ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | nul
     const head = new ListNode(-1);
     let res = head;
     let add = 0;
-    while(l1 != null || l2 != null){
-        const count =  (l1?.val || 0) +(l2?.val || 0) + add 
+    while (l1 != null || l2 != null) {
+        const count = (l1?.val || 0) + (l2?.val || 0) + add
         res.next = new ListNode(count % 10)
         add = Math.floor(count / 10);
         res = res.next;
@@ -994,8 +994,8 @@ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | nul
 function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
     let fast = 0, slow = -n;
     const node = new ListNode(-1, head);
-    let fastnode = node, slownode = node; 
-    while(fastnode && fastnode.next){
+    let fastnode = node, slownode = node;
+    while (fastnode && fastnode.next) {
         fastnode = fastnode.next;
         slownode = (slow >= 0) ? slownode.next : slownode;
         fast++;
@@ -1007,7 +1007,7 @@ function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
 // 24. 两两交换链表中的节点
 function swapPairs(head: ListNode | null): ListNode | null {
     // 方法二：递归，时间复杂度：O(n)，空间复杂度：O(n)
-    if(head === null || head.next === null) return head;
+    if (head === null || head.next === null) return head;
     const next = head.next;
     head.next = swapPairs(next.next)
     const pre = new ListNode(-1, head);
@@ -1022,18 +1022,133 @@ function swapPairs(head: ListNode | null): ListNode | null {
     //     right.next = last.next
     //     left.next = last;
     //     last.next = right;
-        
+
     //     left = right;
     //     right = right.next;
     // }
     // return node1.next;
 };
+// 25. K 个一组翻转链表
+function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
+    // 翻转链表，并让反转后的链表的尾节点的next指向传入的尾lastNode节点，返回反转后的头节点
+    function reverseList(lastnode: ListNode | null, head: ListNode | null, k): ListNode | null {
+        let pre = lastnode, current = head;
+        let i = 0;
+        while (current && i < k) {
+            const next = current.next;
+            current.next = pre;
+            pre = current;
+            current = next;
+            i++;
+        }
+        return pre;
+    }
+    // 获取下一组的k个节点的尾节点，若不够则返回null
+    function newright(head: ListNode | null, k): ListNode | null {
+        let right = 1;
+        let leftNode = new ListNode(-1, head), rightNode = head;
+        while (rightNode && right < k) {
+            rightNode = rightNode.next;
+            right++;
+        }
+        return rightNode;
+    }
+    const pre = new ListNode(-1, head)
+    let left = pre, right = newright(head, k);
+    while (right) {
+        const next = left.next
+        left.next = reverseList(right.next, next, k)
+        left = next;
+        right = newright(left.next, k);
+    }
+    return pre.next;
+};
+class _Node {
+    val: number
+    next: _Node | null
+    random: _Node | null
+
+    constructor(val?: number, next?: _Node, random?: _Node) {
+        this.val = (val === undefined ? 0 : val)
+        this.next = (next === undefined ? null : next)
+        this.random = (random === undefined ? null : random)
+    }
+}
+// 138. 随机链表的复制
+function copyRandomList(head: _Node | null): _Node | null {
+    // 方法二：迭代 + 节点拆分，时间复杂度：O(n)，空间复杂度：O(1)
+    for(let current = head; current !== null; current = current.next.next){
+        const cnode = new _Node(current.val, current.next)
+        current.next = cnode
+    }
+    for(let current = head; current !== null; current = current.next.next){
+        const random = current.random
+        current.next.random = random?.next || null
+    }
+    let pre = new _Node(-1)
+    let cc = pre
+    for(let current = head; current !== null; current = current.next){
+        const c = current.next
+        cc.next = c
+        current.next = current.next.next
+        cc = cc.next
+    }
+    return pre.next
+    // 方法一：回溯 + 哈希表，时间复杂度：O(n)，空间复杂度：O(n)
+    // let current = new _Node(-1, head, head)
+    // let map = new Map<_Node | null, _Node | null>()
+    // let pre = new _Node(-1)
+    // let copycurrent = pre
+    // while(current){
+    //     const next = current.next
+    //     if(map.has(next)){
+    //         copycurrent.next = map.get(next)
+    //     } else {
+    //         const cnext = next ? new _Node(next.val) : null
+    //         copycurrent.next = cnext
+    //         map.set(next, cnext)
+    //     }
+    //     const random = current.random
+    //     if(map.has(random)){
+    //         copycurrent.random = map.get(random)
+    //     } else {
+    //         const crandom = random ? new _Node(random.val) :null
+    //         copycurrent.random = crandom
+    //         map.set(random, crandom)
+    //     }
+    //     current = current.next
+    //     copycurrent = copycurrent.next
+    // }
+    // return pre.next
+    // 方法一：回溯 + 哈希表，时间复杂度：O(n)，空间复杂度：O(n)
+    // let current = head
+    // let map = new Map<_Node, _Node>()
+    // let pre = new _Node(-1)
+    // let copycurrent = pre
+    // while(current){
+    //     const copynode = new _Node(current.val)
+    //     copycurrent.next = copynode
+    //     map.set(current, copynode)
+    //     current = current.next
+    //     copycurrent = copynode
+    // }
+    // copycurrent.next = null
+    // current = head, copycurrent = pre.next
+    // while(current){
+    //     const rnode = current.random
+    //     const crnode = map.get(rnode)
+    //     copycurrent.random = crnode
+    //     current = current.next
+    //     copycurrent = copycurrent.next
+    // }
+    // return pre.next
+};
 // 测试函数
 function test() {
-  const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
-  console.log(twoDArray.flat());
-  console.log(...twoDArray);
-  // const maxVal = Math.max(...twoDArray.flat()); 
+    const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
+    console.log(twoDArray.flat());
+    console.log(...twoDArray);
+    // const maxVal = Math.max(...twoDArray.flat()); 
 }
 
 test();
