@@ -1145,48 +1145,112 @@ function copyRandomList(head: _Node | null): _Node | null {
 };
 // 148. 排序链表
 function sortList(head: ListNode | null): ListNode | null {
-    function merge(head: ListNode | null, mid: ListNode | null, tail: ListNode | null): ListNode | null{
-        let ln = head, rn = mid.next 
-        let pre = new ListNode(-1)
-        let n = pre
-        while(ln !== mid.next && rn !== tail.next && ln && rn){
-            if(ln.val <= rn.val){
-                n.next = ln
-                n = n.next
-                ln = ln.next
+    // 返回除去前size个节点后的链表的head
+    function splitSize(head: ListNode | null, size: number): ListNode | null {
+        let n = head;
+        let pre = head
+        for(let i = 0; i < size; i++){
+            if(n===null) return null
+            pre = n
+            n = n.next
+        }
+        pre.next = null
+        return n
+    }
+    function merge(head: ListNode | null, head2: ListNode | null,): [ListNode | null,ListNode | null] {
+        // 方法二：自底向上归并排序（迭代），时间复杂度：O(nlogn)，空间复杂度：O(1)
+        let p = new ListNode(-1)
+        let pre = p
+        let l = head, r = head2
+        while(l !==null && r !==null){
+            if(l.val <= r.val){
+                pre.next = l
+                pre = pre.next
+                l = l.next
             } else {
-                n.next = rn
-                n = n.next
-                rn = rn.next
+                pre.next = r
+                pre = pre.next
+                r = r.next
             }
         }
-        while(ln !== mid.next && ln){
-            n.next = ln
-            n = n.next
-            ln = ln.next
+        while(l){
+            pre.next = l
+            pre = pre.next
+            l = l.next
         }
-        while(rn !== tail.next && rn){
-            n.next = rn
-            n = n.next
-            rn = rn.next
+        while(r){
+            pre.next = r
+            pre = pre.next
+            r = r.next
         }
-        return pre.next
+        pre.next = null
+        return [p.next, pre]
     }
-    function toSort(head: ListNode | null, tail: ListNode | null): ListNode | null{
-        if(head===null || head.next===tail) return head
-        let pre = new ListNode(-1, head)
-        let slow = pre, fast = pre 
-        // 循环结束后
-        // 偶数情况，slow为左结尾，fast为右结尾
-        // 奇数情况，slow为左结尾，fast.next为右结尾
-        while(fast!==tail || fast.next!==tail){
-            slow = slow.next
-            fast = fast.next.next
-        }
-        let leftnode = toSort(head, slow)
-        toSort(slow.next, tail)
-        let newhead = merge(leftnode, slow, tail)
-        return newhead
+    let length = 0
+    for(let n = head; n !==null; n = n.next){
+        length++
     }
-    return toSort(head, null)
+    let pre = new ListNode(-1, head)
+    for(let step = 1; step < length; step*=2){
+        let newl = pre
+        let temp = pre.next
+        while(temp){
+            let head1 = temp, head2 = splitSize(temp, step)
+            temp = splitSize(head2, step)
+            let [newhead, newtail] = merge(head1, head2)
+            newl.next = newhead
+            newl = newtail
+        }
+    }
+    return pre.next
+    // 方法一：自顶向下归并排序（递归），时间复杂度：O(nlogn)，空间复杂度：O(logn)
+    // function merge(head: ListNode | null, head2: ListNode | null): ListNode | null{
+    //     let ln = head, rn = head2
+    //     let pre = new ListNode(-1)
+    //     let n = pre
+    //     while(ln && rn){
+    //         if(ln.val <= rn.val){
+    //             n.next = ln
+    //             n = n.next
+    //             ln = ln.next
+    //         } else {
+    //             n.next = rn
+    //             n = n.next
+    //             rn = rn.next
+    //         }
+    //     }
+    //     while(ln){
+    //         n.next = ln
+    //         n = n.next
+    //         ln = ln.next
+    //     }
+    //     while(rn){
+    //         n.next = rn
+    //         n = n.next
+    //         rn = rn.next
+    //     }
+    //     n.next = null
+    //     return pre.next
+    // }
+    // function getmidnext(head: ListNode | null): ListNode | null{
+    //     if(head===null || head.next===null) return head
+    //     let slow = head, fast = head 
+    //     let pre = head
+    //     // 循环结束后
+    //     // 偶数情况，slow为右开头，fast为null
+    //     // 奇数情况，slow为右开头，fast为右结尾
+    //     while(fast && fast.next){
+    //         pre = slow
+    //         slow = slow.next
+    //         fast = fast.next.next
+    //     }
+    //     pre.next = null
+    //     return slow
+    // }
+    // if(head===null || head.next===null) return head
+    // let head2 = getmidnext(head)
+    // let left = sortList(head)
+    // let right = sortList(head2)
+    // let newhead = merge(left, right)
+    // return newhead
 }
