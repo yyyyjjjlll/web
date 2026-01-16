@@ -1254,3 +1254,118 @@ function sortList(head: ListNode | null): ListNode | null {
     // let newhead = merge(left, right)
     // return newhead
 }
+// 23. 合并 K 个升序链表
+function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
+    function merge(head1: ListNode | null, head2: ListNode | null){
+        const pre = new ListNode(-1)
+        let current = pre, left = head1, right = head2
+        while(left && right){
+            if(left.val <= right.val){
+                current.next = left
+                current = current.next
+                left = left.next
+            } else {
+                current.next = right
+                current = current.next
+                right = right.next
+            }
+        }
+        current.next = left || right || null
+        return pre.next
+    }
+    let step = 1, l = lists.length
+    for(step; step < l; step *= 2){
+        for(let i = 0; i < l; i += 2*step){
+            lists[i] = merge(lists[i], lists[i+step]||null)
+        }
+    }
+    return lists[0] || null
+};
+// 146. LRU 缓存
+class TDLnode {
+    key: number
+    val: number
+    pre: TDLnode | null
+    next: TDLnode | null
+    constructor(key: number, val?: number, pre?: TDLnode, next?: TDLnode){
+        this.key = key
+        this.val = val ?? 0
+        this.pre = pre ?? null
+        this.next = next ?? null
+    }
+}
+class LRUCache {
+    head: TDLnode
+    capacity: number
+    map: Map<number, TDLnode>
+    constructor(capacity: number) {
+        this.head = new TDLnode(-1, 0, null, null)
+        this.head.next = this.head
+        this.head.pre = this.head
+        this.capacity = capacity
+        this.map = new Map<number, TDLnode>()
+    }
+
+    get(key: number): number {
+        const node = this.map.get(key)
+        if(node){
+            const pre = node.pre
+            const next = node.next
+            pre.next = next
+            next.pre = pre
+            const next2 = this.head.next
+            this.head.next = node
+            node.pre = this.head
+            node.next = next2
+            next2.pre = node
+        }
+        return node ? node.val : -1
+    }
+
+    put(key: number, value: number): void {
+        if(this.map.has(key)){
+            const node = this.map.get(key)
+            const pre1 = node.pre
+            const next1 = node.next
+            pre1.next = next1
+            next1.pre = pre1
+            const next2 = this.head.next
+            this.head.next = node
+            node.pre = this.head
+            node.next = next2
+            next2.pre = node
+            node.val = value
+            this.map.set(key, node)
+        } else {
+            if(this.map.size >= this.capacity){
+                const oldnode = this.head.pre
+                this.map.delete(oldnode.key)
+                this.head.pre = oldnode.pre
+                oldnode.pre.next = this.head
+            }
+            const node = new TDLnode(key, value, this.head, this.head.next)
+            this.head.next.pre = node
+            this.head.next = node
+            this.map.set(key, node)
+        }
+        return null
+    }
+}
+// 94. 二叉树的中序遍历
+class TreeNode {
+    val: number
+    left: TreeNode | null
+    right: TreeNode | null
+    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+        this.val = (val===undefined ? 0 : val)
+        this.left = (left===undefined ? null : left)
+        this.right = (right===undefined ? null : right)
+    }
+}
+function inorderTraversal(root: TreeNode | null): number[] {
+    // 方法一：递归，时间复杂度：O(n)，空间复杂度：O(n)
+    if(root===null) return []
+    const left = inorderTraversal(root.left)
+    const right = inorderTraversal(root.right)
+    return [...left, root.val, ...right]
+};
