@@ -1143,7 +1143,7 @@ function copyRandomList(head: _Node | null): _Node | null {
     // }
     // return pre.next
 };
-// 148. 排序链表
+// ※※148. 排序链表
 function sortList(head: ListNode | null): ListNode | null {
     // 返回除去前size个节点后的链表的head
     function splitSize(head: ListNode | null, size: number): ListNode | null {
@@ -1281,7 +1281,7 @@ function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
     }
     return lists[0] || null
 };
-// 146. LRU 缓存
+// ※※146. LRU 缓存
 class TDLnode {
     key: number
     val: number
@@ -1351,7 +1351,7 @@ class LRUCache {
         return null
     }
 }
-// 94. 二叉树的中序遍历
+// ※※94. 二叉树的中序遍历
 class TreeNode {
     val: number
     left: TreeNode | null
@@ -1363,9 +1363,50 @@ class TreeNode {
     }
 }
 function inorderTraversal(root: TreeNode | null): number[] {
+    // 方法二：Morris 遍历，时间复杂度：O(n)，空间复杂度：O(1)
+    if(root === null) return []
+    let x = root, res = []
+    while(x){
+        if(!x.left){
+            res.push(x.val)
+            x = x.right
+        } else {
+            let curr = x.left
+            while(curr.right && (curr.right !== x)){
+                curr = curr.right
+            }
+            if(!curr.right){
+                curr.right = x
+                x = x.left
+                continue
+            } else {
+                res.push(x.val)
+                x = x.right
+            }
+        }
+    }
+    return res
     // 方法一：递归，时间复杂度：O(n)，空间复杂度：O(n)
-    if(root===null) return []
-    const left = inorderTraversal(root.left)
-    const right = inorderTraversal(root.right)
-    return [...left, root.val, ...right]
+    // if(root===null) return []
+    // const left = inorderTraversal(root.left)
+    // const right = inorderTraversal(root.right)
+    // return [...left, root.val, ...right]
+};
+// 104. 二叉树的最大深度
+function maxDepth(root: TreeNode | null): number {
+    // 深度优先搜索，时间复杂度：O(n)，空间复杂度：O(height)
+    if(root===null) return 0
+    const lm = 1 + maxDepth(root.left)
+    const rm = 1 + maxDepth(root.right)
+    const maxl = Math.max(lm, rm)
+    return maxl
+};
+// 226. 翻转二叉树
+function invertTree(root: TreeNode | null): TreeNode | null {
+    if(root===null) return null
+    const left = invertTree(root.left)
+    const right = invertTree(root.right)
+    root.right = left
+    root.left = right
+    return root
 };
