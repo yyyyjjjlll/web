@@ -1410,3 +1410,34 @@ function invertTree(root: TreeNode | null): TreeNode | null {
     root.left = right
     return root
 };
+// 101. 对称二叉树
+function isSymmetric(root: TreeNode | null): boolean {
+    // 方法二：迭代，时间复杂度：O(n)，空间复杂度：O(n)
+    let q: (TreeNode | null)[] = []
+    q.push(root.left, root.right)
+    while(q.length){
+        const u = q.shift()
+        const v = q.shift()
+        if(!u && !v) continue
+        if((!u && v) || (u && !v)) return false
+        if(u.val !== v.val) return false
+        q.push(u.left)
+        q.push(v.right)
+        q.push(u.right)
+        q.push(v.left)
+    }
+    return true
+    // 方法一：递归，时间复杂度：O(n)，空间复杂度：O(n)
+    // function isMirror(root1: TreeNode | null, root2: TreeNode | null): boolean{
+    //     if(root1 === null && root2 === null) return true
+    //     if((root1 && !root2) || (!root1 && root2)) return false
+    //     if(root1.val !== root2.val || root1.val !== root2.val){
+    //         return false
+    //     } else {
+    //         const outter = isMirror(root1.left, root2.right)
+    //         const inner = isMirror(root1.right, root2.left)
+    //         return outter && inner
+    //     }
+    // }
+    // return isMirror(root.left, root.right)
+};
