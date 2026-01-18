@@ -1400,6 +1400,20 @@ function maxDepth(root: TreeNode | null): number {
     const rm = 1 + maxDepth(root.right)
     const maxl = Math.max(lm, rm)
     return maxl
+    // 广度优先搜索，时间复杂度：O(n)，空间复杂度：最坏情况下会达到 O(n)
+    // if(!root) return 0
+    // let q: (TreeNode | null)[] = [], res = 0
+    // q.push(root)
+    // while(q.length){
+    //     let n = q.length
+    //     for(let i = 0; i < n; i++){ // 注意这里不能直接用q.length，因为会变
+    //         const o = q.shift()
+    //         if(o && o.right) q.push(o.right)
+    //         if(o && o.left) q.push(o.left)
+    //     }
+    //     res += 1
+    // }
+    // return res
 };
 // 226. 翻转二叉树
 function invertTree(root: TreeNode | null): TreeNode | null {
@@ -1440,4 +1454,43 @@ function isSymmetric(root: TreeNode | null): boolean {
     //     }
     // }
     // return isMirror(root.left, root.right)
+};
+// 543. 二叉树的直径
+function diameterOfBinaryTree(root: TreeNode | null): number {
+    let res = 0
+    function maxd(root: TreeNode | null): number {
+        if(!root) return -1
+        const left = 1 + maxd(root.left)
+        const right = 1 + maxd(root.right)
+        res = Math.max(res, left+right)
+        return Math.max(left, right)
+    }
+    maxd(root)
+    return res
+}
+// 102. 二叉树的层序遍历
+function levelOrder(root: TreeNode | null): number[][] {
+    if(!root) return []
+    let q: (TreeNode | number | null)[][] = []
+    let pre_add: (TreeNode | null)[] = []
+    pre_add.push(root)
+    while(pre_add.length){
+        let n = pre_add.length
+        q.push([])
+        for(let i = 0; i < n; i++){
+            let a = pre_add.shift()
+            q[q.length-1].push(a.val)
+            if(a && a.left) pre_add.push(a.left)
+            if(a && a.right) pre_add.push(a.right)
+        }
+    }
+    return q as number[][]
+};
+// 108. 将有序数组转换为二叉搜索树
+function sortedArrayToBST(nums: number[]): TreeNode | null {
+    if(nums.length === 0) return null
+    const middle = new TreeNode(nums[Math.floor((nums.length)/2)])
+    middle.left = sortedArrayToBST(nums.slice(0, Math.floor((nums.length)/2)))
+    middle.right = sortedArrayToBST(nums.slice(Math.floor((nums.length)/2)+1))
+    return middle
 };
