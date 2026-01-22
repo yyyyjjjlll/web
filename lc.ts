@@ -1494,3 +1494,52 @@ function sortedArrayToBST(nums: number[]): TreeNode | null {
     middle.right = sortedArrayToBST(nums.slice(Math.floor((nums.length)/2)+1))
     return middle
 };
+// 98. 验证二叉搜索树
+function isValidBST(root: TreeNode | null): boolean {
+    function compare(root: TreeNode | null, leftmin: number, rightmax: number) {
+        if (!root) return true
+        const left = compare(root.left, root.val, rightmax)
+        const right = compare(root.right, leftmin, root.val)
+        const isleft = root.val < leftmin
+        const isright = root.val > rightmax
+        return left && right && isleft && isright
+    }
+    return compare(root, Infinity, -Infinity)
+};
+// 230. 二叉搜索树中第 K 小的元素
+function kthSmallest(root: TreeNode | null, k: number): number {
+    // O(n), O(h)
+    let res = 0
+    function getres(root: TreeNode | null){
+        if(!root) return
+        getres(root.left)
+        k -= 1
+        if(k===0) {res = root.val}
+        getres(root.right)
+    }
+    getres(root)
+    return res
+    // O(n), O(n)
+    // function getlist(root: TreeNode | null): TreeNode[]{
+    //     if(!root) return []
+    //     const left = getlist(root.left)
+    //     const right = getlist(root.right)
+    //     return [...left, root, ...right]
+    // }
+    // const list = getlist(root)
+    // return list[k-1].val
+};
+// 199. 二叉树的右视图
+function rightSideView(root: TreeNode | null): number[] {
+    let res = []
+    function getlist(root: TreeNode | null, depth: number) {
+        if (!root) return
+        if(depth >= res.length){
+            res = [...res, root.val]
+        }
+        getlist(root.right, depth+1)
+        getlist(root.left, depth+1)
+    }
+    getlist(root, 0)
+    return res
+};

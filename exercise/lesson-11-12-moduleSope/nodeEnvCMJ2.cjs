@@ -16,9 +16,13 @@
 // console.log('cjs2', state.count)
 
 // 方法二：写一个读取的函数
-const {count, addc, getc} = require('./nodeEnvCMJ1.cjs')
-console.log('cjs2', getc())
-addc()
-addc()
-console.log('cjs2', getc())
+// const {count, addc, getc} = require('./nodeEnvCMJ1.cjs')
+// console.log('cjs2', getc())
+// addc()
+// addc()
+// console.log('cjs2', getc())
+
+
+const v = require("./nodeEnvCMJ3.cjs")
+console.log(v)
 
