@@ -1543,3 +1543,20 @@ function rightSideView(root: TreeNode | null): number[] {
     getlist(root, 0)
     return res
 };
+// 114. 二叉树展开为链表
+function flatten(root: TreeNode | null): void {
+    let res: (TreeNode | null)[] = []
+    function traverse(root: TreeNode | null): (TreeNode | null)[]{
+        if(!root) return []
+        const left = traverse(root.left)
+        const right = traverse(root.right)
+        return [root, ...left,...right]
+    }
+    res = traverse(root)
+    for(let i = 0; i < res.length; i++){
+        if(res[i]){
+            res[i].left=null
+            res[i].right=(res[i+1] || null)
+        }
+    }
+};
