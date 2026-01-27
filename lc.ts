@@ -1545,18 +1545,30 @@ function rightSideView(root: TreeNode | null): number[] {
 };
 // 114. 二叉树展开为链表
 function flatten(root: TreeNode | null): void {
-    let res: (TreeNode | null)[] = []
-    function traverse(root: TreeNode | null): (TreeNode | null)[]{
-        if(!root) return []
-        const left = traverse(root.left)
-        const right = traverse(root.right)
-        return [root, ...left,...right]
+    // 方法一：头插法，时间复杂度：O(n)，空间复杂度：O(n)
+    let head = null
+    function getlist(root: TreeNode | null): void {
+        if(!root) return
+        getlist(root.right)
+        getlist(root.left)
+        root.left = null
+        root.right = head
+        head = root
     }
-    res = traverse(root)
-    for(let i = 0; i < res.length; i++){
-        if(res[i]){
-            res[i].left=null
-            res[i].right=(res[i+1] || null)
-        }
-    }
+    getlist(root)
+    // 废
+    // let res: (TreeNode | null)[] = []
+    // function traverse(root: TreeNode | null): (TreeNode | null)[]{
+    //     if(!root) return []
+    //     const left = traverse(root.left)
+    //     const right = traverse(root.right)
+    //     return [root, ...left,...right]
+    // }
+    // res = traverse(root)
+    // for(let i = 0; i < res.length; i++){
+    //     if(res[i]){
+    //         res[i].left=null
+    //         res[i].right=(res[i+1] || null)
+    //     }
+    // }
 };
