@@ -1545,6 +1545,23 @@ function rightSideView(root: TreeNode | null): number[] {
 };
 // 114. 二叉树展开为链表
 function flatten(root: TreeNode | null): void {
+    // 方法二：Morris 遍历，时间复杂度：O(n)，空间复杂度：O(1)
+    let curr = root
+    while (curr) {
+        let next = curr.left
+        if (next) {
+            let p = next
+            while (p && p.right) {
+                p = p.right
+            }
+            if (p) {
+                p.right = curr.right || null
+            }
+            curr.left = null
+            curr.right = next
+        }
+        curr = curr.right
+    }
     // 方法一：头插法，时间复杂度：O(n)，空间复杂度：O(n)
     let head = null
     function getlist(root: TreeNode | null): void {
@@ -1571,4 +1588,16 @@ function flatten(root: TreeNode | null): void {
     //         res[i].right=(res[i+1] || null)
     //     }
     // }
+};
+// 105. 从前序与中序遍历序列构造二叉树
+function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
+    let map = new Map<number, number>()
+    inorder.forEach((item, index)=>{
+        map.set(item, index)
+    })
+    const rootindex = map.get(preorder[0])
+    for(let i = 0; i < preorder.length; i++){
+        
+    }
+    return null
 };
