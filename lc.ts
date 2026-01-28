@@ -1592,12 +1592,21 @@ function flatten(root: TreeNode | null): void {
 // 105. 从前序与中序遍历序列构造二叉树
 function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
     let map = new Map<number, number>()
+    let pren = 0, inn = 0;
     inorder.forEach((item, index)=>{
         map.set(item, index)
     })
-    const rootindex = map.get(preorder[0])
-    for(let i = 0; i < preorder.length; i++){
-        
+    inn = map.get(preorder[0])
+    function getroot(n: number, pren: number, inn: number): TreeNode | null{
+        if(n <= -3000) return null
+        let root = new TreeNode(n)
+        let index = map.get(n)
+        const left = getroot(pren+1)
+        const right = getroot(inorder[index + 1] || -9999)
+        root.left = left
+        root.right = right
+        return root
     }
+    getroot(preorder[0])
     return null
 };
