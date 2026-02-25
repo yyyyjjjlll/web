@@ -1592,21 +1592,37 @@ function flatten(root: TreeNode | null): void {
 // 105. 从前序与中序遍历序列构造二叉树
 function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
     let map = new Map<number, number>()
-    let pren = 0, inn = 0;
-    inorder.forEach((item, index)=>{
-        map.set(item, index)
-    })
-    inn = map.get(preorder[0])
-    function getroot(n: number, pren: number, inn: number): TreeNode | null{
-        if(n <= -3000) return null
-        let root = new TreeNode(n)
-        let index = map.get(n)
-        const left = getroot(pren+1)
-        const right = getroot(inorder[index + 1] || -9999)
-        root.left = left
-        root.right = right
-        return root
+    for(let i = 0; i < inorder.length; i++){
+        map.set(inorder[i], i)
     }
-    getroot(preorder[0])
-    return null
+    const n = preorder.length
+    function getroot(prel: number, prer: number, inl: number): TreeNode | null {
+        if(prel === prer) return null
+        const root = preorder[prel]
+        let rootnode = new TreeNode(root)
+        const m = map.get(root) - inl
+        rootnode.left = getroot(prel+1, prel+1+m, inl )
+        rootnode.right = getroot(prel+1+m, prer, map.get(root)+1 )
+        return rootnode
+    }
+    return getroot(0, n, 0)
+    // let map = new Map<number, number>()
+    // for(let i = 0; i < inorder.length; i++){
+    //     map.set(inorder[i], i)
+    // }
+    // function getroot(preorder: number[], inorder: number[]): TreeNode | null {
+    //     if(preorder.length===0) return null
+    //     const root = preorder[0]
+    //     const leftlength =  map.get(root) - map.get(inorder[0])
+    //     const leftlistpre = preorder.slice(1, leftlength+1)
+    //     const rightlistpre = preorder.slice(leftlength+1)
+    //     const leftlistin = inorder.slice(0, leftlength)
+    //     const rightlistin = inorder.slice(leftlength+1)
+    //     let rootnode = new TreeNode(root)
+    //     rootnode.left = getroot(leftlistpre, leftlistin)
+    //     rootnode.right = getroot(rightlistpre, rightlistin)
+    //     return rootnode
+    // }
+    // return getroot(preorder, inorder)
 };
+
