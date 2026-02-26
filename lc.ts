@@ -1625,4 +1625,101 @@ function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
     // }
     // return getroot(preorder, inorder)
 };
-
+// 437. 路径总和 III
+function pathSum(root: TreeNode | null, targetSum: number): number {
+    let map = new Map<number, number>()
+    map.set(0, 1)
+    let res = 0
+    function getsum(node: TreeNode | null, Sum: number): void{
+        if(!node)  return
+        const num = node.val
+        const nS = Sum + num
+        if(map.has(nS-targetSum)){
+            res += map.get(nS-targetSum)
+        }
+        map.set(nS, (map.get(nS) ?? 0)+1)
+        getsum(node.left, nS)
+        getsum(node.right, nS)
+        map.set(nS, (map.get(nS) ?? 0)-1)
+    }
+    getsum(root, 0)
+    return res
+};
+// 236. 二叉树的最近公共祖先
+function lowestCommonAncestor(root: TreeNode | null, p: TreeNode | null, q: TreeNode | null): TreeNode | null {
+	if(!root || root===p || root===q){
+        return root
+    }
+    const left = lowestCommonAncestor(root.left, p, q)
+    const right = lowestCommonAncestor(root.right, p, q)
+    if(left && right){
+        return root
+    }
+    return left ?? right
+};
+// 124. 二叉树中的最大路径和
+function maxPathSum(root: TreeNode | null): number {
+    if(!root) return 0
+    let res = -Infinity
+    function maxsinglesum(root: TreeNode | null): number {
+        if(!root) return 0
+        const left = maxsinglesum(root.left)
+        const right = maxsinglesum(root.right)
+        res = Math.max(left+root.val+right, res)
+        return Math.max(left+root.val, right+root.val, 0)
+    }
+    maxsinglesum(root)
+    return res
+};
+// 200. 岛屿数量
+function numIslands(grid: string[][]): number {
+    function mark(i, j){
+        if(i<0 || j<0 || i>grid.length-1 || j>grid.length[0]-1 || grid[i][j]!=='1') return
+        grid[i][j] = '2'
+        mark(i, j-1)
+        mark(i, j+1)
+        mark(i-1, j)
+        mark(i+1, j)
+    }
+    let res = 0
+    for(let i = 0; i < grid.length; i++){
+        for(let j = 0; j < grid[0].length; j++){
+            if(grid[i][j]==='1'){
+                mark(i,j)
+                res++
+            }
+        }
+    }
+    return res
+};
+// 994. 腐烂的橘子
+function orangesRotting(grid: number[][]): number {
+    let num = 0
+    let list = []
+    let time = 0
+    for(let i = 0; i < grid.length; i++){
+        for(let j = 0; j < grid[0].length; j++){
+            if(grid[i][j]===1){
+                num++
+            }
+            if(grid[i][j]===2){
+                list.push([i,j])
+            }
+        }
+    }
+    while(num && list.length>0){
+        time++
+        let temp = list
+        list = []
+        for(const [x, y] of temp){
+            for(const [i, j] of [[x-1,y],[x+1,y],[x,y-1],[x,y+1]]){
+                if(i>=0 && j>=0 && i<grid.length && j<grid[0].length && grid[i][j]===1){
+                    num--
+                    grid[i][j]=2
+                    list.push([i,j])
+                }
+            }
+        }
+    }
+    return num ? -1 : time
+};
