@@ -1723,3 +1723,81 @@ function orangesRotting(grid: number[][]): number {
     }
     return num ? -1 : time
 };
+// 207. 课程表
+function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+    let map = new Map()
+    let list = new Array(numCourses).fill(0)
+    for(let i = 0; i < prerequisites.length; i++){
+        let newdc = map.get(prerequisites[i][1]) ?? []
+        newdc.push(prerequisites[i][0])
+        map.set(prerequisites[i][1], newdc)
+        list[prerequisites[i][0]]++
+    }
+    let temp = []
+    for(let i = 0; i < list.length; i++){
+        if(list[i]===0){
+            temp.push(i)
+        }
+    }
+    let count = 0
+    while(temp.length>0){
+        count++
+        const c = temp.shift()
+        const depl = map.get(c) ?? []
+        for(let i = 0; i < depl.length; i++){
+            const depc = depl[i]
+            if(--list[depc] === 0){
+                temp.push(depc)
+            }
+        }
+    }
+    return count===numCourses
+};
+// 208. 实现 Trie (前缀树)
+class Node {
+    son: (Node | null)[]
+    hasend: boolean
+    constructor() {
+        this.son = new Array(26).fill(null)
+        this.hasend = false
+    }
+}
+class Trie {
+    root: Node
+    constructor() {
+        this.root = new Node()
+    }
+
+    insert(word: string): void {
+        let currentn = this.root
+        for(const c of word){
+            const index = c.charCodeAt(0) - 'a'.charCodeAt(0)
+            if(!currentn.son[index]){
+                currentn.son[index] = new Node()
+            }
+            currentn = currentn.son[index]
+        }
+        currentn.hasend = true
+    }
+
+
+    search(word: string): boolean {
+        let currentn = this.root
+        for(const c of word){
+            const index = c.charCodeAt(0) - 'a'.charCodeAt(0)
+            if(!currentn.son[index]) return false
+            currentn = currentn.son[index]
+        }
+        return currentn.hasend
+    }
+
+    startsWith(prefix: string): boolean {
+        let currentn = this.root
+        for(const c of prefix){
+            const index = c.charCodeAt(0) - 'a'.charCodeAt(0)
+            if(!currentn.son[index]) return false
+            currentn = currentn.son[index]
+        }
+        return true
+    }
+}
