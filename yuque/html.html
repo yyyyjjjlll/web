@@ -2,6 +2,100 @@
 <meta name=\"doc-version\" content=\"1\" />
 <meta name=\"viewport\" content=\"adapt\" />
 <meta name=\"typography\" content=\"classic\" />
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #f8f9fa;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+    padding: 20px 0;
+    z-index: 1000;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  }
+  
+  .sidebar-title {
+    padding: 0 20px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 15px;
+  }
+  
+  .sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-nav li {
+    margin: 0;
+  }
+  
+  .sidebar-nav a {
+    display: block;
+    padding: 10px 20px;
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+  }
+  
+  .sidebar-nav a:hover {
+    background-color: #e9ecef;
+    color: #333;
+  }
+  
+  .sidebar-nav a.active {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border-left-color: #1976d2;
+    font-weight: 500;
+  }
+  
+  .main-content {
+    margin-left: 250px;
+    padding: 20px 40px;
+    max-width: 1200px;
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    
+    .main-content {
+      margin-left: 0;
+      padding: 20px;
+    }
+  }
+</style>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-title">目录</div>
+  <ul class="sidebar-nav" id="sidebarNav"></ul>
+</div>
+<div class="main-content" id="mainContent">
 <p data-lake-id=\"ufa094be5\" id=\"ufa094be5\" style=\"text-align: left\">
   <card type=\"inline\" name=\"image\"
     value=\"data:%7B%22src%22%3A%22https%3A%2F%2Fcdn.nlark.com%2Fyuque%2F0%2F2023%2Fpng%2F1500604%2F1691053717225-17afa0a8-d891-4458-86d6-0218d38704b5.png%3Fx-oss-process%3Dimage%252Fwatermark%252Ctype_d3F5LW1pY3JvaGVp%252Csize_43%252Ctext_5b6u5L-h5YWs5LyX5Y-377ya5YmN56uv5YWF55S15a6d%252Ccolor_FFFFFF%252Cshadow_50%252Ct_80%252Cg_se%252Cx_10%252Cy_10%22%2C%22taskId%22%3A%22uc877a05a-532c-4983-a8c2-d1537b25e89%22%2C%22clientId%22%3A%22uad0749be-01e0-4%22%2C%22originalType%22%3A%22binary%22%2C%22width%22%3A780%2C%22height%22%3A432%2C%22linkTarget%22%3A%22_blank%22%2C%22name%22%3A%22qrcode.png%22%2C%22size%22%3A281391%2C%22from%22%3A%22ui%22%2C%22originWidth%22%3A1526%2C%22originHeight%22%3A846%2C%22ratio%22%3A2%2C%22status%22%3A%22done%22%2C%22style%22%3A%22shadow%22%2C%22ocrLocations%22%3A%5B%7B%22text%22%3A%22%E5%AD%A6%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%22%2C%22x%22%3A162%2C%22y%22%3A355%2C%22width%22%3A629%2C%22height%22%3A126%7D%2C%7B%22text%22%3A%22%E4%B8%81%E7%AB%AF%E6%B7%B1%E7%94%B5%E5%AE%9D%22%2C%22x%22%3A170%2C%22y%22%3A193%2C%22width%22%3A628%2C%22height%22%3A132%7D%2C%7B%22text%22%3A%22%E5%8A%A0%E5%85%A5%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%BA%A4%E6%B5%81%E7%BE%A4%2C%E5%86%85%E6%8E%A8%22%2C%22x%22%3A288%2C%22y%22%3A642%2C%22width%22%3A510%2C%22height%22%3A41%7D%2C%7B%22text%22%3A%22%E8%8E%B7%E5%8F%96%E6%9C%80%E6%96%B0%E6%A0%A1%E6%8B%9B%E4%BF%A1%E6%81%AF%E6%B1%87%E6%80%BB%22%2C%22x%22%3A288%2C%22y%22%3A595%2C%22width%22%3A427%2C%22height%22%3A43%7D%2C%7B%22text%22%3A%22%E5%BE%AE%E4%BF%A1%E6%89%AB%E7%A0%81%E5%85%B3%E6%B3%A8%E5%85%AC%E4%BC%97%E5%8F%B7%22%2C%22x%22%3A916%2C%22y%22%3A612%2C%22width%22%3A412%2C%22height%22%3A47%7D%2C%7B%22text%22%3A%22%E8%8E%B7%E5%8F%96%E9%9D%A2%E8%AF%95%E9%A2%98PDF%E7%89%88%22%2C%22x%22%3A291%2C%22y%22%3A548%2C%22width%22%3A320%2C%22height%22%3A43%7D%2C%7B%22text%22%3A%22DMO%22%2C%22x%22%3A123%2C%22y%22%3A125%2C%22width%22%3A200%2C%22height%22%3A58%7D%5D%2C%22showTitle%22%3Afalse%2C%22title%22%3A%22%22%2C%22rotation%22%3A0%2C%22crop%22%3A%5B0%2C0%2C1%2C1%5D%2C%22averageHue%22%3A%22%237eab90%22%2C%22id%22%3A%22C3ckA%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
@@ -679,16 +773,13 @@
   <li fid=\"ud4ca8ed7\" data-lake-id=\"3b840906bf19d6d0b1cb07b822fe9dfe\" id=\"3b840906bf19d6d0b1cb07b822fe9dfe\"><span
       data-lake-id=\"uca9cd7e7\" id=\"uca9cd7e7\">使用方法1：</span></li>
 </ul>
-<card type=\"inline\" name=\"codeblock\"
-  value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22html%22%2C%22code%22%3A%22%3Clabel%20for%3D%5C%22mobile%5C%22%3ENumber%3A%3C%2Flabel%3E%5Cn%3Cinput%20type%3D%5C%22text%5C%22%20id%3D%5C%22mobile%5C%22%2F%3E%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22oup8A%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-</card>
+<pre style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>&lt;label for="mobile"&gt;Number:&lt;/label&gt;
+&lt;input type="text" id="mobile"/&gt;</code></pre>
 <ul list=\"u43a08460\">
   <li fid=\"ud5ce3955\" data-lake-id=\"59e42fbb880be4a1f8e3655e38c2d8bd\" id=\"59e42fbb880be4a1f8e3655e38c2d8bd\"><span
       data-lake-id=\"ud18f8b7e\" id=\"ud18f8b7e\">使用方法2：</span></li>
 </ul>
-<card type=\"inline\" name=\"codeblock\"
-  value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22html%22%2C%22code%22%3A%22%3Clabel%3EDate%3A%3Cinput%20type%3D%5C%22text%5C%22%2F%3E%3C%2Flabel%3E%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%225R8v9%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-</card>
+<pre style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>&lt;label&gt;Date:&lt;input type="text"/&gt;&lt;/label&gt;</code></pre>
 <h3 data-lake-id=\"440ee15932cae7e448e95f86bf42b3e7\" id=\"440ee15932cae7e448e95f86bf42b3e7\"><span
     data-lake-id=\"u4035ecb5\" id=\"u4035ecb5\">15. Canvas和SVG的区别</span></h3>
 <p data-lake-id=\"8b80e37467dcf3e490c80cc0061003dd\" id=\"8b80e37467dcf3e490c80cc0061003dd\"><strong><span
@@ -928,3 +1019,92 @@
 <card type=\"block\" name=\"checkIn\"
   value=\"data:%7B%22title%22%3A%22%E9%98%85%E8%AF%BB%E5%90%8E%E8%AF%B7%E7%82%B9%E5%87%BB%E6%89%93%E5%8D%A1%22%2C%22buttonText%22%3A%22%E6%88%91%E5%B7%B2%E8%AF%BB%22%2C%22enableDeadline%22%3Afalse%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22zZ6PE%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
 </card>
+</div>
+<script>
+  (function() {
+    // 获取所有h3标签
+    const h3Elements = document.querySelectorAll('h3');
+    const sidebarNav = document.getElementById('sidebarNav');
+    
+    if (!sidebarNav || h3Elements.length === 0) return;
+    
+    // 生成导航链接
+    h3Elements.forEach(function(h3) {
+      const id = h3.id;
+      if (!id) return;
+      
+      // 获取h3的文本内容
+      const text = h3.textContent.trim() || h3.innerText.trim();
+      if (!text) return;
+      
+      // 创建列表项和链接
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = text;
+      a.setAttribute('data-target', id);
+      
+      // 平滑滚动
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.getElementById(id);
+        if (target) {
+          const offsetTop = target.offsetTop - 20;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+      
+      li.appendChild(a);
+      sidebarNav.appendChild(li);
+    });
+    
+    // 滚动时高亮当前章节
+    function updateActiveNav() {
+      const scrollPos = window.scrollY + 100;
+      let current = '';
+      
+      h3Elements.forEach(function(h3) {
+        const id = h3.id;
+        if (!id) return;
+        
+        const element = document.getElementById(id);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+          
+          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+            current = id;
+          }
+        }
+      });
+      
+      // 更新活动状态
+      const navLinks = sidebarNav.querySelectorAll('a');
+      navLinks.forEach(function(link) {
+        if (link.getAttribute('data-target') === current) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+    
+    // 监听滚动事件
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          updateActiveNav();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    
+    // 初始高亮
+    updateActiveNav();
+  })();
+</script>
