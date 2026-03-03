@@ -17,7 +17,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    width: 250px;
+    width: 280px;
     height: 100vh;
     background-color: #f8f9fa;
     border-right: 1px solid #e0e0e0;
@@ -57,6 +57,19 @@
     border-left: 3px solid transparent;
   }
   
+  .sidebar-nav a.h2-link {
+    font-weight: 600;
+    color: #333;
+    padding-left: 20px;
+    font-size: 15px;
+  }
+  
+  .sidebar-nav a.h3-link {
+    padding-left: 40px;
+    font-size: 13px;
+    color: #666;
+  }
+  
   .sidebar-nav a:hover {
     background-color: #e9ecef;
     color: #333;
@@ -70,7 +83,7 @@
   }
   
   .main-content {
-    margin-left: 250px;
+    margin-left: 280px;
     padding: 20px 40px;
     max-width: 1200px;
   }
@@ -1022,32 +1035,67 @@
 </div>
 <script>
   (function() {
-    // 获取所有h3标签
+    // 获取所有h2和h3标签
+    const h2Elements = document.querySelectorAll('h2');
     const h3Elements = document.querySelectorAll('h3');
     const sidebarNav = document.getElementById('sidebarNav');
     
-    if (!sidebarNav || h3Elements.length === 0) return;
+    if (!sidebarNav) return;
     
-    // 生成导航链接
+    // 创建一个数组来存储所有标题元素（按顺序）
+    const allHeadings = [];
+    
+    // 先添加所有h2
+    h2Elements.forEach(function(h2) {
+      const id = h2.id;
+      if (!id) return;
+      allHeadings.push({
+        element: h2,
+        id: id,
+        level: 2,
+        text: h2.textContent.trim() || h2.innerText.trim()
+      });
+    });
+    
+    // 再添加所有h3
     h3Elements.forEach(function(h3) {
       const id = h3.id;
       if (!id) return;
+      allHeadings.push({
+        element: h3,
+        id: id,
+        level: 3,
+        text: h3.textContent.trim() || h3.innerText.trim()
+      });
+    });
+    
+    // 按DOM顺序排序
+    allHeadings.sort(function(a, b) {
+      const posA = a.element.compareDocumentPosition(b.element);
+      return posA & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+    });
+    
+    // 生成导航链接
+    allHeadings.forEach(function(heading) {
+      if (!heading.text) return;
       
-      // 获取h3的文本内容
-      const text = h3.textContent.trim() || h3.innerText.trim();
-      if (!text) return;
-      
-      // 创建列表项和链接
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.href = '#' + id;
-      a.textContent = text;
-      a.setAttribute('data-target', id);
+      a.href = '#' + heading.id;
+      a.textContent = heading.text;
+      a.setAttribute('data-target', heading.id);
+      
+      // 根据层级添加不同的class
+      if (heading.level === 2) {
+        a.classList.add('h2-link');
+      } else {
+        a.classList.add('h3-link');
+      }
       
       // 平滑滚动
       a.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.getElementById(id);
+        const target = document.getElementById(heading.id);
         if (target) {
           const offsetTop = target.offsetTop - 20;
           window.scrollTo({
@@ -1063,23 +1111,21 @@
     
     // 滚动时高亮当前章节
     function updateActiveNav() {
-      const scrollPos = window.scrollY + 100;
+      const scrollPos = window.scrollY + 150;
       let current = '';
       
-      h3Elements.forEach(function(h3) {
-        const id = h3.id;
-        if (!id) return;
-        
-        const element = document.getElementById(id);
+      // 从后往前查找，找到第一个在视口上方的标题
+      for (let i = allHeadings.length - 1; i >= 0; i--) {
+        const heading = allHeadings[i];
+        const element = document.getElementById(heading.id);
         if (element) {
           const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-          
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-            current = id;
+          if (scrollPos >= offsetTop) {
+            current = heading.id;
+            break;
           }
         }
-      });
+      }
       
       // 更新活动状态
       const navLinks = sidebarNav.querySelectorAll('a');
