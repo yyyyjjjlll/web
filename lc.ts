@@ -1801,3 +1801,27 @@ class Trie {
         return true
     }
 }
+// ※※46. 全排列
+function permute(nums: number[]): number[][] {
+    const n = nums.length
+    let path = new Array(n).fill(0)
+    let pathuse = new Array(n).fill(false)
+    let res = []
+
+    function dfs(i){
+        if(i === n){
+            res.push(path.slice())
+            return
+        }
+        for(let j = 0; j < nums.length; j++){
+            if(!pathuse[j]){
+                path[i] = nums[j]
+                pathuse[j] = true
+                dfs(i+1)
+                pathuse[j] = false
+            }
+        }
+    }
+    dfs(0)
+    return res
+};
