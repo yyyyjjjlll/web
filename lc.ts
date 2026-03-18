@@ -1825,3 +1825,48 @@ function permute(nums: number[]): number[][] {
     dfs(0)
     return res
 };
+// 78. 子集
+function subsets(nums: number[]): number[][] {
+    let res: number[][] = []
+    let path: number[] = []
+    let n: number = nums.length
+    function dfs(index: number){
+        res.push([...path])
+        for(let i = index; i < n; i++){
+            path.push(nums[i])
+            dfs(i+1)
+            path.pop()
+        }
+    }
+    dfs(0)
+    return res
+};
+// 17. 电话号码的字母组合
+function letterCombinations(digits: string): string[] {
+    const MAPPING = ["","","abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+    let res: string[] = []
+    let path: string = ""
+    function dfs(index){
+        if(index === digits.length){
+            res.push(path)
+            return
+        }
+        const letters = MAPPING[Number(digits[index])]
+        for(const c of letters){
+            path += c
+            dfs(index+1)
+            path = path.slice(0, -1)
+        }
+    }
+    dfs(0)
+    return res
+};
+// 39. 组合总和
+function combinationSum(candidates: number[], target: number): number[][] {
+    let res: number[][] = []
+    let combine: number[] = []
+    let sum: number = 0
+    fuction dfs(index, sum){
+        if(sum > target)
+    }
+};
