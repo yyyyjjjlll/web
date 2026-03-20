@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>前端文档导航</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      border-right: 1px solid #e5e7eb;
+      background: #fff;
+      padding: 20px 14px;
+      transition: width 0.25s ease, padding 0.25s ease, border-color 0.25s ease;
+      overflow: hidden;
+    }
+
+    .title {
+      margin: 0 8px 16px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .select {
+      width: 100%;
+      margin-bottom: 14px;
+      padding: 8px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 14px;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .menu-item:hover {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    .menu-item.active {
+      border-color: #3b82f6;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .layout.sidebar-collapsed .sidebar {
+      width: 0;
+      padding-left: 0;
+      padding-right: 0;
+      border-right-color: transparent;
+    }
+
+    .header {
+      height: 56px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      font-size: 14px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toggle-btn {
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #111827;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .toggle-btn:hover {
+      background: #f3f4f6;
+    }
+
+    .frame {
+      width: 100%;
+      height: calc(100vh - 56px);
+      border: 0;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h1 class="title">文档导航</h1>
+      <select id="docSelect" class="select"></select>
+      <div id="docMenu" class="menu"></div>
+    </aside>
+    <main class="main">
+      <div class="header">
+        <div class="header-left">
+          <button id="toggleSidebar" class="toggle-btn" type="button">隐藏侧边栏</button>
+          <span>当前页面：<strong id="currentName">-</strong></span>
+        </div>
+        <span id="currentPath">-</span>
+      </div>
+      <iframe id="docFrame" class="frame" src="" title="文档预览"></iframe>
+    </main>
+  </div>
+
+  <script>
+    const docs = [
+      { name: "HTML", file: "pages/html.html" },
+      { name: "CSS", file: "pages/css.html" },
+      { name: "性能优化", file: "pages/性能优化.html" },
+      { name: "JavaScript", file: "pages/JavaScript.html" },
+    ];
+
+    const frame = document.getElementById("docFrame");
+    const menu = document.getElementById("docMenu");
+    const select = document.getElementById("docSelect");
+    const currentName = document.getElementById("currentName");
+    const currentPath = document.getElementById("currentPath");
+    const layout = document.querySelector(".layout");
+    const toggleSidebarBtn = document.getElementById("toggleSidebar");
+
+    function renderOptions() {
+      docs.forEach((doc) => {
+        const option = document.createElement("option");
+        option.value = doc.file;
+        option.textContent = doc.name;
+        select.appendChild(option);
+      });
+    }
+
+    function renderMenu() {
+      docs.forEach((doc) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "menu-item";
+        btn.textContent = doc.name;
+        btn.dataset.file = doc.file;
+        btn.addEventListener("click", () => openDoc(doc.file));
+        menu.appendChild(btn);
+      });
+    }
+
+    function syncActive(file) {
+      Array.from(menu.querySelectorAll(".menu-item")).forEach((el) => {
+        el.classList.toggle("active", el.dataset.file === file);
+      });
+      select.value = file;
+    }
+
+    function openDoc(file) {
+      const target =
+        docs.find((d) => d.file === file) ||
+        docs.find((d) => d.file.endsWith('/' + file)) ||
+        docs[0];
+      frame.src = target.file;
+      currentName.textContent = target.name;
+      currentPath.textContent = target.file;
+      syncActive(target.file);
+      history.replaceState(null, "", `?page=${encodeURIComponent(target.file)}`);
+    }
+
+    function setSidebarCollapsed(collapsed) {
+      layout.classList.toggle("sidebar-collapsed", collapsed);
+      toggleSidebarBtn.textContent = collapsed ? "显示侧边栏" : "隐藏侧边栏";
+      localStorage.setItem("yuqueSidebarCollapsed", collapsed ? "1" : "0");
+    }
+
+    select.addEventListener("change", (e) => openDoc(e.target.value));
+    toggleSidebarBtn.addEventListener("click", () => {
+      const collapsed = layout.classList.contains("sidebar-collapsed");
+      setSidebarCollapsed(!collapsed);
+    });
+
+    renderOptions();
+    renderMenu();
+    setSidebarCollapsed(localStorage.getItem("yuqueSidebarCollapsed") === "1");
+
+    const urlPage = new URLSearchParams(window.location.search).get("page");
+    openDoc(urlPage || docs[0].file);
+  </script>
+</body>
+</html>

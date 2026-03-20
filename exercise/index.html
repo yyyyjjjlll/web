@@ -1,16 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        /* .container{
+            width: 100%;
+            height: 100px;
+            background-color: green;
+        }
+        .t1{
+            width: 50px;
+            height: 100px;
+            background-color: red;
+        }
+        .t2{
+            width: 60px;
+            height: 100px;
+            background-color: blue;
+            float: left
+        }
+        .t3{
+            width: 70px;
+            height: 100px;
+            background-color: yellow;
+        }
+        .t4{
+            clear: both;
+        } */
+        /* div {
+            background-color: red;
+            width: 100px;
+            height: 50px;
+            border-radius: 0px 0px 100px 100px;
+        } */
+        .square {
+            width: 30%;
+            overflow: hidden;
+            background: yellow;
+        }
+        .square::after {
+            content: '';
+            display: block;
+            margin-top: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>hello world</h1>
+    <!-- <h1>hello world</h1>
     <script>
         console.log(window)
         let a = 1;
         console.log(window.a)
-    </script>
+    </script> -->
+    <!-- <div class='container'>
+        <div class='t1'></div>
+        <div class='t2'></div>
+        <div class='t4'></div>
+        <div class='t3'></div>
+    </div> -->
+    <div class="square"></div>
 </body>
+
 </html>
