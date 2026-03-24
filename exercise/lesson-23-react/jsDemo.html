@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="number">0</p>
+    <button id="btn">点击+</button>
+    <script>
+      let count = 0
+      const numberDom = document.getElementById('number')
+      const btnDom = document.getElementById('btn')
+      btnDom.addEventListener('click', handleclick)
+      function handleclick(){
+        count++
+        numberDom.textContent = count
+      }
+    </script>
+</body>
+
+</html>
