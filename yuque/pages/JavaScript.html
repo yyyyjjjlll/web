@@ -239,18 +239,32 @@ console.log(({}).constructor === Object); // true</code></pre>
       data-lake-id=\"u87791f28\"
       id=\"u87791f28\"><span data-lake-id=\"ucc7eaa73\" id=\"ucc7eaa73\">constructor</span></code><span
       data-lake-id=\"uec476f50\" id=\"uec476f50\">就不能用来判断数据类型了：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22function%20Fn()%7B%7D%3B%5Cn%20%5CnFn.prototype%20%3D%20new%20Array()%3B%5Cn%20%5Cnvar%20f%20%3D%20new%20Fn()%3B%5Cn%20%5Cnconsole.log(f.constructor%3D%3D%3DFn)%3B%20%20%20%20%2F%2F%20false%5Cnconsole.log(f.constructor%3D%3D%3DArray)%3B%20%2F%2F%20true%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22f5411e7b%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>function Fn(){};
+
+Fn.prototype = new Array();
+  
+var f = new Fn();
+  
+console.log(f.constructor===Fn);    // false
+console.log(f.constructor===Array); // true</code></pre>
   <p data-lake-id=\"f3fccbddff8f81d3bbbe408d0e636d56\" id=\"f3fccbddff8f81d3bbbe408d0e636d56\"><strong><span
         data-lake-id=\"u50b22c4f\" id=\"u50b22c4f\">（4）Object.prototype.toString.call()</span></strong></p>
   <p data-lake-id=\"e6a465c85f748a3a495ad65203c291a2\" id=\"e6a465c85f748a3a495ad65203c291a2\"><code
       data-lake-id=\"ua8b101e1\"
       id=\"ua8b101e1\"><span data-lake-id=\"uea260777\" id=\"uea260777\">Object.prototype.toString.call()</span></code><span
       data-lake-id=\"u580fdd4b\" id=\"u580fdd4b\"> 使用 Object 对象的原型方法 toString 来判断数据类型：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20a%20%3D%20Object.prototype.toString%3B%5Cn%20%5Cnconsole.log(a.call(2))%3B%5Cnconsole.log(a.call(true))%3B%5Cnconsole.log(a.call('str'))%3B%5Cnconsole.log(a.call(%5B%5D))%3B%5Cnconsole.log(a.call(function()%7B%7D))%3B%5Cnconsole.log(a.call(%7B%7D))%3B%5Cnconsole.log(a.call(undefined))%3B%5Cnconsole.log(a.call(null))%3B%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%2231a17b07%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var a = Object.prototype.toString;
+
+console.log(a.call(2));
+console.log(a.call(true));
+console.log(a.call('str'));
+console.log(a.call([]));
+console.log(a.call(function(){}));
+console.log(a.call({}));
+console.log(a.call(undefined));
+console.log(a.call(null));</code></pre>
   <p data-lake-id=\"d8d5f1b2e3c1b0a98557a64945091894\" id=\"d8d5f1b2e3c1b0a98557a64945091894\"><span
       data-lake-id=\"uc58f4c03\"
       id=\"uc58f4c03\">同样是检测对象obj调用toString方法，obj.toString()的结果和Object.prototype.toString.call(obj)的结果不一样，这是为什么？</span>
@@ -268,30 +282,26 @@ console.log(({}).constructor === Object); // true</code></pre>
     <li fid=\"ua541f847\" data-lake-id=\"40e442ca4872ae0d2727bde9bce6c00e\" id=\"40e442ca4872ae0d2727bde9bce6c00e\">
       <span data-lake-id=\"u409d7897\" id=\"u409d7897\">通过Object.prototype.toString.call()做判断</span></li>
   </ul>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22Object.prototype.toString.call(obj).slice(8%2C-1)%20%3D%3D%3D%20'Array'%3B%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22MCyBN%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>Object.prototype.toString.call(obj).slice(8,-1) === 'Array';</code></pre>
   <ul list=\"ub07cdc5f\">
     <li fid=\"u680e95c0\" data-lake-id=\"c850a84564d9a8b072d433792de9ce78\" id=\"c850a84564d9a8b072d433792de9ce78\">
       <span data-lake-id=\"u0949631c\" id=\"u0949631c\">通过原型链做判断</span></li>
   </ul>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22obj.__proto__%20%3D%3D%3D%20Array.prototype%3B%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22aPehq%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>obj.__proto__ === Array.prototype;</code></pre>
   <ul list=\"u9f7c7615\">
     <li fid=\"u6bf86b78\" data-lake-id=\"e8d3c49d1aef22a9fc0903750f669686\" id=\"e8d3c49d1aef22a9fc0903750f669686\">
       <span data-lake-id=\"u2df1d8c4\" id=\"u2df1d8c4\">通过ES6的Array.isArray()做判断</span></li>
   </ul>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22Array.isArrray(obj)%3B%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22tuJQP%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>Array.isArrray(obj);</code></pre>
   <ul list=\"u684e0548\">
     <li fid=\"u3d0f6fe5\" data-lake-id=\"d3bbe8309e603b2de185edadcd5902de\" id=\"d3bbe8309e603b2de185edadcd5902de\">
       <span data-lake-id=\"u54be3a6f\" id=\"u54be3a6f\">通过instanceof做判断</span></li>
   </ul>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22obj%20instanceof%20Array%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22UZnkO%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>obj instanceof Array</code></pre>
   <ul list=\"uc1a03444\">
     <li fid=\"u5bb2f572\" data-lake-id=\"a38f4838876b648ed193cc19aad92403\" id=\"a38f4838876b648ed193cc19aad92403\">
       <span data-lake-id=\"u1da1aafe\" id=\"u1da1aafe\">通过Array.prototype.isPrototypeOf</span></li>
