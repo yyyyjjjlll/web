@@ -1864,9 +1864,22 @@ function letterCombinations(digits: string): string[] {
 // 39. 组合总和
 function combinationSum(candidates: number[], target: number): number[][] {
     let res: number[][] = []
-    let combine: number[] = []
+    let path: number[] = []
     let sum: number = 0
-    fuction dfs(index, sum){
-        if(sum > target)
+    function dfs(index){
+        if(sum > target) return
+        if(sum === target){
+            res.push([...path])
+            return
+        }
+        for(let i = index; i < candidates.length; i++){
+            sum += candidates[i]
+            path.push(candidates[i])
+            dfs(i)
+            path = path.slice(0, -1)
+            sum -= candidates[i]
+        }
     }
+    dfs(0)
+    return res
 };
