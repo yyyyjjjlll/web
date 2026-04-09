@@ -1883,3 +1883,24 @@ function combinationSum(candidates: number[], target: number): number[][] {
     dfs(0)
     return res
 };
+// 22. 括号生成
+function generateParenthesis(n: number): string[] {
+    let res: string[] = []
+    let path: string[] = new Array(2*n)
+    function dfs(l, r){
+        if((l+r) === 2*n){
+            res.push(path.join(''))
+            return
+        }
+        if(l < n){
+            path[l+r] = '('
+            dfs(l+1, r)
+        }
+        if(r < l){
+            path[l+r] = ')'
+            dfs(l, r+1)
+        }
+    }
+    dfs(0, 0)
+    return res
+};
