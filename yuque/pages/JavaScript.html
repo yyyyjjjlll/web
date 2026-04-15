@@ -631,9 +631,10 @@ console.log(numberepsilon(0.1 + 0.2, 0.3)); // true</code></pre>
   <p data-lake-id=\"0ad660c5487f29bb0b44973a697006c7\" id=\"0ad660c5487f29bb0b44973a697006c7\"><span
       data-lake-id=\"u722c5101\" id=\"u722c5101\">在 JavaScript 中，基本类型是没有属性和方法的，但是为了便于操作基本类型的值，在调用基本类型的属性或方法时 JavaScript
       会在后台隐式地将基本类型的值转换为对象，如：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22const%20a%20%3D%20%5C%22abc%5C%22%3B%5Cna.length%3B%20%2F%2F%203%5Cna.toUpperCase()%3B%20%2F%2F%20%5C%22ABC%5C%22%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22LcyMP%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>const a = "abc";
+a.length; // 3
+a.toUpperCase(); // "ABC"</code></pre>
   <p data-lake-id=\"7f38b313ebc637d1cb8a34d8f22b3e97\" id=\"7f38b313ebc637d1cb8a34d8f22b3e97\" style=\"text-align:
     justify\"><span data-lake-id=\"u6f81b72e\" id=\"u6f81b72e\">在访问</span><code data-lake-id=\"uaa53f6d9\"
       id=\"uaa53f6d9\"><span data-lake-id=\"u302d82d0\" id=\"u302d82d0\">'abc'.length</span></code><span
@@ -649,21 +650,24 @@ console.log(numberepsilon(0.1 + 0.2, 0.3)); // true</code></pre>
     justify\"><span data-lake-id=\"u170a32de\" id=\"u170a32de\">JavaScript也可以使用</span><code data-lake-id=\"u59e7a191\"
       id=\"u59e7a191\"><span data-lake-id=\"ue0069984\" id=\"ue0069984\">Object</span></code><span
       data-lake-id=\"u935a29db\" id=\"u935a29db\">函数显式地将基本类型转换为包装类型：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20a%20%3D%20'abc'%5CnObject(a)%20%2F%2F%20String%20%7B%5C%22abc%5C%22%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22T8FEx%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var a = 'abc'
+Object(a) // String {"abc"}</code></pre>
   <p data-lake-id=\"5f925d5309d342daa7aace67c0d673ea\" id=\"5f925d5309d342daa7aace67c0d673ea\" style=\"text-align:
     justify\"><span data-lake-id=\"u8bd195cd\" id=\"u8bd195cd\">也可以使用</span><code data-lake-id=\"u914802ec\"
       id=\"u914802ec\"><span data-lake-id=\"u1330911c\" id=\"u1330911c\">valueOf</span></code><span
       data-lake-id=\"uf546628a\" id=\"uf546628a\">方法将包装类型倒转成基本类型：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20a%20%3D%20'abc'%5Cnvar%20b%20%3D%20Object(a)%5Cnvar%20c%20%3D%20b.valueOf()%20%2F%2F%20'abc'%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22kbA6S%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var a = 'abc'
+var b = Object(a)
+var c = b.valueOf() // 'abc'</code></pre>
   <p data-lake-id=\"b1785598015fbb72a44c0824e65e8cb8\" id=\"b1785598015fbb72a44c0824e65e8cb8\" style=\"text-align:
     justify\"><span data-lake-id=\"uea224ff9\" id=\"uea224ff9\">看看如下代码会打印出什么：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20a%20%3D%20new%20Boolean(%20false%20)%3B%5Cnif%20(!a)%20%7B%5Cn%5Ctconsole.log(%20%5C%22Oops%5C%22%20)%3B%20%2F%2F%20never%20runs%5Cn%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22MEDsz%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var a = new Boolean( false );
+if (!a) {
+	console.log( "Oops" ); // never runs
+}</code></pre>
   <p data-lake-id=\"f11db35196cf8c5b222560bf7ba230ff\" id=\"f11db35196cf8c5b222560bf7ba230ff\" style=\"text-align:
     justify\"><span data-lake-id=\"u5c33f85e\" id=\"u5c33f85e\">答案是什么都不会打印，因为虽然包裹的基本类型是</span><code
       data-lake-id=\"u35310b70\"
@@ -680,9 +684,12 @@ console.log(numberepsilon(0.1 + 0.2, 0.3)); // true</code></pre>
       id=\"u2e49c078\"><span data-lake-id=\"u1b2287e8\" id=\"u1b2287e8\">ToPrimitive</span></code><span
       data-lake-id=\"u2a9bb243\" id=\"u2a9bb243\">方法，这是 JavaScript 中每个值隐含的自带的方法，用来将值
       （无论是基本类型值还是对象）转换为基本类型值。如果值为基本类型，则直接返回值本身；如果值为对象，其看起来大概是这样：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22%2F**%5Cn*%20%40obj%20%E9%9C%80%E8%A6%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%AF%B9%E8%B1%A1%5Cn*%20%40type%20%E6%9C%9F%E6%9C%9B%E7%9A%84%E7%BB%93%E6%9E%9C%E7%B1%BB%E5%9E%8B%5Cn*%2F%5CnToPrimitive(obj%2Ctype)%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22GmSiQ%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>/**
+* @obj 需要转换的对象
+* @type 期望的结果类型
+*/
+ToPrimitive(obj,type)</code></pre>
   <p data-lake-id=\"3b86d1070a058e1dd23e86527aede8f3\" id=\"3b86d1070a058e1dd23e86527aede8f3\" style=\"text-align:
     justify\"><code data-lake-id=\"u2ed8dbc4\"
       id=\"u2ed8dbc4\"><span data-lake-id=\"ud8850e0a\" id=\"ud8850e0a\">type</span></code><span
