@@ -1904,3 +1904,43 @@ function generateParenthesis(n: number): string[] {
     dfs(0, 0)
     return res
 };
+// 79. 单词搜索
+function exist(board: string[][], word: string): boolean {
+    if(board.length * board[0].length < word.length) return false
+    const map = new Map<string, number>()
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[0].length; j++){
+            map.set(board[i][j], (map.get(board[i][j]) || 0)+1)
+        }
+    }
+    for(const char of word){
+        if(!map.has(char)){
+            return false
+        }
+        map.set(char, (map.get(char) || 0)-1)
+    }
+    let res = false
+    let visited = new Array(board.length)
+    for(let i = 0; i < board.length; i++){
+        visited[i] = new Array(board[0].length).fill(false)
+    }
+    function checked(x, y, index){
+        if(index === word.length) return true
+        if(x < 0 || x === board.length || y < 0 || y === board[0].length || visited[x][y] || board[x][y] !== word[index]) return false
+        visited[x][y] = true
+        const left = checked(x-1, y, index+1)
+        const right = checked(x+1, y, index+1)
+        const top = checked(x, y+1, index+1)
+        const bottom = checked(x, y-1, index+1)
+        const res = left || right || top || bottom
+        if(!res){visited[x][y] = false}
+        return res
+    }
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[0].length; j++){
+            res = checked(i, j, 0) || res
+            if(res) return res
+        }
+    }
+    return res
+};
