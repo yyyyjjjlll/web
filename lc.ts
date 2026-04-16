@@ -340,43 +340,56 @@ function findAnagrams(s: string, p: string): number[] {
 };
 // 560. 和为K的子数组
 function subarraySum(nums: number[], k: number): number {
-    let sum = 0, res = 0;
-    let map = new Map();
-    if (nums.length === 0) return 0
+    let sum = new Array(nums.length+1).fill(0)
     for (let i = 0; i < nums.length; i++) {
-        sum += nums[i]
-        if (sum === k) { res++ }
-        if (map.has(sum - k)) {
-            res += map.get(sum - k)
-        }
-        if (map.has(sum)) {
-            map.set(sum, map.get(sum) + 1)
-        } else {
-            map.set(sum, 1)
-        }
+        sum[i+1] = sum[i] + nums[i]
+    }
+    let map = new Map()
+    let res = 0
+    for(const s of sum){
+        res += map.get(s-k) || 0
+        map.set(s, (map.get(s) || 0)+1)
     }
     return res
-    // if(nums.length === 0) return 0
-    // let sum = new Array(nums.length).fill(0)
-    // let map = new Map<number, number[]>();
-    // let res = 0;
-    // sum[0] = nums[0]
-    // for(let i =1; i< nums.length; i++){
-    //     sum[i] = sum[i-1] + nums[i]
-    // }
-    // for(let i =0; i< nums.length; i++){
-    //     if(sum[i] === k){
-    //         res++;
-    //     }
-    //     if(map.has(sum[i]-k)){
-    //         res += map.get(sum[i]-k).length;
-    //     }
-    //     if(map.has(sum[i])){
-    //         map.set(sum[i], [...map.get(sum[i]),i]);
-    //     } else {map.set(sum[i], [i])}
-    // }
-    // return res
 };
+// function subarraySum(nums: number[], k: number): number {
+//     let sum = 0, res = 0;
+//     let map = new Map();
+//     if (nums.length === 0) return 0
+//     for (let i = 0; i < nums.length; i++) {
+//         sum += nums[i]
+//         if (sum === k) { res++ }
+//         if (map.has(sum - k)) {
+//             res += map.get(sum - k)
+//         }
+//         if (map.has(sum)) {
+//             map.set(sum, map.get(sum) + 1)
+//         } else {
+//             map.set(sum, 1)
+//         }
+//     }
+//     return res
+//     // if(nums.length === 0) return 0
+//     // let sum = new Array(nums.length).fill(0)
+//     // let map = new Map<number, number[]>();
+//     // let res = 0;
+//     // sum[0] = nums[0]
+//     // for(let i =1; i< nums.length; i++){
+//     //     sum[i] = sum[i-1] + nums[i]
+//     // }
+//     // for(let i =0; i< nums.length; i++){
+//     //     if(sum[i] === k){
+//     //         res++;
+//     //     }
+//     //     if(map.has(sum[i]-k)){
+//     //         res += map.get(sum[i]-k).length;
+//     //     }
+//     //     if(map.has(sum[i])){
+//     //         map.set(sum[i], [...map.get(sum[i]),i]);
+//     //     } else {map.set(sum[i], [i])}
+//     // }
+//     // return res
+// };
 // 239. 滑动窗口最大值
 function maxSlidingWindow(nums: number[], k: number): number[] {
     let res: number[] = [];
