@@ -1944,3 +1944,30 @@ function exist(board: string[][], word: string): boolean {
     }
     return res
 };
+// 131. 分割回文串
+function partition(s: string): string[][] {
+    let res = []
+    function match(left, right): boolean{
+        for(let i = 0; i < Math.ceil((right-left)/2); i++){
+            if(s[left+i] !== s[right-i]){
+                return false
+            }
+        }
+        return true
+    }
+    function getchild(index: number, prec: string[]){
+        if(index === s.length){
+            res.push([...prec])
+            return
+        }
+        for(let i = index; i < s.length; i++){
+            if(match(index, i)){
+                prec.push(s.substring(index, i+1))
+                getchild(i+1, prec)
+                prec.pop()
+            }
+        }
+    }
+    getchild(0, [])
+    return res
+};
