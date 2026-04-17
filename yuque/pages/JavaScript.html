@@ -770,9 +770,10 @@ ToPrimitive(obj,type)</code></pre>
   </ul>
   <p data-lake-id=\"f59b82c45cef6de64cca9ac2f4826f5d\" id=\"f59b82c45cef6de64cca9ac2f4826f5d\" style=\"text-align:
     justify\"><span data-lake-id=\"udf6a4c17\" id=\"udf6a4c17\">总结上面的规则，对于 Date 以外的对象，转换为基本类型的大概规则可以概括为一个函数：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20objToNumber%20%3D%20value%20%3D%3E%20Number(value.valueOf().toString())%5CnobjToNumber(%5B%5D)%20%3D%3D%3D%200%5CnobjToNumber(%7B%7D)%20%3D%3D%3D%20NaN%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22Uxkdm%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var objToNumber = value => Number(value.valueOf().toString())
+objToNumber([]) === 0
+objToNumber({}) === NaN</code></pre>
   <p data-lake-id=\"28ec17ec331c094c0ac8f95e9e1a4eb7\" id=\"28ec17ec331c094c0ac8f95e9e1a4eb7\" style=\"text-align:
     justify\"><span data-lake-id=\"udd214e7b\" id=\"udd214e7b\">而 JavaScript 中的隐式类型转换主要发生在</span><code
       data-lake-id=\"u6a174bf5\"
@@ -800,10 +801,13 @@ ToPrimitive(obj,type)</code></pre>
         id=\"ub0ad8f74\"><span data-lake-id=\"u557348f9\" id=\"u557348f9\">string</span></code><span
         data-lake-id=\"u8578ab13\" id=\"u8578ab13\">类型变量时，两边的变量都会被隐式转换为字符串；其他情况下两边的变量都会被转换为数字。</span></li>
   </ol>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%221%20%2B%20'23'%20%2F%2F%20'123'%5Cn%201%20%2B%20false%20%2F%2F%201%20%5Cn%201%20%2B%20Symbol()%20%2F%2F%20Uncaught%20TypeError%3A%20Cannot%20convert%20a%20Symbol%20value%20to%20a%20number%5Cn%20'1'%20%2B%20false%20%2F%2F%20'1false'%5Cn%20false%20%2B%20true%20%2F%2F%201%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%220VjIs%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
-  <ol list=\"ub2f71ae3\" start=\"2\">
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>1 + '23' // '123'
+1 + false // 1 
+1 + Symbol() // Uncaught TypeError: Cannot convert a Symbol value to a number
+'1' + false // '1false'
+false + true // 1</code></pre>
+  <ol list=\"ub2f71ae3\" start="2">
     <li fid=\"u621c084a\" data-lake-id=\"aaebc15a8ca9dae0b232a301694b9d37\" id=\"aaebc15a8ca9dae0b232a301694b9d37\">
       <code data-lake-id=\"uf6c5b23f\"
         id=\"uf6c5b23f\"><strong><span data-lake-id=\"ufb255155\" id=\"ufb255155\">-</span></strong></code><strong><span
@@ -815,10 +819,11 @@ ToPrimitive(obj,type)</code></pre>
         id=\"u25d8343d\"><span data-lake-id=\"u8af40f09\" id=\"u8af40f09\">NaN</span></code><span
         data-lake-id=\"u1034b96b\" id=\"u1034b96b\">也是一个数字</span></li>
   </ol>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%221%20*%20'23'%20%2F%2F%2023%5Cn%201%20*%20false%20%2F%2F%200%5Cn%201%20%2F%20'aa'%20%2F%2F%20NaN%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22qtxDW%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
-  <ol list=\"u0142d05f\" start=\"3\">
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>1 * '23' // 23
+1 * false // 0
+1 / 'aa' // NaN</code></pre>
+  <ol list=\"u0142d05f\" start="3">
     <li fid=\"ufe0ad40c\" data-lake-id=\"0dc7167572af4c15d0c85c416664d784\" id=\"0dc7167572af4c15d0c85c416664d784\">
       <strong><span data-lake-id=\"uc147acb9\" id=\"uc147acb9\">对于</span></strong><code data-lake-id=\"u161682dc\"
         id=\"u161682dc\"><strong><span data-lake-id=\"u4cd91338\" id=\"u4cd91338\">==</span></strong></code><strong><span
@@ -829,10 +834,11 @@ ToPrimitive(obj,type)</code></pre>
     justify\"><span data-lake-id=\"ue059bd31\" id=\"ue059bd31\">操作符两边的值都尽量转成</span><code data-lake-id=\"u18bae02a\"
       id=\"u18bae02a\"><span data-lake-id=\"u89af2821\" id=\"u89af2821\">number</span></code><span
       data-lake-id=\"u8f994b3d\" id=\"u8f994b3d\">：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%223%20%3D%3D%20true%20%2F%2F%20false%2C%203%20%E8%BD%AC%E4%B8%BAnumber%E4%B8%BA3%EF%BC%8Ctrue%E8%BD%AC%E4%B8%BAnumber%E4%B8%BA1%5Cn'0'%20%3D%3D%20false%20%2F%2Ftrue%2C%20'0'%E8%BD%AC%E4%B8%BAnumber%E4%B8%BA0%EF%BC%8Cfalse%E8%BD%AC%E4%B8%BAnumber%E4%B8%BA0%5Cn'0'%20%3D%3D%200%20%2F%2F%20'0'%E8%BD%AC%E4%B8%BAnumber%E4%B8%BA0%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22sZL6H%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
-  <ol list=\"u42079048\" start=\"4\">
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>3 == true // false, 3 转为number为3，true转为number为1
+'0' == false //true, '0'转为number为0，false转为number为0
+'0' == 0 // '0'转为number为0</code></pre>
+  <ol list=\"u42079048\" start="4">
     <li fid=\"u576a5957\" data-lake-id=\"8787051fdaf1153e648927de490d16b6\" id=\"8787051fdaf1153e648927de490d16b6\">
       <strong><span data-lake-id=\"uf4979963\" id=\"uf4979963\">对于</span></strong><code data-lake-id=\"u9d358163\"
         id=\"u9d358163\"><strong><span data-lake-id=\"u9dcee1d4\" id=\"u9dcee1d4\">&lt;</span></strong></code><strong><span
@@ -843,37 +849,43 @@ ToPrimitive(obj,type)</code></pre>
   </ol>
   <p data-lake-id=\"024207303e90483efb63b2d1c561689b\" id=\"024207303e90483efb63b2d1c561689b\" style=\"text-align:
     justify\"><span data-lake-id=\"ua19fbaed\" id=\"ua19fbaed\">如果两边都是字符串，则比较字母表顺序：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22'ca'%20%3C%20'bd'%20%2F%2F%20false%5Cn'a'%20%3C%20'b'%20%2F%2F%20true%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22tsOvH%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>'ca' < 'bd' // false
+'a' < 'b' // true</code></pre>
   <p data-lake-id=\"2489150faf7a65f375666b8ab4d0419e\" id=\"2489150faf7a65f375666b8ab4d0419e\" style=\"text-align:
     justify\"><span data-lake-id=\"u6e53e383\" id=\"u6e53e383\">其他情况下，转换为数字再比较：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22'12'%20%3C%2013%20%2F%2F%20true%5Cnfalse%20%3E%20-1%20%2F%2F%20true%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22b9EDB%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>'12' < 13 // true
+false > -1 // true</code></pre>
   <p data-lake-id=\"ec3f864f9849fbbf48a8b6671286f7ac\" id=\"ec3f864f9849fbbf48a8b6671286f7ac\" style=\"text-align:
     justify\"><span data-lake-id=\"ub3506022\" id=\"ub3506022\">以上说的是基本类型的隐式转换，而对象会被</span><code
       data-lake-id=\"u465ff5ac\"
       id=\"u465ff5ac\"><span data-lake-id=\"udd96bf09\" id=\"udd96bf09\">ToPrimitive</span></code><span
       data-lake-id=\"ud06ccec1\" id=\"ud06ccec1\">转换为基本类型再进行转换：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20a%20%3D%20%7B%7D%5Cna%20%3E%202%20%2F%2F%20false%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22d28Qk%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var a = {}
+a > 2 // false</code></pre>
   <p data-lake-id=\"2e0eb41f3847509729e3c477998efd15\" id=\"2e0eb41f3847509729e3c477998efd15\" style=\"text-align:
     justify\"><span data-lake-id=\"u838ed8bd\" id=\"u838ed8bd\">其对比过程如下：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22a.valueOf()%20%2F%2F%20%7B%7D%2C%20%E4%B8%8A%E9%9D%A2%E6%8F%90%E5%88%B0%E8%BF%87%EF%BC%8CToPrimitive%E9%BB%98%E8%AE%A4type%E4%B8%BAnumber%EF%BC%8C%E6%89%80%E4%BB%A5%E5%85%88valueOf%EF%BC%8C%E7%BB%93%E6%9E%9C%E8%BF%98%E6%98%AF%E4%B8%AA%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%B8%8B%E4%B8%80%E6%AD%A5%5Cna.toString()%20%2F%2F%20%5C%22%5Bobject%20Object%5D%5C%22%EF%BC%8C%E7%8E%B0%E5%9C%A8%E6%98%AF%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BA%86%5CnNumber(a.toString())%20%2F%2F%20NaN%EF%BC%8C%E6%A0%B9%E6%8D%AE%E4%B8%8A%E9%9D%A2%20%3C%20%E5%92%8C%20%3E%20%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E8%A7%84%E5%88%99%EF%BC%8C%E8%A6%81%E8%BD%AC%E6%8D%A2%E6%88%90%E6%95%B0%E5%AD%97%5CnNaN%20%3E%202%20%2F%2Ffalse%EF%BC%8C%E5%BE%97%E5%87%BA%E6%AF%94%E8%BE%83%E7%BB%93%E6%9E%9C%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22X2f5S%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>a.valueOf() // {}, 上面提到过，ToPrimitive默认type为number，所以先valueOf，结果还是个对象，下一步
+a.toString() // "[object Object]"，现在是一个字符串了
+Number(a.toString()) // NaN，根据上面 < 和 > 操作符的规则，要转换成数字
+NaN > 2 //false，得出比较结果</code></pre>
   <p data-lake-id=\"ec84a7e5aec9b0cfd575139ce91cb8aa\" id=\"ec84a7e5aec9b0cfd575139ce91cb8aa\" style=\"text-align:
     justify\"><span data-lake-id=\"uccf863c6\" id=\"uccf863c6\">又比如：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20a%20%3D%20%7Bname%3A'Jack'%7D%5Cnvar%20b%20%3D%20%7Bage%3A%2018%7D%5Cna%20%2B%20b%20%2F%2F%20%5C%22%5Bobject%20Object%5D%5Bobject%20Object%5D%5C%22%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22Bz6iq%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var a = {name:'Jack'}
+var b = {age: 18}
+a + b // "[object Object][object Object]"</code></pre>
   <p data-lake-id=\"7b866b59c6415e2f488064bec236de3e\" id=\"7b866b59c6415e2f488064bec236de3e\" style=\"text-align:
     justify\"><span data-lake-id=\"ua76427d5\" id=\"ua76427d5\">运算过程如下：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22a.valueOf()%20%2F%2F%20%7B%7D%EF%BC%8C%E4%B8%8A%E9%9D%A2%E6%8F%90%E5%88%B0%E8%BF%87%EF%BC%8CToPrimitive%E9%BB%98%E8%AE%A4type%E4%B8%BAnumber%EF%BC%8C%E6%89%80%E4%BB%A5%E5%85%88valueOf%EF%BC%8C%E7%BB%93%E6%9E%9C%E8%BF%98%E6%98%AF%E4%B8%AA%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%B8%8B%E4%B8%80%E6%AD%A5%5Cna.toString()%20%2F%2F%20%5C%22%5Bobject%20Object%5D%5C%22%5Cnb.valueOf()%20%2F%2F%20%E5%90%8C%E7%90%86%5Cnb.toString()%20%2F%2F%20%5C%22%5Bobject%20Object%5D%5C%22%5Cna%20%2B%20b%20%2F%2F%20%5C%22%5Bobject%20Object%5D%5Bobject%20Object%5D%5C%22%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22qRwAn%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>a.valueOf() // {}，上面提到过，ToPrimitive默认type为number，所以先valueOf，结果还是个对象，下一步
+a.toString() // "[object Object]"
+b.valueOf() // 同理
+b.toString() // "[object Object]"
+a + b // "[object Object][object Object]"</code></pre>
   <h3 data-lake-id=\"47636b0cb0327cd564b05728347eae3b\" id=\"47636b0cb0327cd564b05728347eae3b\"><span
       data-lake-id=\"u3d1f7871\" id=\"u3d1f7871\">18. </span><code data-lake-id=\"uf95342d1\"
       id=\"uf95342d1\"><span data-lake-id=\"u05f8fa83\" id=\"u05f8fa83\">+</span></code><span data-lake-id=\"u22b6aafe\"
@@ -900,14 +912,22 @@ ToPrimitive(obj,type)</code></pre>
       object.assign和扩展运算法是深拷贝还是浅拷贝，两者区别</span></h3>
   <p data-lake-id=\"u17269347\" id=\"u17269347\"><span data-lake-id=\"uec511c00\" id=\"uec511c00\" style=\"color:
       #121212\">扩展运算符：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22let%20outObj%20%3D%20%7B%5Cn%20%20inObj%3A%20%7Ba%3A%201%2C%20b%3A%202%7D%5Cn%7D%5Cnlet%20newObj%20%3D%20%7B...outObj%7D%5CnnewObj.inObj.a%20%3D%202%5Cnconsole.log(outObj)%20%2F%2F%20%7BinObj%3A%20%7Ba%3A%202%2C%20b%3A%202%7D%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22SqCDG%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>let outObj = {
+  inObj: {a: 1, b: 2}
+}
+let newObj = {...outObj}
+newObj.inObj.a = 2
+console.log(outObj) // {inObj: {a: 2, b: 2}}</code></pre>
   <p data-lake-id=\"u97c1710e\" id=\"u97c1710e\"><span data-lake-id=\"u8d384e30\" id=\"u8d384e30\" style=\"color:
       #121212\">Object.assign():</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22let%20outObj%20%3D%20%7B%5Cn%20%20inObj%3A%20%7Ba%3A%201%2C%20b%3A%202%7D%5Cn%7D%5Cnlet%20newObj%20%3D%20Object.assign(%7B%7D%2C%20outObj)%5CnnewObj.inObj.a%20%3D%202%5Cnconsole.log(outObj)%20%2F%2F%20%7BinObj%3A%20%7Ba%3A%202%2C%20b%3A%202%7D%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22mgchh%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>let outObj = {
+  inObj: {a: 1, b: 2}
+}
+let newObj = Object.assign({}, outObj)
+newObj.inObj.a = 2
+console.log(outObj) // {inObj: {a: 2, b: 2}}</code></pre>
   <p data-lake-id=\"u42786622\" id=\"u42786622\"><span data-lake-id=\"u6e4e2e02\" id=\"u6e4e2e02\">可以看到，两者都是浅拷贝。</span>
   </p>
   <ul list=\"ub34eda36\">
@@ -923,16 +943,18 @@ ToPrimitive(obj,type)</code></pre>
         id=\"u8e57a252\">使用</span><span data-lake-id=\"u2524420a\" id=\"u2524420a\" style=\"color:
         #000000\">JSON自带的.stringify方法来判断：</span></li>
   </ul>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22if(Json.stringify(Obj)%20%3D%3D%20'%7B%7D'%20)%7B%5Cn%20%20%20%20console.log('%E7%A9%BA%E5%AF%B9%E8%B1%A1')%3B%5Cn%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22O75Ek%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>if(Json.stringify(Obj) == '{}' ){
+    console.log('空对象');
+}</code></pre>
   <ul list=\"u526170ba\">
     <li fid=\"ud44908a8\" data-lake-id=\"ue7314304\" id=\"ue7314304\"><span data-lake-id=\"ubdfd3093\"
         id=\"ubdfd3093\">使用ES6新增的方法Object.keys()来判断：</span></li>
   </ul>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22if(Object.keys(Obj).length%20%3C%200)%7B%5Cn%20%20%20%20console.log('%E7%A9%BA%E5%AF%B9%E8%B1%A1')%3B%5Cn%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22gIydB%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>if(Object.keys(Obj).length < 0){
+    console.log('空对象');
+}</code></pre>
   <p data-lake-id=\"u9fe9258f\" id=\"u9fe9258f\">
     <card type=\"inline\" name=\"image\"
       value=\"data:%7B%22src%22%3A%22https%3A%2F%2Fcdn.nlark.com%2Fyuque%2F0%2F2023%2Fpng%2F1500604%2F1691053717225-17afa0a8-d891-4458-86d6-0218d38704b5.png%3Fx-oss-process%3Dimage%252Fwatermark%252Ctype_d3F5LW1pY3JvaGVp%252Csize_43%252Ctext_5b6u5L-h5YWs5LyX5Y-377ya5YmN56uv5YWF55S15a6d%252Ccolor_FFFFFF%252Cshadow_50%252Ct_80%252Cg_se%252Cx_10%252Cy_10%22%2C%22taskId%22%3A%22uc877a05a-532c-4983-a8c2-d1537b25e89%22%2C%22clientId%22%3A%22uad0749be-01e0-4%22%2C%22originalType%22%3A%22binary%22%2C%22width%22%3A780%2C%22height%22%3A432%2C%22linkTarget%22%3A%22_blank%22%2C%22name%22%3A%22qrcode.png%22%2C%22size%22%3A281391%2C%22from%22%3A%22ui%22%2C%22originWidth%22%3A1526%2C%22originHeight%22%3A846%2C%22ratio%22%3A2%2C%22status%22%3A%22done%22%2C%22style%22%3A%22shadow%22%2C%22ocrLocations%22%3A%5B%7B%22text%22%3A%22%E5%AD%A6%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%22%2C%22x%22%3A162%2C%22y%22%3A355%2C%22width%22%3A629%2C%22height%22%3A126%7D%2C%7B%22text%22%3A%22%E4%B8%81%E7%AB%AF%E6%B7%B1%E7%94%B5%E5%AE%9D%22%2C%22x%22%3A170%2C%22y%22%3A193%2C%22width%22%3A628%2C%22height%22%3A132%7D%2C%7B%22text%22%3A%22%E5%8A%A0%E5%85%A5%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E4%BA%A4%E6%B5%81%E7%BE%A4%2C%E5%86%85%E6%8E%A8%22%2C%22x%22%3A288%2C%22y%22%3A642%2C%22width%22%3A510%2C%22height%22%3A41%7D%2C%7B%22text%22%3A%22%E8%8E%B7%E5%8F%96%E6%9C%80%E6%96%B0%E6%A0%A1%E6%8B%9B%E4%BF%A1%E6%81%AF%E6%B1%87%E6%80%BB%22%2C%22x%22%3A288%2C%22y%22%3A595%2C%22width%22%3A427%2C%22height%22%3A43%7D%2C%7B%22text%22%3A%22%E5%BE%AE%E4%BF%A1%E6%89%AB%E7%A0%81%E5%85%B3%E6%B3%A8%E5%85%AC%E4%BC%97%E5%8F%B7%22%2C%22x%22%3A916%2C%22y%22%3A612%2C%22width%22%3A412%2C%22height%22%3A47%7D%2C%7B%22text%22%3A%22%E8%8E%B7%E5%8F%96%E9%9D%A2%E8%AF%95%E9%A2%98PDF%E7%89%88%22%2C%22x%22%3A291%2C%22y%22%3A548%2C%22width%22%3A320%2C%22height%22%3A43%7D%2C%7B%22text%22%3A%22DMO%22%2C%22x%22%3A123%2C%22y%22%3A125%2C%22width%22%3A200%2C%22height%22%3A58%7D%5D%2C%22showTitle%22%3Afalse%2C%22title%22%3A%22%22%2C%22rotation%22%3A0%2C%22crop%22%3A%5B0%2C0%2C1%2C1%5D%2C%22averageHue%22%3A%22%237eab90%22%2C%22id%22%3A%22gckHT%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">

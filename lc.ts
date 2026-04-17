@@ -1984,3 +1984,31 @@ function partition(s: string): string[][] {
     getchild(0, [])
     return res
 };
+// 51. N 皇后
+function solveNQueens(n: number): string[][] {
+    const res = []
+    const column = new Array(n).fill(-1) // 行(索引)被第几列(索引)放置，区间[0, n-1]
+    const list1 = new Array(2 * n - 2).fill(false) // 行列相加的值是否被放置，区间[0, 2n-2]
+    const list2 = new Array(2 * n - 2).fill(false) // 行列相减的值是否被放置，区间[-n+1, n-1]
+    function dfs(index) {
+        // index是列数
+        if (index === n) {
+            res.push(column.map(c => '.'.repeat(c) + 'Q' + '.'.repeat(n - c - 1)))
+            return
+        }
+        // i是行数
+        for (let i = 0; i < n; i++) {
+            if ((column[i] === -1) && !list1[index + i] && !list2[index - i + n - 1]) {
+                column[i] = index
+                list1[index + i] = true
+                list2[index - i + n - 1] = true
+                dfs(index + 1)
+                column[i] = -1
+                list1[index + i] = false
+                list2[index - i + n - 1] = false
+            }
+        }
+    }
+    dfs(0)
+    return res
+};
