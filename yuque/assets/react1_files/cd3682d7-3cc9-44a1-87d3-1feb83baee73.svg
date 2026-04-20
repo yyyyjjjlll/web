@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 75</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#54DFA5" offset="0%"></stop>
+            <stop stop-color="#2ABC6C" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="全文评论" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="分镜" transform="translate(-361.000000, -1037.000000)">
+            <g id="编组-2" transform="translate(205.000000, 1029.000000)">
+                <g id="编组-74" transform="translate(156.000000, 8.000000)">
+                    <g id="编组" transform="translate(1.800000, 1.800000)" fill="url(#linearGradient-1)" stroke="#289B60" stroke-width="0.8">
+                        <g id="矩形">
+                            <rect x="0.4" y="0.4" width="19.6" height="19.6" rx="3"></rect>
+                        </g>
+                    </g>
+                    <path d="M17.6897054,6.84 L17.6897054,17.64 L15.0012999,17.64 L15.0012999,9.06973703 L12.9266225,9.87458213 L12.9266225,7.79803314 L15.6213721,6.84 L17.6897054,6.84 Z M9.77080917,9.03437934 L9.77,11.7693793 L12.3932947,11.7698801 L12.3932947,13.5935472 L9.77,13.5933793 L9.77080917,16.3290479 L8.0224855,16.3290479 L8.022,13.5933793 L5.4,13.5935472 L5.4,11.7698801 L8.022,11.7693793 L8.0224855,9.03437934 L9.77080917,9.03437934 Z" id="形状结合" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

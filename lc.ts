@@ -2012,3 +2012,35 @@ function solveNQueens(n: number): string[][] {
     dfs(0)
     return res
 };
+// 35. 搜索插入位置
+function searchInsert(nums: number[], target: number): number {
+    let left = 0
+    let right = nums.length - 1
+    while(left <= right){
+        let mid = Math.floor((right+left)/2)
+        if(nums[mid] < target){
+            left = mid+1
+        } else {
+            right =mid-1
+        }
+    }
+    return left
+};
+// 74. 搜索二维矩阵
+function searchMatrix(matrix: number[][], target: number): boolean {
+    let m = matrix.length, n = matrix[0].length
+    let left = 0, right = m * n - 1
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2)
+        const row = Math.floor(mid / n)
+        const column = mid % n
+        if(matrix[row][column]===target){
+            return true
+        } else if (matrix[row][column] < target) {
+            left = mid + 1
+        } else {
+            right = mid - 1
+        }
+    }
+    return false
+};
