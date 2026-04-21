@@ -2044,3 +2044,48 @@ function searchMatrix(matrix: number[][], target: number): boolean {
     }
     return false
 };
+// 34. 在排序数组中查找元素的第一个和最后一个位置
+function searchRange(nums: number[], target: number): number[] {
+    function searchT(nums: number[], target: number): number {
+        let left = 0, right = nums.length-1
+        while(left <= right){
+            const mid = Math.floor((left+right)/2)
+            if(nums[mid] < target){
+                left = mid + 1
+            } else {
+                right = mid -1
+            }
+        }
+        return left
+    }
+    const begin = searchT(nums, target)
+    const left = nums[begin] === target ? begin : -1
+    const end = searchT(nums, target+1)
+    const right = nums[end-1] === target ? end-1 : -1
+    return [left, right]
+};
+// 33. 搜索旋转排序数组
+function search(nums: number[], target: number): number {
+    let left = 0, right = nums.length - 1
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2)
+        if (nums[mid] === target) return mid
+        // 右半有序的话
+        if (nums[mid] < nums[right]) {
+            // 在右半部分
+            if (nums[mid] < target && nums[right] >= target) {
+                left = mid + 1
+            } else {
+                right = mid - 1
+            }
+        } else {
+            // 在左半部分
+            if (nums[left] <= target && nums[mid] > target) {
+                right = mid - 1
+            } else {
+                left = mid + 1
+            }
+        }
+    }
+    return -1
+};
