@@ -2089,3 +2089,19 @@ function search(nums: number[], target: number): number {
     }
     return -1
 };
+// 153. 寻找旋转排序数组中的最小值
+function findMin(nums: number[]): number {
+    let left = 0, right = nums.length-1
+    while(left <= right){
+        const mid = Math.floor((left+right)/2)
+        if(nums[right] >= nums[left]){
+            return nums[left]
+        // 在左侧的情况
+        }else if(nums[mid] < nums[right]) {
+            right = mid
+        } else {
+            left = mid + 1
+        }
+    }
+    return nums[left]
+};
