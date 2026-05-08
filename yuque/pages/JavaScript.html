@@ -1196,9 +1196,8 @@ console.log(outObj) // {inObj: {a: 2, b: 2}}</code></pre>
     <li fid=\"ua6ef5fb4\" data-lake-id=\"b78fcf791a933ef2b2c3af5023dddc80\" id=\"b78fcf791a933ef2b2c3af5023dddc80\">
       <span data-lake-id=\"u20b039d9\" id=\"u20b039d9\">如果函数体不需要返回值，且只有一句话，可以给这个语句前面加一个void关键字。最常见的就是调用一个函数：</span></li>
   </ul>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22let%20fn%20%3D%20()%20%3D%3E%20void%20doesNotReturn()%3B%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%220d2OL%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>let fn = () => void doesNotReturn();</code></pre>
   <p data-lake-id=\"f83b4e0817753aa4707a77a5fccf6daa\" id=\"f83b4e0817753aa4707a77a5fccf6daa\"><strong><span
         data-lake-id=\"u4459201c\" id=\"u4459201c\">（2）箭头函数没有自己的this</span></strong></p>
   <p data-lake-id=\"5503980a3aebebcb94e6e8ec04dcb1d4\" id=\"5503980a3aebebcb94e6e8ec04dcb1d4\"><span
@@ -1206,9 +1205,21 @@ console.log(outObj) // {inObj: {a: 2, b: 2}}</code></pre>
       所以它没有自己的this，它只会在自己作用域的上一层继承this。所以箭头函数中this的指向在它在定义时已经确定了，之后不会改变。</span></p>
   <p data-lake-id=\"cbf34008739f48a4b9d60dee08febfd2\" id=\"cbf34008739f48a4b9d60dee08febfd2\"><strong><span
         data-lake-id=\"ubeb710e3\" id=\"ubeb710e3\">（3）箭头函数继承来的this指向永远不会改变</span></strong></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20id%20%3D%20'GLOBAL'%3B%5Cnvar%20obj%20%3D%20%7B%5Cn%20%20id%3A%20'OBJ'%2C%5Cn%20%20a%3A%20function()%7B%5Cn%20%20%20%20console.log(this.id)%3B%5Cn%20%20%7D%2C%5Cn%20%20b%3A%20()%20%3D%3E%20%7B%5Cn%20%20%20%20console.log(this.id)%3B%5Cn%20%20%7D%5Cn%7D%3B%5Cnobj.a()%3B%20%20%20%20%2F%2F%20'OBJ'%5Cnobj.b()%3B%20%20%20%20%2F%2F%20'GLOBAL'%5Cnnew%20obj.a()%20%20%2F%2F%20undefined%5Cnnew%20obj.b()%20%20%2F%2F%20Uncaught%20TypeError%3A%20obj.b%20is%20not%20a%20constructor%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22Q5jVy%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var id = 'GLOBAL';
+var obj = {
+  id: 'OBJ',
+  a: function(){
+    console.log(this.id);
+  },
+  b: () => {
+    console.log(this.id);
+  }
+};
+obj.a();    // 'OBJ'
+obj.b();    // 'GLOBAL'
+new obj.a()  // undefined
+new obj.b()  // Uncaught TypeError: obj.b is not a constructor</code></pre>
   <p data-lake-id=\"584cbde93d30b08d6c52b3024472ed2d\" id=\"584cbde93d30b08d6c52b3024472ed2d\"><span
       data-lake-id=\"ueb4b1fb8\"
       id=\"ueb4b1fb8\">对象obj的方法b是使用箭头函数定义的，这个函数中的this就永远指向它定义时所处的全局执行环境中的this，即便这个函数是作为对象obj的方法调用，this依旧指向Window对象。需要注意，定义对象的大括号</span><code
@@ -1217,9 +1228,15 @@ console.log(outObj) // {inObj: {a: 2, b: 2}}</code></pre>
       data-lake-id=\"ub6dad9a1\" id=\"ub6dad9a1\">是无法形成一个单独的执行环境的，它依旧是处于全局执行环境中。</span></p>
   <p data-lake-id=\"69b20b192162d0b8fcf4be68be7557f7\" id=\"69b20b192162d0b8fcf4be68be7557f7\"><strong><span
         data-lake-id=\"u440a0f22\" id=\"u440a0f22\">（4）call()、apply()、bind()等方法不能改变箭头函数中this的指向</span></strong></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22var%20id%20%3D%20'Global'%3B%5Cnlet%20fun1%20%3D%20()%20%3D%3E%20%7B%5Cn%20%20%20%20console.log(this.id)%5Cn%7D%3B%5Cnfun1()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20'Global'%5Cnfun1.call(%7Bid%3A%20'Obj'%7D)%3B%20%20%20%20%20%2F%2F%20'Global'%5Cnfun1.apply(%7Bid%3A%20'Obj'%7D)%3B%20%20%20%20%2F%2F%20'Global'%5Cnfun1.bind(%7Bid%3A%20'Obj'%7D)()%3B%20%20%20%2F%2F%20'Global'%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%223We7g%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>var id = 'Global';
+let fun1 = () => {
+    console.log(this.id)
+};
+fun1();                     // 'Global'
+fun1.call({id: 'Obj'});     // 'Global'
+fun1.apply({id: 'Obj'});    // 'Global'
+fun1.bind({id: 'Obj'})();   // 'Global'</code></pre>
   <p data-lake-id=\"7062165d02b258bad78876cba7070e78\" id=\"7062165d02b258bad78876cba7070e78\"><strong><span
         data-lake-id=\"u6fe4633a\" id=\"u6fe4633a\">（5）箭头函数不能作为构造函数使用</span></strong></p>
   <p data-lake-id=\"d0c08489e2a9f04d18d48d4b68e24c84\" id=\"d0c08489e2a9f04d18d48d4b68e24c84\"><span
