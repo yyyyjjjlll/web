@@ -2,7 +2,6 @@
  * 前端测试脚本
  * 运行方式: npx ts-node test.ts 或 npx tsx test.ts
  */
-
 // ============== 工具函数 ==============
 // 1. 两数之和
 function twoSum(nums: number[], target: number): number[] {
