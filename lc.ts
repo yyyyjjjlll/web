@@ -42,6 +42,7 @@ function groupAnagrams(strs: string[]): string[][] {
     // return res
     return Array.from(map.values())
 };
+
 // 128. 最长连续序列
 function longestConsecutive(nums: number[]): number {
     // 时间复杂度O(n log n)

@@ -41,7 +41,6 @@
 //   merge(nums, left, mid, right);
 // }
 
-
 // // 归并排序实践
 // function sort(nums: number[], left: number, right: number, mid: number): void{
 //   let i = left, j = mid+1, k = 0;
