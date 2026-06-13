@@ -263,6 +263,7 @@ function trap(height: number[]): number {
 //   }
 //   return area
 // }
+
 // 3. 无重复字符的最长子串
 function lengthOfLongestSubstring(s: string): number {
     // 时间复杂度O(n^2)

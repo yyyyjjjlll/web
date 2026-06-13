@@ -70,9 +70,6 @@
 //   sort(nums, left, right, mid)
 // }
 
-
-
-
 // // 测试函数
 // function test() {
 //   const twoDArray = [[1, 5, 2], [8, 3, 10], [4, 9]];
