@@ -83,6 +83,7 @@ function longestConsecutive(nums: number[]): number {
     }
     return res
 };
+
 // 283. 移动零
 function moveZeroes(nums: number[]): void {
     // 时间过长，时间复杂度O(n^2)
