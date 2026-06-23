@@ -1261,28 +1261,41 @@ fun1.bind({id: 'Obj'})();   // 'Global'</code></pre>
   <p data-lake-id=\"c22af90eefd41ffb83539841f7ab3f1f\" id=\"c22af90eefd41ffb83539841f7ab3f1f\"><br></p>
   <p data-lake-id=\"8bd1180041d69e6eed5a5c635414635f\" id=\"8bd1180041d69e6eed5a5c635414635f\"><span
       data-lake-id=\"ue8d0166c\" id=\"ue8d0166c\">可以⽤Babel理解⼀下箭头函数: </span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22%2F%2F%20ES6%20%5Cnconst%20obj%20%3D%20%7B%20%5Cn%20%20getArrow()%20%7B%20%5Cn%20%20%20%20return%20()%20%3D%3E%20%7B%20%5Cn%20%20%20%20%20%20console.log(this%20%3D%3D%3D%20obj)%3B%20%5Cn%20%20%20%20%7D%3B%20%5Cn%20%20%7D%20%5Cn%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22YpyX0%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>// ES6 
+const obj = { 
+  getArrow() { 
+    return () => { 
+      console.log(this === obj); 
+    }; 
+  } 
+}</code></pre>
   <p data-lake-id=\"25b29fb8608f431e52c9ac245fa2c320\" id=\"25b29fb8608f431e52c9ac245fa2c320\"><span
       data-lake-id=\"u6a2f8aef\" id=\"u6a2f8aef\">转化后：</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22%2F%2F%20ES5%EF%BC%8C%E7%94%B1%20Babel%20%E8%BD%AC%E8%AF%91%5Cnvar%20obj%20%3D%20%7B%20%5Cn%20%20%20getArrow%3A%20function%20getArrow()%20%7B%20%5Cn%20%20%20%20%20var%20_this%20%3D%20this%3B%20%5Cn%20%20%20%20%20return%20function%20()%20%7B%20%5Cn%20%20%20%20%20%20%20%20console.log(_this%20%3D%3D%3D%20obj)%3B%20%5Cn%20%20%20%20%20%7D%3B%20%5Cn%20%20%20%7D%20%5Cn%7D%3B%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22f1XXO%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>// ES5，由 Babel 转译
+var obj = { 
+    getArrow: function getArrow() { 
+      var _this = this; 
+      return function () { 
+        console.log(_this === obj); 
+      }; 
+    } 
+};</code></pre>
   <h3 data-lake-id=\"2eca98daa24253e853762b195c608f96\" id=\"2eca98daa24253e853762b195c608f96\"><span
       data-lake-id=\"u883a97b8\" id=\"u883a97b8\">6. 扩展运算符的作用及使用场景</span></h3>
   <p data-lake-id=\"8b64746b03f83656e5980b54ebb2ff20\" id=\"8b64746b03f83656e5980b54ebb2ff20\"><strong><span
         data-lake-id=\"ub51b909d\" id=\"ub51b909d\">（1）对象扩展运算符</span></strong></p>
   <p data-lake-id=\"ec64c2ac7749153e47818384ca933d1a\" id=\"ec64c2ac7749153e47818384ca933d1a\"><span
       data-lake-id=\"u0a3f27e2\" id=\"u0a3f27e2\">对象的扩展运算符(...)用于取出参数对象中的所有可遍历属性，拷贝到当前对象之中。</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22let%20bar%20%3D%20%7B%20a%3A%201%2C%20b%3A%202%20%7D%3B%5Cnlet%20baz%20%3D%20%7B%20...bar%20%7D%3B%20%2F%2F%20%7B%20a%3A%201%2C%20b%3A%202%20%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22GNJ7L%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>let bar = { a: 1, b: 2 };
+let baz = { ...bar }; // { a: 1, b: 2 }</code></pre>
   <p data-lake-id=\"c2df73645937e4b52c353060d5a4edc4\" id=\"c2df73645937e4b52c353060d5a4edc4\"><span
       data-lake-id=\"u9d448bb2\" id=\"u9d448bb2\">上述方法实际上等价于:</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22let%20bar%20%3D%20%7B%20a%3A%201%2C%20b%3A%202%20%7D%3B%5Cnlet%20baz%20%3D%20Object.assign(%7B%7D%2C%20bar)%3B%20%2F%2F%20%7B%20a%3A%201%2C%20b%3A%202%20%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22VkEAT%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>let bar = { a: 1, b: 2 };
+let baz = Object.assign({}, bar); // { a: 1, b: 2 }</code></pre>
   <p data-lake-id=\"ef4947f260b7c55d813fec9c328792ca\" id=\"ef4947f260b7c55d813fec9c328792ca\"><code
       data-lake-id=\"u9926d2da\"
       id=\"u9926d2da\"><span data-lake-id=\"uf7195841\" id=\"uf7195841\">Object.assign</span></code><span
@@ -1298,9 +1311,9 @@ fun1.bind({id: 'Obj'})();   // 'Global'</code></pre>
   <p data-lake-id=\"5c8e7f357afc71b27f1ed580847db33f\" id=\"5c8e7f357afc71b27f1ed580847db33f\"><br></p>
   <p data-lake-id=\"441982b8e0106ef1811e247a853f0999\" id=\"441982b8e0106ef1811e247a853f0999\"><span
       data-lake-id=\"uf5675c82\" id=\"uf5675c82\">同样，如果用户自定义的属性，放在扩展运算符后面，则扩展运算符内部的同名属性会被覆盖掉。</span></p>
-  <card type=\"inline\" name=\"codeblock\"
-    value=\"data:%7B%22search%22%3A%22%22%2C%22mode%22%3A%22javascript%22%2C%22code%22%3A%22let%20bar%20%3D%20%7Ba%3A%201%2C%20b%3A%202%7D%3B%5Cnlet%20baz%20%3D%20%7B...bar%2C%20...%7Ba%3A2%2C%20b%3A%204%7D%7D%3B%20%20%2F%2F%20%7Ba%3A%202%2C%20b%3A%204%7D%22%2C%22autoWrap%22%3Afalse%2C%22lineNumbers%22%3Atrue%2C%22heightLimit%22%3Atrue%2C%22collapsed%22%3Afalse%2C%22hideToolbar%22%3Afalse%2C%22name%22%3A%22%22%2C%22tabSize%22%3Anull%2C%22indentWithTab%22%3Afalse%2C%22lightLines%22%3A%5B%5D%2C%22foldLines%22%3A%5B%5D%2C%22theme%22%3A%22default%22%2C%22__spacing%22%3A%22both%22%2C%22id%22%3A%22GJrwr%22%2C%22margin%22%3A%7B%22top%22%3Atrue%2C%22bottom%22%3Atrue%7D%7D\">
-  </card>
+  <pre
+  style="border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 4px; background-color: #f7f7f7; font-size: 13px; overflow-x: auto;"><code>let bar = {a: 1, b: 2};
+let baz = {...bar, ...{a:2, b: 4}};  // {a: 2, b: 4}</code></pre>
   <p data-lake-id=\"866f70c0670bb7cb0d6db1412060a36f\" id=\"866f70c0670bb7cb0d6db1412060a36f\"><span
       data-lake-id=\"u943e14d8\" id=\"u943e14d8\">利用上述特性就可以很方便的修改对象的部分属性。在</span><code data-lake-id=\"uba3f1fe0\"
       id=\"uba3f1fe0\"><span data-lake-id=\"u7d1769c5\" id=\"u7d1769c5\">redux</span></code><span
