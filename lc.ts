@@ -2108,3 +2108,19 @@ function findMin(nums: number[]): number {
     }
     return nums[left]
 };
+// 20. 有效的括号
+function isValid(s: string): boolean {
+    if(s.length % 2){
+        return false
+    }
+    const mp = {')':'(', '}':'{',']':'['}
+    const st = []
+    for(const c of s){
+        if(!mp.hasOwnProperty(c)){
+            st.push(c)
+        } else if (st.pop() !== mp[c]){
+            return false
+        }
+    }
+    return st.length === 0
+};
