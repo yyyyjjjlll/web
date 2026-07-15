@@ -2124,3 +2124,27 @@ function isValid(s: string): boolean {
     }
     return st.length === 0
 };
+// 155. 最小栈
+class MinStack {
+    st: (number|null)[][]
+    constructor() {
+        this.st = [[Infinity, null]]
+    }
+
+    push(value: number): void {
+        const min = Math.min(this.st[this.st.length-1][0], value)
+        this.st.push([min, value])
+    }
+
+    pop(): void {
+        this.st.pop()
+    }
+
+    top(): number {
+        return this.st[this.st.length-1][1]
+    }
+
+    getMin(): number {
+        return this.st[this.st.length-1][0]
+    }
+}
