@@ -2148,4 +2148,25 @@ class MinStack {
         return this.st[this.st.length-1][0]
     }
 }
-
+// 394. 字符串解码
+function decodeString(s: string): string {
+    if(s.length===0){
+        return s
+    }
+    if('a' <= s[0] && s[0] <= 'z'){
+        return s[0] + decodeString(s.slice(1))
+    }
+    const i = s.indexOf('[');
+    let count = 1
+    for(let j = i+1; ; j++){
+        if(s[j]==='['){
+            count++
+        } else if(s[j]===']'){
+            count--
+            if(count===0){
+                const k = Number(s.slice(0, i))
+                return decodeString(s.slice(i+1, j)).repeat(k) + decodeString(s.slice(j+1))
+            }
+        }
+    }
+};
