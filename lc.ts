@@ -2170,3 +2170,97 @@ function decodeString(s: string): string {
         }
     }
 };
+// 136. 只出现一次的数字
+function singleNumber(nums: number[]): number {
+    let answer: number = 0
+    for(const num of nums){
+        answer ^= num
+    }
+    return answer
+};
+// 169. 多数元素
+function majorityElement(nums: number[]): number {
+    let ans: number = nums[0]
+    let hp: number = 0
+    for(let num of nums){
+        if(hp === 0){
+            ans = num
+            hp = 1
+        } else {
+            hp += (ans === num ? 1 : -1)
+        }
+    }
+    return ans
+};
+// 75. 颜色分类
+function sortColors(nums: number[]): void {
+    let l = 0
+    let r = 0
+    for(let i = 0; i < nums.length; i++){
+        const tem = nums[i]
+        nums[i] = 2
+        if(tem <= 1){
+            nums[r] = 1
+            r++
+        }
+        if(tem===0){
+            nums[l] = 0
+            l++
+        }
+    }
+};
+// function sortColors(nums: number[]): void {
+//     let l = 0
+//     let r = 0
+//     for(let i = 0; i < nums.length; i++){
+//         if(nums[i]===1){
+//             [nums[r], nums[i]] = [nums[i], nums[r]]
+//             r++
+//         } else if(nums[i]===0){
+//             [nums[l], nums[i]] = [nums[i], nums[l]]
+//             if(l<r){
+//                 [nums[r], nums[i]] = [nums[i], nums[r]]
+//             }
+//             l++
+//             r++
+//         }
+//     }
+// };
+// 31. 下一个排列
+function nextPermutation(nums: number[]): void {
+    const n = nums.length
+    let i = n-2
+    while(i>=0 && nums[i+1] <= nums[i]){
+        i--
+    }
+    if(i>=0){
+        let j = n-1
+        while(nums[i] >= nums[j]){
+            j--
+        }
+        [nums[i], nums[j]] = [nums[j], nums[i]]
+    }
+    let left = i+1, right=n-1
+    while(left<right){
+        [nums[left],nums[right]] =[nums[right],nums[left]]
+        left++
+        right--
+    }
+};
+// 287. 寻找重复数
+function findDuplicate(nums: number[]): number {
+    let slow = 0, fast = 0
+    while(true){
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if(slow === fast){
+            break
+        }
+    }
+    let head = 0
+    while(head !== slow){
+        head = nums[head]
+        slow = nums[slow]
+    }
+    return head
+};
