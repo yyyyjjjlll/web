@@ -2264,3 +2264,101 @@ function findDuplicate(nums: number[]): number {
     }
     return head
 };
+// 121. 买卖股票的最佳时机
+function maxProfit(prices: number[]): number {
+    let minPrice = prices[0]
+    let ans = 0
+    for(const p of prices){
+        ans = Math.max(p-minPrice, ans)
+        minPrice = Math.min(minPrice, p)
+    }
+    return ans
+};
+// 55. 跳跃游戏
+function canJump(nums: number[]): boolean {
+    let mx = 0
+    for(let i = 0; i < nums.length; i++){
+        if(i>mx) return false
+        mx = Math.max(mx, i+nums[i])
+    }
+    return true
+};
+// 45. 跳跃游戏 II
+function jump(nums: number[]): number {
+    let cmx = 0
+    let nmx = 0
+    let ans = 0
+    for(let i = 0; i < nums.length-1; i++){
+        nmx = Math.max(nums[i]+i, nmx)
+        if(i === cmx){
+            ans++
+            cmx = nmx
+        }
+    };
+    return ans
+}
+// 763. 划分字母区间
+function partitionLabels(s: string): number[] {
+    let last = new Array(26)
+    for(let i = 0; i < s.length; i++){
+        last[s[i].charCodeAt(0)-'a'.charCodeAt(0)] = i
+    }
+    let ans = []
+    let start = 0
+    let end = 0
+    for(let i = 0; i < s.length; i++){
+        end = Math.max(end, last[s[i].charCodeAt(0)-'a'.charCodeAt(0)])
+        if(i === end){
+            ans.push(end-start+1)
+            start = i+1
+        }
+    }
+    return ans
+    // let last = new Array(s.length)
+    // for(let i = 0; i < s.length; i++){
+    //     const c = s[i]
+    //     last[i] = i
+    //     for(let j = s.length-1; j > i; j--){
+    //         if(s[j] === c){
+    //             last[i] = j
+    //         }
+    //     }
+    // }
+    // let ans = []
+    // let start = 0
+    // let end = 0
+    // for(let i = 0; i < s.length; i++){
+    //     end = Math.max(end, last[i])
+    //     if(i === end){
+    //         ans.push(end-start+1)
+    //         start = i+1
+    //     }
+    // }
+    // return ans
+};
+// 70. 爬楼梯
+function climbStairs(n: number): number {
+    if(n < 2) return 1
+    let l = 1
+    let f = 1
+    for(let i = 1; i < n; i ++){
+        let tem = l
+        l = f
+        f = tem +f
+    }
+    return f
+};
+// 118. 杨辉三角
+function generate(numRows: number): number[][] {
+    let ans = Array(numRows)
+    ans[0] = [1]
+    for(let i = 1; i < numRows; i++){
+        ans[i] = Array(i+1)
+        for(let j = 0; j < i+1; j++){
+            const left = (j > 0 ? ans[i-1][j-1] : 0)
+            const right = (j===i ? 0 : ans[i-1][j])
+            ans[i][j] = left+right
+        }
+    }
+    return ans
+};
