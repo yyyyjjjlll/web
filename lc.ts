@@ -2362,3 +2362,39 @@ function generate(numRows: number): number[][] {
     }
     return ans
 };
+// 198. 打家劫舍
+function rob(nums: number[]): number {
+    let n = nums.length
+    let lm = 0, rm = 0
+    for(let i = 0; i < n; i++){
+        let old_rm = rm
+        rm = Math.max(lm+nums[i], rm)
+        lm = old_rm
+    }
+    return rm
+};
+// 279. 完全平方数
+function numSquares(n: number): number {
+    let arr = Array(n+1).fill(0)
+    for(let i = 1; i < n+1; i++){
+        arr[i] = i
+        for(let j = 1; j*j <= i; j++){
+            arr[i] = Math.min(arr[i], arr[i-j*j]+1)
+        }
+    }
+    return arr[n]
+};
+// 322. 零钱兑换
+function coinChange(coins: number[], amount: number): number {
+    let arr = Array(amount+1).fill(0)
+    for(let i = 1; i < amount+1; i++){
+        arr[i] = Infinity
+        for(let j =0; j < coins.length; j++){
+            if(coins[j] > i){
+                continue
+            }
+            arr[i] = Math.min(arr[i], arr[i - coins[j]]+1)
+        }
+    }
+    return (arr[amount] === Infinity) ? -1 : arr[amount]
+};
