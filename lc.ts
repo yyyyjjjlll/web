@@ -2398,3 +2398,56 @@ function coinChange(coins: number[], amount: number): number {
     }
     return (arr[amount] === Infinity) ? -1 : arr[amount]
 };
+// 139. 单词拆分
+function wordBreak(s: string, wordDict: string[]): boolean {
+    const ml = Math.max(...wordDict.map(word=>word.length))
+    const set = new Set<string>(wordDict)
+    let isOk = Array<boolean>(s.length+1).fill(false)
+    isOk[0] = true
+    for(let i = 0; i < s.length; i++){
+        if(isOk[i]===false){
+            continue
+        }
+        for(let j = 0; j < ml; j++){
+            if((i+j)<s.length && set.has(s.slice(i,i+j+1))){
+                isOk[i+j+1] = true
+            }
+        }
+    }
+    return isOk[s.length]
+};
+// 300. 最长递增子序列
+function lengthOfLIS(nums: number[]): number {
+    let arr = []
+    arr.push(nums[0])
+    for(const num of nums){
+        if(num > arr[arr.length-1]){
+            arr.push(num)
+        } else if(num < arr[arr.length-1]){
+            let left = 0, right = arr.length-1
+            while(left < right){
+                const mid = (left + right) >> 1
+                if(arr[mid] >= num){
+                    right = mid
+                } else if(arr[mid] < num){
+                    left = mid + 1
+                }
+            }
+            arr[left] = num
+        }
+    }
+    return arr.length
+};
+// function lengthOfLIS(nums: number[]): number {
+//     let ml = 1
+//     let arr = Array(nums.length).fill(1)
+//     for(let i = 0; i < nums.length; i++){
+//         for(let j =0; j < i; j++){
+//             if(nums[i] > nums[j]){
+//                 arr[i] = Math.max(arr[j] + 1, arr[i])
+//                 ml = Math.max(ml, arr[i])
+//             }
+//         }
+//     }
+//     return ml
+// };
