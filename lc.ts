@@ -2451,3 +2451,66 @@ function lengthOfLIS(nums: number[]): number {
 //     }
 //     return ml
 // };
+// 152. 乘积最大子数组
+function maxProduct(nums: number[]): number {
+    let max_cur = nums[0]
+    let min_cur = nums[0]
+    let mx = nums[0]
+    for(let i = 1; i < nums.length; i++){
+        if(nums[i] > 0){
+            max_cur = Math.max(max_cur * nums[i], nums[i])
+            min_cur = Math.min(min_cur * nums[i], nums[i])
+        } else {
+            const tem = max_cur
+            max_cur = Math.max(min_cur * nums[i], nums[i])
+            min_cur = Math.min(tem * nums[i], nums[i])
+        }
+        mx = Math.max(max_cur, mx)
+    }
+    return mx
+};
+// 416. 分割等和子集
+function canPartition(nums: number[]): boolean {
+    let sum = 0
+    for(const num of nums){
+        sum += num
+    }
+    if(sum % 2) return false
+    const s = sum / 2
+    let arr = Array(s+1).fill(false)
+    arr[0] = true
+    if(nums[0] <= s){
+        arr[nums[0]] = true
+    }
+    for(let i = 1; i < nums.length; i++){
+        for(let j = s; j >= 0; j--){
+            if(nums[i] <= j){
+                arr[j] = (arr[j] || arr[j-nums[i]])
+            }
+        }
+    }
+    return arr[s]
+};
+// function canPartition(nums: number[]): boolean {
+//     let sum = 0
+//     for(const num of nums){
+//         sum += num
+//     }
+//     if(sum % 2) return false
+//     const s = sum / 2
+//     let arr = Array.from({length: nums.length}, ()=> Array(s+1).fill(false))
+//     arr[0][0] = true
+//     if(nums[0] <= s){
+//         arr[0][nums[0]] = true
+//     }
+//     for(let i = 1; i < nums.length; i++){
+//         for(let j = 0; j <= s; j++){
+//             if(nums[i] > j){
+//                 arr[i][j] = arr[i-1][j]
+//             } else {
+//                 arr[i][j] = (arr[i-1][j] || arr[i-1][j-nums[i]])
+//             }
+//         }
+//     }
+//     return arr[nums.length-1][s]
+// };
